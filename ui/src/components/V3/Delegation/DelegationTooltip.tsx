@@ -1,9 +1,9 @@
-import { Divider, Flex, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
-import { KeyColour } from '../../Dashboard';
-import { BLOCKCHAIN_COLORS } from './Delegation';
-import { format } from 'date-fns';
-import { TOKEN_COLORS } from './Delegation';
+import { Divider, Flex, Text } from "@chakra-ui/react";
+import { formatNumber } from "@synthetixio/formatters";
+import { KeyColour } from "../../Dashboard";
+import { BLOCKCHAIN_COLORS } from "./Delegation";
+import { format } from "date-fns";
+import { TOKEN_COLORS } from "./Delegation";
 
 type DelegationTooltipProps = {
   active?: boolean;
@@ -12,7 +12,10 @@ type DelegationTooltipProps = {
   label?: string;
 };
 
-export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipProps) => {
+export const DelegationTooltip = ({
+  payload,
+  blockchains,
+}: DelegationTooltipProps) => {
   const delegation = payload?.[0]?.payload as any;
 
   if (!delegation) {
@@ -29,10 +32,16 @@ export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipPro
       borderRadius="md"
       borderWidth="1px"
     >
-      <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {delegation.labelType === 'M'
+      <Text
+        mb={2}
+        fontFamily="heading"
+        color="gray.500"
+        fontSize="12px"
+        lineHeight="16px"
+      >
+        {delegation.labelType === "M"
           ? delegation.label
-          : format(new Date(delegation.day), 'yyyy-MM-dd')}
+          : format(new Date(delegation.day), "yyyy-MM-dd")}
       </Text>
       {blockchains?.map((blockchain, index) => {
         return (
@@ -42,7 +51,13 @@ export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipPro
               colour={BLOCKCHAIN_COLORS[index]}
               textTransform="capitalize"
             />
-            <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+            <Text
+              ml={3}
+              fontFamily="heading"
+              fontSize="12px"
+              lineHeight="16px"
+              textAlign="center"
+            >
               ${formatNumber(delegation[blockchain].cumDelegationUsd)}
             </Text>
           </Flex>
@@ -50,7 +65,13 @@ export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipPro
       })}
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+        >
           ${formatNumber(delegation.totalCumDelegationsUsd)}
         </Text>
       </Flex>
@@ -63,7 +84,13 @@ export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipPro
               colour={TOKEN_COLORS[index]}
               textTransform="capitalize"
             />
-            <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+            <Text
+              ml={3}
+              fontFamily="heading"
+              fontSize="12px"
+              lineHeight="16px"
+              textAlign="center"
+            >
               {formatNumber(delegation[blockchain].dailyDelegations)}
             </Text>
           </Flex>
@@ -71,7 +98,13 @@ export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipPro
       })}
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+        >
           {formatNumber(delegation.totalDailyDelegations)}
         </Text>
       </Flex>

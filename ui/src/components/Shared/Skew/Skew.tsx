@@ -1,5 +1,5 @@
-import { Progress, Td, Flex, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
+import { Progress, Td, Flex, Text } from "@chakra-ui/react";
+import { formatNumber } from "@synthetixio/formatters";
 
 interface SkewProps {
   skew: number;
@@ -32,11 +32,28 @@ export const Skew = ({ skew }: SkewProps) => {
           value={skew * 100}
         />
         <Flex justifyContent="space-between" width="100%">
-          <Text fontFamily="heading" fontSize="12px" lineHeight="16px" color="green.500">
-            {formatNumber(skew * 100, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}%
+          <Text
+            fontFamily="heading"
+            fontSize="12px"
+            lineHeight="16px"
+            color="green.500"
+          >
+            {formatNumber(skew * 100, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
+            %
           </Text>
-          <Text fontFamily="heading" fontSize="12px" lineHeight="16px" color="red.500">
-            {formatNumber(100 - skew * 100, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+          <Text
+            fontFamily="heading"
+            fontSize="12px"
+            lineHeight="16px"
+            color="red.500"
+          >
+            {formatNumber(100 - skew * 100, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
             %
           </Text>
         </Flex>

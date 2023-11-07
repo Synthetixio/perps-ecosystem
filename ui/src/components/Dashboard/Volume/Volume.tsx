@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
-import { TimeBadge } from '../../TimeBadge';
-import { KeyColour } from '../KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
-import { VolumeTooltip } from './VolumeTooltip';
-import { formatNumber } from '@snx-v2/formatters';
-import { useStats } from '../../../hooks';
+import { useState } from "react";
+import { Box, Flex, Text, Spinner, FlexProps } from "@chakra-ui/react";
+import { TimeBadge } from "../../TimeBadge";
+import { KeyColour } from "../KeyColour";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Bar,
+  XAxis,
+  Tooltip,
+  Line,
+  YAxis,
+} from "recharts";
+import { VolumeTooltip } from "./VolumeTooltip";
+import { formatNumber } from "@synthetixio/formatters";
+import { useStats } from "../../../hooks";
 
 export const Volume = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<'M' | 'Y'>('M');
+  const [state, setState] = useState<"M" | "Y">("M");
 
   const { data, loading } = useStats(state);
 
@@ -22,7 +30,7 @@ export const Volume = ({ ...props }: FlexProps) => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: 'separate !important',
+          borderCollapse: "separate !important",
           borderSpacing: 0,
         }}
         bg="navy.700"
@@ -31,12 +39,25 @@ export const Volume = ({ ...props }: FlexProps) => {
         {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+          <Text
+            fontFamily="heading"
+            fontSize="20px"
+            fontWeight={700}
+            lineHeight="28px"
+          >
             Volume
           </Text>
           <Box>
-            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            <TimeBadge
+              title="1M"
+              onPress={() => setState("M")}
+              isActive={state === "M"}
+            />
+            <TimeBadge
+              title="1Y"
+              onPress={() => setState("Y")}
+              isActive={state === "Y"}
+            />
           </Box>
         </Flex>
         <Flex mt={6}>
@@ -44,12 +65,23 @@ export const Volume = ({ ...props }: FlexProps) => {
           <KeyColour ml={4} label="ALL TIME" colour="cyan.500" />
         </Flex>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+            minHeight={200}
+          >
             <Spinner size="xl" />
           </Flex>
         ) : (
           <>
-            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
+            <Text
+              my={3}
+              color="white"
+              fontSize="24px"
+              fontFamily="heading"
+              fontWeight={800}
+            >
               $
               {formatNumber(volumeNumber || 0, {
                 minimumFractionDigits: 0,
@@ -69,9 +101,14 @@ export const Volume = ({ ...props }: FlexProps) => {
                 <Tooltip
                   cursor={false}
                   content={VolumeTooltip}
-                  wrapperStyle={{ outline: 'none' }}
+                  wrapperStyle={{ outline: "none" }}
                 />
-                <Bar yAxisId="left" dataKey="volume" stackId="a" fill="#FFFFFF3D" />
+                <Bar
+                  yAxisId="left"
+                  dataKey="volume"
+                  stackId="a"
+                  fill="#FFFFFF3D"
+                />
                 <Line
                   yAxisId="right"
                   dataKey="cumulativeVolume"
@@ -81,8 +118,12 @@ export const Volume = ({ ...props }: FlexProps) => {
                 />
                 <XAxis
                   dataKey="label"
-                  tickLine={{ display: 'none' }}
-                  tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                  tickLine={{ display: "none" }}
+                  tick={{
+                    fontSize: "12px",
+                    fontFamily: "Inter",
+                    fill: "#9999AC",
+                  }}
                 />
                 <YAxis
                   hide={true}

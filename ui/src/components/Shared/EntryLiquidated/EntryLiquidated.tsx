@@ -1,6 +1,6 @@
-import { Fade, Flex, Td, Text } from '@chakra-ui/react';
-import { formatNumberToUsd } from '@snx-v2/formatters';
-import { WreckedIcon } from '../../Icons';
+import { Fade, Flex, Td, Text } from "@chakra-ui/react";
+import { formatNumberToUsd } from "@synthetixio/formatters";
+import { WreckedIcon } from "../../Icons";
 
 interface EntryLiquidatedProps {
   entry: number;
@@ -30,7 +30,11 @@ export const EntryLiquidated = ({
             maximumFractionDigits: decimals,
           })}
         </Text>
-        <Flex flexDirection="row" alignItems="center" mt={isLiquidated ? -2 : 0}>
+        <Flex
+          flexDirection="row"
+          alignItems="center"
+          mt={isLiquidated ? -2 : 0}
+        >
           <Text
             fontFamily="heading"
             fontWeight={500}

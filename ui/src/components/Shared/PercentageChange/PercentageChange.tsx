@@ -1,6 +1,6 @@
-import { Fade, Td } from '@chakra-ui/react';
-import { formatPercent } from '@snx-v2/formatters';
-import { expo } from '../../../utils';
+import { Fade, Td } from "@chakra-ui/react";
+import { formatPercent } from "@synthetixio/formatters";
+import { expo } from "../../../utils";
 
 interface PercentageChangeProps {
   amount: number;
@@ -11,7 +11,10 @@ export const PercentageChange = ({ amount }: PercentageChangeProps) => {
   const displayNumber =
     amount > 1000
       ? `${expo(`${amount * 100}`, 2)}%`
-      : formatPercent(amount, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      : formatPercent(amount, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
 
   return (
     <Td
@@ -20,10 +23,10 @@ export const PercentageChange = ({ amount }: PercentageChangeProps) => {
       lineHeight="20px"
       fontFamily="heading"
       fontWeight={500}
-      color={isPositive ? 'green.500' : 'red.500'}
+      color={isPositive ? "green.500" : "red.500"}
     >
       <Fade in>
-        {isPositive ? '+' : ''}
+        {isPositive ? "+" : ""}
         {displayNumber}
       </Fade>
     </Td>

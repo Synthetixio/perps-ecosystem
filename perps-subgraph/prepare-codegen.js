@@ -1,30 +1,30 @@
 const fs = require('fs');
 const prettier = require('prettier');
-const prettierOptions = JSON.parse(fs.readFileSync('../../../.prettierrc', 'utf8'));
+const prettierOptions = JSON.parse(fs.readFileSync('.prettierrc', 'utf8'));
 
 const PerpsV2DelayedExecutionAAVEPERP = JSON.parse(
   fs.readFileSync(
-    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedExecutionAAVEPERP.json',
+    'node_modules/@synthetixio/contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedExecutionAAVEPERP.json',
     'utf-8'
   )
 );
 const PerpsV2DelayedIntentAAVEPERP = JSON.parse(
   fs.readFileSync(
-    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedIntentAAVEPERP.json',
+    'node_modules/@synthetixio/contracts/src/mainnet-ovm/deployment/json/PerpsV2DelayedIntentAAVEPERP.json',
     'utf-8'
   )
 );
 
 const perpsV2MarketLiquidateAAVEPERPNew = JSON.parse(
   fs.readFileSync(
-    '../../contracts/src/mainnet-ovm/deployment/json/PerpsV2MarketLiquidateAAVEPERP.json',
+    'node_modules/@synthetixio/contracts/src/mainnet-ovm/deployment/json/PerpsV2MarketLiquidateAAVEPERP.json',
     'utf-8'
   )
 );
 
 const futuresMarketManager = JSON.parse(
   fs.readFileSync(
-    '../../contracts/src/mainnet-ovm/deployment/json/FuturesMarketManager.json',
+    'node_modules/@synthetixio/contracts/src/mainnet-ovm/deployment/json/FuturesMarketManager.json',
     'utf-8'
   )
 );

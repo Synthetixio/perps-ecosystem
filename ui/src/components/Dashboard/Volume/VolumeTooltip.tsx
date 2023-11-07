@@ -1,6 +1,6 @@
-import { Flex, Text } from '@chakra-ui/react';
-import { formatNumber } from '@snx-v2/formatters';
-import { KeyColour } from '../KeyColour';
+import { Flex, Text } from "@chakra-ui/react";
+import { formatNumber } from "@synthetixio/formatters";
+import { KeyColour } from "../KeyColour";
 
 type VolumeTooltipProps = {
   active?: boolean;
@@ -25,18 +25,36 @@ export const VolumeTooltip = ({ payload }: VolumeTooltipProps) => {
       borderWidth="1px"
       borderColor="gray.900"
     >
-      <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {volumeInfo.labelType === 'M' ? volumeInfo.day : volumeInfo.label}
+      <Text
+        mb={2}
+        fontFamily="heading"
+        color="gray.500"
+        fontSize="12px"
+        lineHeight="16px"
+      >
+        {volumeInfo.labelType === "M" ? volumeInfo.day : volumeInfo.label}
       </Text>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="Volume" colour="whiteAlpha.400" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+        >
           ${formatNumber(volumeInfo.volume)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="All Time Volume" colour="cyan.500" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+        >
           ${formatNumber(volumeInfo.cumulativeVolume)}
         </Text>
       </Flex>

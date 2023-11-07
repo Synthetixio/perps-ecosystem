@@ -1,9 +1,9 @@
-import { Flex, FlexProps, Spinner, Text } from '@chakra-ui/react';
-import { formatNumberToUsd, formatPercent } from '@snx-v2/formatters';
-import Wei, { wei } from '@synthetixio/wei';
-import { utils } from 'ethers';
-import { DailyMarketStat } from '../../../__generated__/graphql';
-import { CurrencyIcon } from '../../CurrencyIcon';
+import { Flex, FlexProps, Spinner, Text } from "@chakra-ui/react";
+import { formatNumberToUsd, formatPercent } from "@synthetixio/formatters";
+import Wei, { wei } from "@synthetixio/wei";
+import { utils } from "ethers";
+import { DailyMarketStat } from "../../../__generated__/graphql";
+import { CurrencyIcon } from "../../CurrencyIcon";
 
 interface MarketData extends Partial<DailyMarketStat> {
   percentageDifference: Wei;
@@ -15,14 +15,20 @@ interface MarketsCardProp extends FlexProps {
   number: number;
 }
 
-export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp) => {
+export const MarketsCard = ({
+  loading,
+  data,
+  number,
+  ...props
+}: MarketsCardProp) => {
   let displayName;
 
   displayName = utils.parseBytes32String(
-    data?.market?.asset || '0x7342544300000000000000000000000000000000000000000000000000000000'
+    data?.market?.asset ||
+      "0x7342544300000000000000000000000000000000000000000000000000000000"
   );
 
-  if (displayName === 'sETH' || displayName === 'sBTC') {
+  if (displayName === "sETH" || displayName === "sBTC") {
     displayName = displayName.substring(1);
   }
 
@@ -49,13 +55,17 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
       ) : (
         <>
           {data ? (
-            <Flex width="100%" flexDirection="column" justifyContent="space-between">
+            <Flex
+              width="100%"
+              flexDirection="column"
+              justifyContent="space-between"
+            >
               <Flex justifyContent="space-between" width="100%">
                 <Flex alignItems="center">
                   <CurrencyIcon
                     currencyKey={utils.parseBytes32String(
                       data?.market?.asset ||
-                        '0x7342544300000000000000000000000000000000000000000000000000000000'
+                        "0x7342544300000000000000000000000000000000000000000000000000000000"
                     )}
                   />
                   <Text
@@ -79,24 +89,41 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
               </Flex>
               <Flex mt={6} justifyContent="space-between">
                 <Flex flexDirection="column">
-                  <Text fontSize="12px" fontWeight={700} fontFamily="heading" color="gray.500">
+                  <Text
+                    fontSize="12px"
+                    fontWeight={700}
+                    fontFamily="heading"
+                    color="gray.500"
+                  >
                     Volume
                   </Text>
-                  <Text color="gray.50" fontSize="14px" fontWeight={500} lineHeight="20px">
-                    {formatNumberToUsd(wei(data?.volume || 0, 18, true).toNumber())}
-                  </Text>
-                </Flex>
-                <Flex flexDirection="column" alignItems="flex-start">
-                  <Text fontSize="12px" fontWeight={700} fontFamily="heading" color="gray.500">
-                    24h Change
-                  </Text>
                   <Text
-                    color={percentageDifference >= 0 ? 'green.500' : 'red.500'}
+                    color="gray.50"
                     fontSize="14px"
                     fontWeight={500}
                     lineHeight="20px"
                   >
-                    {percentageDifference >= 0 ? '+' : '-'}
+                    {formatNumberToUsd(
+                      wei(data?.volume || 0, 18, true).toNumber()
+                    )}
+                  </Text>
+                </Flex>
+                <Flex flexDirection="column" alignItems="flex-start">
+                  <Text
+                    fontSize="12px"
+                    fontWeight={700}
+                    fontFamily="heading"
+                    color="gray.500"
+                  >
+                    24h Change
+                  </Text>
+                  <Text
+                    color={percentageDifference >= 0 ? "green.500" : "red.500"}
+                    fontSize="14px"
+                    fontWeight={500}
+                    lineHeight="20px"
+                  >
+                    {percentageDifference >= 0 ? "+" : "-"}
                     {percentageDisplay}
                   </Text>
                 </Flex>

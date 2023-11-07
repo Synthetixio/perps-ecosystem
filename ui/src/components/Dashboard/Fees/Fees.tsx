@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
-import { TimeBadge } from '../../TimeBadge';
-import { KeyColour } from '../KeyColour';
-import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
-import { formatNumber } from '@snx-v2/formatters';
-import { useStats } from '../../../hooks';
-import { FeesTooltip } from './FeesTooltip';
+import { useState } from "react";
+import { Box, Flex, Text, Spinner, FlexProps } from "@chakra-ui/react";
+import { TimeBadge } from "../../TimeBadge";
+import { KeyColour } from "../KeyColour";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Bar,
+  XAxis,
+  Tooltip,
+  Line,
+  YAxis,
+} from "recharts";
+import { formatNumber } from "@synthetixio/formatters";
+import { useStats } from "../../../hooks";
+import { FeesTooltip } from "./FeesTooltip";
 
 export const Fees = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<'M' | 'Y'>('M');
+  const [state, setState] = useState<"M" | "Y">("M");
 
   const { data, loading } = useStats(state);
 
@@ -22,7 +30,7 @@ export const Fees = ({ ...props }: FlexProps) => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: 'separate !important',
+          borderCollapse: "separate !important",
           borderSpacing: 0,
         }}
         bg="navy.700"
@@ -31,12 +39,25 @@ export const Fees = ({ ...props }: FlexProps) => {
         {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+          <Text
+            fontFamily="heading"
+            fontSize="20px"
+            fontWeight={700}
+            lineHeight="28px"
+          >
             Fees
           </Text>
           <Box>
-            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            <TimeBadge
+              title="1M"
+              onPress={() => setState("M")}
+              isActive={state === "M"}
+            />
+            <TimeBadge
+              title="1Y"
+              onPress={() => setState("Y")}
+              isActive={state === "Y"}
+            />
           </Box>
         </Flex>
         <Flex mt={6}>
@@ -49,9 +70,18 @@ export const Fees = ({ ...props }: FlexProps) => {
           </Flex>
         ) : (
           <>
-            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
+            <Text
+              my={3}
+              color="white"
+              fontSize="24px"
+              fontFamily="heading"
+              fontWeight={800}
+            >
               $
-              {formatNumber(totalFees || 0, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+              {formatNumber(totalFees || 0, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
@@ -63,8 +93,17 @@ export const Fees = ({ ...props }: FlexProps) => {
                   bottom: 5,
                 }}
               >
-                <Tooltip cursor={false} content={FeesTooltip} wrapperStyle={{ outline: 'none' }} />
-                <Bar yAxisId="left" dataKey="fees" stackId="a" fill="#FFFFFF3D" />
+                <Tooltip
+                  cursor={false}
+                  content={FeesTooltip}
+                  wrapperStyle={{ outline: "none" }}
+                />
+                <Bar
+                  yAxisId="left"
+                  dataKey="fees"
+                  stackId="a"
+                  fill="#FFFFFF3D"
+                />
                 <Line
                   yAxisId="right"
                   dataKey="cumulativeFees"
@@ -74,8 +113,12 @@ export const Fees = ({ ...props }: FlexProps) => {
                 />
                 <XAxis
                   dataKey="label"
-                  tickLine={{ display: 'none' }}
-                  tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
+                  tickLine={{ display: "none" }}
+                  tick={{
+                    fontSize: "12px",
+                    fontFamily: "Inter",
+                    fill: "#9999AC",
+                  }}
                 />
                 <YAxis
                   hide={true}
