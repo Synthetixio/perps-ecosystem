@@ -1,4 +1,12 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
+import {
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Tbody,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
 import {
   Currency,
   TableHeaderCell,
@@ -7,9 +15,9 @@ import {
   WalletTooltip,
   LiquidatorTooltip,
   Age,
-} from '../Shared';
-import { useLiquidations } from '../../hooks';
-import { LiquidationsLoading } from './LiquidationsLoading';
+} from "../Shared";
+import { useLiquidations } from "../../hooks";
+import { LiquidationsLoading } from "./LiquidationsLoading";
 
 export const LiquidationsTable = () => {
   const { loading, data, error } = useLiquidations();
@@ -23,7 +31,7 @@ export const LiquidationsTable = () => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: 'separate !important',
+          borderCollapse: "separate !important",
           borderSpacing: 0,
         }}
       >
@@ -46,7 +54,6 @@ export const LiquidationsTable = () => {
                 <LiquidationsLoading />
                 <LiquidationsLoading />
                 <LiquidationsLoading />
-                <LiquidationsLoading />
               </>
             )}
 
@@ -61,17 +68,23 @@ export const LiquidationsTable = () => {
                 trader: { id },
                 fee,
                 futuresPosition: { leverage },
+                txHash,
+                long,
               }) => {
                 return (
                   <Tr key={liquidationId} borderTopWidth="1px">
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
-                      isPosition={false}
+                      direction={long ? "LONG" : "SHORT"}
+                      txHash={txHash}
                     />
                     <Age timestamp={timestamp} />
                     <Currency amount={price?.toNumber() || null} />
-                    <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                    <Size
+                      size={size.toNumber()}
+                      marketPrice={price ? price.toNumber() : null}
+                    />
                     <Currency amount={fee?.toNumber() || null} />
                     <WalletTooltip address={id} />
                     <LiquidatorTooltip address={liquidator} />
@@ -82,8 +95,19 @@ export const LiquidationsTable = () => {
           </Tbody>
         </Table>
         {((!loading && data?.length === 0) || error) && (
-          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+          <Flex
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          >
+            <Text
+              fontFamily="inter"
+              fontWeight="500"
+              fontSize="14px"
+              color="gray.500"
+              m={6}
+            >
               No Liquidations
             </Text>
           </Flex>

@@ -1,10 +1,26 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip } from '../Shared';
-import { AllActionsLoading } from './AllActionsLoading';
-import { useActions } from '../../hooks';
-import { Action } from '../Shared/Action';
+import {
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Tbody,
+  Flex,
+  Text,
+} from "@chakra-ui/react";
+import {
+  Currency,
+  TableHeaderCell,
+  Market,
+  Size,
+  MarginTransfer,
+  WalletTooltip,
+} from "../Shared";
+import { AllActionsLoading } from "./AllActionsLoading";
+import { useActions } from "../../hooks";
+import { Action } from "../Shared/Action";
 
-const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
+const isPosition = (l: string) =>
+  l !== "Deposit Margin" && l !== "Withdraw Margin";
 
 export const AllActionsTable = () => {
   const { loading, data, error } = useActions();
@@ -18,7 +34,7 @@ export const AllActionsTable = () => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: 'separate !important',
+          borderCollapse: "separate !important",
           borderSpacing: 0,
         }}
       >
@@ -30,6 +46,7 @@ export const AllActionsTable = () => {
               <TableHeaderCell>Price</TableHeaderCell>
               <TableHeaderCell>Size</TableHeaderCell>
               <TableHeaderCell>Fee</TableHeaderCell>
+              <TableHeaderCell>Address</TableHeaderCell>
             </Tr>
           </Thead>
           <Tbody>
@@ -45,10 +62,25 @@ export const AllActionsTable = () => {
             )}
 
             {data?.map(
-              ({ label, address, asset, price, fees, size, txHash, timestamp, leverage, id }) => {
+              ({
+                label,
+                address,
+                asset,
+                price,
+                fees,
+                size,
+                txHash,
+                timestamp,
+                leverage,
+                id,
+              }) => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
-                    <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
+                    <Action
+                      label={label}
+                      txHash={txHash}
+                      timestamp={timestamp.toNumber()}
+                    />
                     <Market
                       asset={asset}
                       leverage={leverage?.toNumber() || null}
@@ -56,7 +88,10 @@ export const AllActionsTable = () => {
                     />
                     <Currency amount={price?.toNumber() || null} />
                     {isPosition(label) ? (
-                      <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
+                      <Size
+                        size={size.toNumber()}
+                        marketPrice={price ? price.toNumber() : null}
+                      />
                     ) : (
                       <MarginTransfer size={size.toNumber()} />
                     )}
@@ -69,8 +104,19 @@ export const AllActionsTable = () => {
           </Tbody>
         </Table>
         {((!loading && data?.length === 0) || error) && (
-          <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-            <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+          <Flex
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          >
+            <Text
+              fontFamily="inter"
+              fontWeight="500"
+              fontSize="14px"
+              color="gray.500"
+              m={6}
+            >
               No actions
             </Text>
           </Flex>
