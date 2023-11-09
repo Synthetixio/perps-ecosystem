@@ -71,8 +71,6 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     pollInterval: 10000,
   });
 
-  console.log('market data', marketData);
-
   const openPositions = marketData?.futuresPositions.map((item) => ({
     ...item,
     accountType,

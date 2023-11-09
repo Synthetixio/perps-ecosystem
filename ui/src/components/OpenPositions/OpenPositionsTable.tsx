@@ -29,8 +29,6 @@ export const OpenPositionsTable = () => {
     }
   }, [data]);
 
-  console.log('data', data, 'error', error);
-
   return (
     <>
       <TableContainer
