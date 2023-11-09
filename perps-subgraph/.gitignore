@@ -3,3 +3,4 @@ tests/.bin/
 tests/.latest.json
 .network.json
 subgraph.yaml
+node_modules
