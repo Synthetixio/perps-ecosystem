@@ -1,34 +1,19 @@
-import {
-  Box,
-  Flex,
-  FlexProps,
-  Spinner,
-  Text,
-  Tooltip as ChakraTooltip,
-} from "@chakra-ui/react";
+import { Box, Flex, FlexProps, Spinner, Text, Tooltip as ChakraTooltip } from '@chakra-ui/react';
 
-import { useState } from "react";
-import { useDelegations } from "../../../hooks/useDelegations";
-import { TimeBadge } from "../../TimeBadge";
-import { KeyColour } from "../../Dashboard";
-import { formatNumber } from "@synthetixio/formatters";
-import { DelegationTooltip } from "./DelegationTooltip";
-import {
-  Area,
-  Bar,
-  ComposedChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import { InfoIcon } from "@chakra-ui/icons";
+import { useState } from 'react';
+import { useDelegations } from '../../../hooks/useDelegations';
+import { TimeBadge } from '../../TimeBadge';
+import { KeyColour } from '../../Dashboard';
+import { formatNumber } from '@synthetixio/formatters';
+import { DelegationTooltip } from './DelegationTooltip';
+import { Area, Bar, ComposedChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { InfoIcon } from '@chakra-ui/icons';
 
-export const BLOCKCHAIN_COLORS = ["#522ED1", "#FC8738"];
-export const TOKEN_COLORS = ["#11946B", "#ED1EFF"];
+export const BLOCKCHAIN_COLORS = ['#522ED1', '#FC8738'];
+export const TOKEN_COLORS = ['#11946B', '#ED1EFF'];
 
 export const Delegation = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<"M" | "Y" | "ALL">("ALL");
+  const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
   const { data, loading, blockchains, ids, totalToday } = useDelegations(state);
   return (
     <Flex
@@ -37,7 +22,7 @@ export const Delegation = ({ ...props }: FlexProps) => {
       borderWidth="1px"
       borderRadius="5px"
       sx={{
-        borderCollapse: "separate !important",
+        borderCollapse: 'separate !important',
         borderSpacing: 0,
       }}
       bg="navy.700"
@@ -50,19 +35,11 @@ export const Delegation = ({ ...props }: FlexProps) => {
         flexDir="row"
         w="100%"
         flexWrap="wrap"
-        sx={{ gap: "16px" }}
+        sx={{ gap: '16px' }}
       >
-        <ChakraTooltip
-          label="All collateral delegated by token, pool, and network"
-          hasArrow
-        >
-          <Flex alignItems="center" sx={{ gap: "8px" }}>
-            <Text
-              fontFamily="heading"
-              fontSize="20px"
-              fontWeight={700}
-              lineHeight="28px"
-            >
+        <ChakraTooltip label="All collateral delegated by token, pool, and network" hasArrow>
+          <Flex alignItems="center" sx={{ gap: '8px' }}>
+            <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
               Pool Delegations
             </Text>
             <InfoIcon />
@@ -70,24 +47,12 @@ export const Delegation = ({ ...props }: FlexProps) => {
         </ChakraTooltip>
 
         <Box>
-          <TimeBadge
-            title="1M"
-            onPress={() => setState("M")}
-            isActive={state === "M"}
-          />
-          <TimeBadge
-            title="1Y"
-            onPress={() => setState("Y")}
-            isActive={state === "Y"}
-          />
-          <TimeBadge
-            title="ALL"
-            onPress={() => setState("ALL")}
-            isActive={state === "ALL"}
-          />
+          <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
+          <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+          <TimeBadge title="ALL" onPress={() => setState('ALL')} isActive={state === 'ALL'} />
         </Box>
       </Flex>
-      <Flex mt={6} sx={{ gap: "12px" }}>
+      <Flex mt={6} sx={{ gap: '12px' }}>
         {ids.map((id, index) => {
           return (
             <KeyColour
@@ -105,14 +70,8 @@ export const Delegation = ({ ...props }: FlexProps) => {
         </Flex>
       ) : (
         <>
-          {" "}
-          <Text
-            my={3}
-            color="white"
-            fontSize="24px"
-            fontFamily="heading"
-            fontWeight={800}
-          >
+          {' '}
+          <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
             $
             {formatNumber(totalToday ?? 0, {
               minimumFractionDigits: 0,
@@ -139,7 +98,7 @@ export const Delegation = ({ ...props }: FlexProps) => {
                     blockchains={blockchains}
                   />
                 )}
-                wrapperStyle={{ outline: "none" }}
+                wrapperStyle={{ outline: 'none' }}
               />
               {blockchains.map((blockchain, index) => {
                 return (
@@ -168,19 +127,14 @@ export const Delegation = ({ ...props }: FlexProps) => {
               <XAxis
                 dataKey="label"
                 minTickGap={10}
-                tickLine={{ display: "none" }}
+                tickLine={{ display: 'none' }}
                 tick={{
-                  fontSize: "12px",
-                  fontFamily: "Inter",
-                  fill: "#9999AC",
+                  fontSize: '12px',
+                  fontFamily: 'Inter',
+                  fill: '#9999AC',
                 }}
               />
-              <YAxis
-                hide
-                yAxisId="left"
-                orientation="left"
-                stroke="#FFFFFF3D"
-              />
+              <YAxis hide yAxisId="left" orientation="left" stroke="#FFFFFF3D" />
             </ComposedChart>
           </ResponsiveContainer>
         </>

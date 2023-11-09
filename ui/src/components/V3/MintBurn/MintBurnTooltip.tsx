@@ -1,7 +1,7 @@
-import { Divider, Flex, Text } from "@chakra-ui/react";
-import { formatNumber } from "@synthetixio/formatters";
-import { KeyColour } from "../../Dashboard";
-import { format } from "date-fns";
+import { Divider, Flex, Text } from '@chakra-ui/react';
+import { formatNumber } from '@synthetixio/formatters';
+import { KeyColour } from '../../Dashboard';
+import { format } from 'date-fns';
 
 type MintBurnTooltipProps = {
   active?: boolean;
@@ -27,110 +27,55 @@ export const MintBurnTooltip = ({ payload }: MintBurnTooltipProps) => {
       borderWidth="1px"
       sx={{ gap: 2 }}
     >
-      <Text
-        fontFamily="heading"
-        color="gray.500"
-        fontSize="12px"
-        lineHeight="16px"
-      >
-        {mintBurn.labelType === "M"
-          ? mintBurn.label
-          : format(new Date(mintBurn.day), "yyyy-MM-dd")}
+      <Text fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
+        {mintBurn.labelType === 'M' ? mintBurn.label : format(new Date(mintBurn.day), 'yyyy-MM-dd')}
       </Text>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Ethereum snxUSD Supply" colour="#522ED1" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.opSNXSupply)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Optimism snxUSD Supply" colour="#FC8738" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.ethSNXSupply)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.totalSNXSupply)}
         </Text>
       </Flex>
       <Divider />
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Ethereum Mints" colour="#11946B" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.ethMints)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Ethereum Burns" colour="#FF4A60" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.ethBurns)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Optimism Mints" colour="#11946B" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.opMints)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Optimism Burns" colour="#FF4A60" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.opBurns)}
         </Text>
       </Flex>
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(mintBurn.totalMintBurn)}
         </Text>
       </Flex>
