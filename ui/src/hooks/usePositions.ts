@@ -12,7 +12,6 @@ import { generateMarketIds } from './useActions';
 import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
 import { useEthersProvider } from '../utils/ProviderContext';
 import { initMulticall, initPerpsMarketData } from '../utils';
-import { hexlify } from 'ethers/lib/utils';
 
 export interface PositionType {
   accountType: string;
@@ -40,7 +39,7 @@ type OrderByDirection = 'asc' | 'desc';
 export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('markets') || null;
-  const accountAddressLowerCase = accountAddress ? hexlify(accountAddress) : '';
+  const accountAddressLowerCase = accountAddress?.toLowerCase();
   const { provider } = useEthersProvider();
 
   const direction = searchParams.get('direction') || 'desc';
@@ -71,6 +70,8 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     },
     pollInterval: 10000,
   });
+
+  console.log('market data', marketData);
 
   const openPositions = marketData?.futuresPositions.map((item) => ({
     ...item,

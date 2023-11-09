@@ -1,29 +1,12 @@
-import {
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Tbody,
-  Flex,
-  Text,
-} from "@chakra-ui/react";
-import { useSearchParams } from "react-router-dom";
-import {
-  TableHeaderCell,
-  PnL,
-  Market,
-  Size,
-  MarkPrice,
-  PercentageChange,
-  WalletTooltip,
-  Currency,
-} from "../Shared";
-import { OpenPositionsLoading } from "./OpenPositionsLoading";
-import { usePositions, PositionType } from "../../hooks";
-import { useState, useEffect, useMemo } from "react";
+import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
+import { useSearchParams } from 'react-router-dom';
+import { TableHeaderCell, PnL, Market, Size, MarkPrice, WalletTooltip, Currency } from '../Shared';
+import { OpenPositionsLoading } from './OpenPositionsLoading';
+import { usePositions, PositionType } from '../../hooks';
+import { useState, useEffect, useMemo } from 'react';
 
 export const OpenPositionsTable = () => {
-  const [storedParams, setStoredParams] = useState<string>("");
+  const [storedParams, setStoredParams] = useState<string>('');
   const [showLoading, setShowLoading] = useState<boolean>(true);
 
   const [searchParams] = useSearchParams();
@@ -46,6 +29,8 @@ export const OpenPositionsTable = () => {
     }
   }, [data]);
 
+  console.log('data', data, 'error', error);
+
   return (
     <>
       <TableContainer
@@ -55,7 +40,7 @@ export const OpenPositionsTable = () => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: "separate !important",
+          borderCollapse: 'separate !important',
           borderSpacing: 0,
         }}
       >
@@ -98,25 +83,19 @@ export const OpenPositionsTable = () => {
                   index: number
                 ) => {
                   return (
-                    <Tr
-                      key={address?.concat(index.toString())}
-                      borderTopWidth="1px"
-                    >
+                    <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
                       <Market
                         asset={asset}
                         leverage={leverage.toNumber()}
-                        direction={long ? "LONG" : "SHORT"}
+                        direction={long ? 'LONG' : 'SHORT'}
                       />
                       {/* Mark Price */}
                       <MarkPrice
                         indexPrice={indexPrice.toNumber()}
                         markPrice={marketPrice.toNumber()}
                       />
-                      <Size
-                        size={size.toNumber()}
-                        marketPrice={marketPrice.toNumber()}
-                      />
+                      <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
                       {/* PNL */}
                       <PnL
                         pnl={unrealizedPnl.toNumber()}
@@ -125,10 +104,7 @@ export const OpenPositionsTable = () => {
                       {/* Liquidation Price */}
                       {/* Liquidation Price */}
                       <Currency amount={liquidationPrice.toNumber()} />
-                      {/* 
-                      <PercentageChange
-                        amount={unrealizedPnlPercentage.toNumber()}
-                      /> */}
+
                       {/* Realized PNL */}
                       <PnL pnl={realizedPnl.toNumber()} />
                       {/* Address */}
@@ -141,38 +117,16 @@ export const OpenPositionsTable = () => {
           </Table>
 
           {!loading && !error && noData && (
-            <Flex
-              width="100%"
-              justifyContent="center"
-              bg="navy.700"
-              borderTopWidth="1px"
-            >
-              <Text
-                fontFamily="inter"
-                fontWeight="500"
-                fontSize="14px"
-                color="gray.500"
-                m={6}
-              >
+            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 No open positions
               </Text>
             </Flex>
           )}
 
           {error && noData && !loading && (
-            <Flex
-              width="100%"
-              justifyContent="center"
-              bg="navy.700"
-              borderTopWidth="1px"
-            >
-              <Text
-                fontFamily="inter"
-                fontWeight="500"
-                fontSize="14px"
-                color="gray.500"
-                m={6}
-              >
+            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
+              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 We&apos;re having problem loading the position data
               </Text>
             </Flex>

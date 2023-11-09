@@ -69,6 +69,7 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
     (async () => {
       const pythConfigByMarketKey = await getMarketsPythConfig();
       const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+
       await pyth.subscribePriceFeedUpdates(pythIds, (price) => {
         const { id } = price;
         const priceData = price.getPriceUnchecked();
