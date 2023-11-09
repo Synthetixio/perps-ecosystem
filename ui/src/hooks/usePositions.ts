@@ -43,8 +43,6 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   const accountAddressLowerCase = accountAddress ? hexlify(accountAddress) : '';
   const { provider } = useEthersProvider();
 
-  console.log('accountAddressLowerCase', accountAddress);
-
   const direction = searchParams.get('direction') || 'desc';
   const orderBy =
     searchParams.get('orderby') === 'size' ? 'margin' : searchParams.get('orderby') || 'margin';
