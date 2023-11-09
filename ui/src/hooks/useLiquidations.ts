@@ -1,17 +1,17 @@
-import { useQuery } from "@apollo/client";
-import { POSITIONS_LIQUIDATED_QUERY } from "../queries/liquidated";
-import { useSearchParams } from "react-router-dom";
-import { useMarketSummaries } from "./useMarketSummaries";
-import { generateMarketIds } from "./useActions";
+import { useQuery } from '@apollo/client';
+import { POSITIONS_LIQUIDATED_QUERY } from '../queries/liquidated';
+import { useSearchParams } from 'react-router-dom';
+import { useMarketSummaries } from './useMarketSummaries';
+import { generateMarketIds } from './useActions';
 import {
   PositionLiquidated_OrderBy,
   OrderDirection,
   PositionsLiquidatedQuery,
-} from "../__generated__/graphql";
-import Wei, { wei } from "@synthetixio/wei";
+} from '../__generated__/graphql';
+import Wei, { wei } from '@synthetixio/wei';
 
 interface QueryLiquidation {
-  __typename?: "PositionLiquidated";
+  __typename?: 'PositionLiquidated';
   id: string;
   timestamp: string;
   txHash: string;
@@ -20,15 +20,15 @@ interface QueryLiquidation {
   fee: string;
   liquidator: string;
   futuresPosition: {
-    __typename?: "FuturesPosition";
+    __typename?: 'FuturesPosition';
     leverage: string;
   };
   market: {
-    __typename?: "FuturesMarket";
+    __typename?: 'FuturesMarket';
     asset: string;
   };
   trader: {
-    __typename?: "Trader";
+    __typename?: 'Trader';
     id: string;
     totalLiquidations: string;
   };
@@ -85,10 +85,9 @@ function parsedLiquidationData(
 
 export function useLiquidations() {
   const [searchParams] = useSearchParams();
-  const { data: marketConfigs, isLoading: marketConfigsLoading } =
-    useMarketSummaries();
+  const { data: marketConfigs, isLoading: marketConfigsLoading } = useMarketSummaries();
 
-  const markets = generateMarketIds(marketConfigs, searchParams.get("markets"));
+  const markets = generateMarketIds(marketConfigs, searchParams.get('markets'));
 
   const {
     loading,
@@ -109,9 +108,7 @@ export function useLiquidations() {
   const isLoading = loading || marketConfigsLoading;
 
   return {
-    data: queryData?.positionLiquidateds
-      ? parsedLiquidationData(queryData)
-      : undefined,
+    data: queryData?.positionLiquidateds ? parsedLiquidationData(queryData) : undefined,
     loading: isLoading,
     error,
   };

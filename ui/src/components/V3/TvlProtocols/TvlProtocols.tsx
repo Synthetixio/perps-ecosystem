@@ -1,31 +1,17 @@
-import {
-  Flex,
-  Text,
-  Spinner,
-  FlexProps,
-  Box,
-  Tooltip as ChakraTooltip,
-} from "@chakra-ui/react";
-import { InfoIcon } from "@chakra-ui/icons";
-import {
-  ResponsiveContainer,
-  ComposedChart,
-  XAxis,
-  Tooltip,
-  YAxis,
-  Area,
-} from "recharts";
-import { useTvlProtocols } from "../../../hooks/useTvlProtocols";
-import { KeyColour } from "../../Dashboard";
-import { TvlProtocolsTooltip } from "./TvlProtocolsTooltip";
-import { useState } from "react";
-import { TimeBadge } from "../../TimeBadge";
-import { formatNumber } from "@synthetixio/formatters";
+import { Flex, Text, Spinner, FlexProps, Box, Tooltip as ChakraTooltip } from '@chakra-ui/react';
+import { InfoIcon } from '@chakra-ui/icons';
+import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
+import { useTvlProtocols } from '../../../hooks/useTvlProtocols';
+import { KeyColour } from '../../Dashboard';
+import { TvlProtocolsTooltip } from './TvlProtocolsTooltip';
+import { useState } from 'react';
+import { TimeBadge } from '../../TimeBadge';
+import { formatNumber } from '@synthetixio/formatters';
 
-export const BLOCKCHAIN_COLORS = ["#522ED1", "#FC8738"];
+export const BLOCKCHAIN_COLORS = ['#522ED1', '#FC8738'];
 
 export const TvlProtocols = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<"M" | "Y" | "ALL">("ALL");
+  const [state, setState] = useState<'M' | 'Y' | 'ALL'>('ALL');
   const { data, loading, blockchains, totalToday } = useTvlProtocols(state);
 
   return (
@@ -36,7 +22,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: "separate !important",
+          borderCollapse: 'separate !important',
           borderSpacing: 0,
         }}
         bg="navy.700"
@@ -49,43 +35,23 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
           flexDir="row"
           w="100%"
           flexWrap="wrap"
-          sx={{ gap: "16px" }}
+          sx={{ gap: '16px' }}
         >
-          <ChakraTooltip
-            label="All value held in the Synthetix V3 Core Contract"
-            hasArrow
-          >
-            <Flex alignItems="center" sx={{ gap: "8px" }}>
-              <Text
-                fontFamily="heading"
-                fontSize="20px"
-                fontWeight={700}
-                lineHeight="28px"
-              >
+          <ChakraTooltip label="All value held in the Synthetix V3 Core Contract" hasArrow>
+            <Flex alignItems="center" sx={{ gap: '8px' }}>
+              <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
                 TVL Network Totals
               </Text>
               <InfoIcon />
             </Flex>
           </ChakraTooltip>
           <Box>
-            <TimeBadge
-              title="1M"
-              onPress={() => setState("M")}
-              isActive={state === "M"}
-            />
-            <TimeBadge
-              title="1Y"
-              onPress={() => setState("Y")}
-              isActive={state === "Y"}
-            />
-            <TimeBadge
-              title="ALL"
-              onPress={() => setState("ALL")}
-              isActive={state === "ALL"}
-            />
+            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
+            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            <TimeBadge title="ALL" onPress={() => setState('ALL')} isActive={state === 'ALL'} />
           </Box>
         </Flex>
-        <Flex mt={6} sx={{ gap: "12px" }}>
+        <Flex mt={6} sx={{ gap: '12px' }}>
           {blockchains.map((blockchain: any, index: number) => {
             return (
               <KeyColour
@@ -103,13 +69,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
           </Flex>
         ) : (
           <>
-            <Text
-              my={3}
-              color="white"
-              fontSize="24px"
-              fontFamily="heading"
-              fontWeight={800}
-            >
+            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
               {formatNumber(totalToday ?? 0, {
                 minimumFractionDigits: 0,
@@ -136,7 +96,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
                       blockchains={blockchains}
                     />
                   )}
-                  wrapperStyle={{ outline: "none" }}
+                  wrapperStyle={{ outline: 'none' }}
                 />
                 {blockchains.map((blockchain: any, index: number) => {
                   return (
@@ -153,19 +113,14 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
                 <XAxis
                   dataKey="label"
                   minTickGap={10}
-                  tickLine={{ display: "none" }}
+                  tickLine={{ display: 'none' }}
                   tick={{
-                    fontSize: "12px",
-                    fontFamily: "Inter",
-                    fill: "#9999AC",
+                    fontSize: '12px',
+                    fontFamily: 'Inter',
+                    fill: '#9999AC',
                   }}
                 />
-                <YAxis
-                  hide
-                  yAxisId="left"
-                  orientation="left"
-                  stroke="#FFFFFF3D"
-                />
+                <YAxis hide yAxisId="left" orientation="left" stroke="#FFFFFF3D" />
               </ComposedChart>
             </ResponsiveContainer>
           </>

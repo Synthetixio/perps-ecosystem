@@ -1,8 +1,8 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { formatNumber } from "@synthetixio/formatters";
-import { KeyColour } from "../../Dashboard";
-import { BLOCKCHAIN_COLORS } from "./TvlProtocols";
-import { format } from "date-fns";
+import { Flex, Text } from '@chakra-ui/react';
+import { formatNumber } from '@synthetixio/formatters';
+import { KeyColour } from '../../Dashboard';
+import { BLOCKCHAIN_COLORS } from './TvlProtocols';
+import { format } from 'date-fns';
 
 type TvlProtocolsTooltipProps = {
   active?: boolean;
@@ -11,10 +11,7 @@ type TvlProtocolsTooltipProps = {
   label?: string;
 };
 
-export const TvlProtocolsTooltip = ({
-  payload,
-  blockchains,
-}: TvlProtocolsTooltipProps) => {
+export const TvlProtocolsTooltip = ({ payload, blockchains }: TvlProtocolsTooltipProps) => {
   const tvlProtocols = payload?.[0]?.payload as any;
 
   if (!tvlProtocols) {
@@ -31,16 +28,10 @@ export const TvlProtocolsTooltip = ({
       borderRadius="md"
       borderWidth="1px"
     >
-      <Text
-        mb={2}
-        fontFamily="heading"
-        color="gray.500"
-        fontSize="12px"
-        lineHeight="16px"
-      >
-        {tvlProtocols.labelType === "M"
+      <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
+        {tvlProtocols.labelType === 'M'
           ? tvlProtocols.label
-          : format(new Date(tvlProtocols.day), "yyyy-MM-dd")}
+          : format(new Date(tvlProtocols.day), 'yyyy-MM-dd')}
       </Text>
       {blockchains?.map((blockchain, index) => {
         return (
@@ -50,13 +41,7 @@ export const TvlProtocolsTooltip = ({
               colour={BLOCKCHAIN_COLORS[index]}
               textTransform="capitalize"
             />
-            <Text
-              ml={3}
-              fontFamily="heading"
-              fontSize="12px"
-              lineHeight="16px"
-              textAlign="center"
-            >
+            <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
               ${formatNumber(tvlProtocols[blockchain])}
             </Text>
           </Flex>
@@ -64,13 +49,7 @@ export const TvlProtocolsTooltip = ({
       })}
       <Flex justifyContent="space-between" w="100%">
         <KeyColour label="Total" colour="cyan.500" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(tvlProtocols.totalUsd)}
         </Text>
       </Flex>
