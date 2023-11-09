@@ -1,6 +1,6 @@
-import React from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
-import { AllActionsTable } from './components/Actions';
+import React from "react";
+import { Flex, Heading } from "@chakra-ui/react";
+import { AllActionsTable } from "./components/Actions";
 
 function App() {
   return (
@@ -14,5 +14,7 @@ function App() {
     </>
   );
 }
+
+// test
 
 export default App;
