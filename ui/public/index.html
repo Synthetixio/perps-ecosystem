@@ -13,22 +13,25 @@
       name="twitter:description"
       content="Explore trades, trends, and market movements of Synthetix Perpetuals for valuable insights and informed decision making."
     />
-    <meta name="twitter:image" content="https://watcher.synthetix.io/metatag.png" />
+    <meta
+      name="twitter:image"
+      content="https://watcher.synthetix.io/metatag.png"
+    />
     <!-- Matomo -->
     <script>
       var _paq = (window._paq = window._paq || []);
       /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-      _paq.push(['trackPageView']);
-      _paq.push(['enableLinkTracking']);
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
       (function () {
-        var u = 'https://analytics.synthetix.io/';
-        _paq.push(['setTrackerUrl', u + 'matomo.php']);
-        _paq.push(['setSiteId', '7']);
+        var u = "https://analytics.synthetix.io/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", "7"]);
         var d = document,
-          g = d.createElement('script'),
-          s = d.getElementsByTagName('script')[0];
+          g = d.createElement("script"),
+          s = d.getElementsByTagName("script")[0];
         g.async = true;
-        g.src = u + 'matomo.js';
+        g.src = u + "matomo.js";
         s.parentNode.insertBefore(g, s);
       })();
     </script>
@@ -38,10 +41,12 @@
     <div id="app"></div>
     <script>
       (function () {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
+        const script = document.createElement("script");
+        script.type = "text/javascript";
         script.src =
-          window.localStorage.UNSAFE_IMPORT === 'true' ? '/main.js' : `/main.js?_=${Date.now()}`;
+          window.localStorage.UNSAFE_IMPORT === "true"
+            ? "/main.js"
+            : `/main.js?_=${Date.now()}`;
         document.body.appendChild(script);
       })();
     </script>

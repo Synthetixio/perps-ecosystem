@@ -19,9 +19,10 @@ export const Account: FC = () => {
   const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
 
   const { kwentaOwner } = useOwnerKwenta(params?.walletAddress);
+
   const { polynomialOwner } = useOwnerPolynomial(params?.walletAddress);
 
-  const { addressEnsName: addressEnsName } = useEnsName(params?.walletAddress);
+  const { addressEnsName } = useEnsName(params?.walletAddress);
   const { addressEnsName: kwentaEnsName } = useEnsName(kwentaOwner);
   const { addressEnsName: polynomialEnsName } = useEnsName(polynomialOwner);
 

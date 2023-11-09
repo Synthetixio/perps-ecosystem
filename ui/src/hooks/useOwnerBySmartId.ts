@@ -20,6 +20,15 @@ export const AccountBySmartIdQuery = gql`
   }
 `;
 
+export const AccountByAddress = gql`
+  query SmAccounts($owner: String) {
+    smartMarginAccounts(where: { owner: $owner }) {
+      owner
+      id
+    }
+  }
+`;
+
 export const AccountQuery = gql`
   query SmAccounts($account: String) {
     logAccountCreateds(where: { account: $account }) {

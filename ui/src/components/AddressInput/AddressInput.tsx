@@ -1,10 +1,10 @@
-import { ethers } from "ethers";
-import { SearchIcon } from "@chakra-ui/icons";
-import { Button, Flex, Input } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useGlobalProvidersWithFallback } from "@synthetixio/use-global-providers";
-import { useState } from "react";
+import { ethers } from 'ethers';
+import { SearchIcon } from '@chakra-ui/icons';
+import { Button, Flex, Input } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
+import { useState } from 'react';
 
 export const AddressInput = () => {
   const { globalProviders } = useGlobalProvidersWithFallback();
@@ -14,18 +14,18 @@ export const AddressInput = () => {
   const navigate = useNavigate();
 
   const { register, getValues } = useForm({
-    defaultValues: { address: "" },
+    defaultValues: { address: '' },
   });
 
   const onSubmit = async () => {
     setInputError(null);
-    const address = getValues("address");
+    const address = getValues('address');
+
     if (address) {
-      if (address.endsWith(".ens") || !ethers.utils.isAddress(address)) {
+      if (address.endsWith('.ens') || !ethers.utils.isAddress(address)) {
         try {
-          const ens: string | null = await L1DefaultProvider.resolveName(
-            address
-          );
+          const ens: string | null = await L1DefaultProvider.resolveName(address);
+
           if (ens) {
             navigate(`/${ens}`);
             return;
@@ -34,38 +34,32 @@ export const AddressInput = () => {
             return;
           }
         } catch (e) {
-          setInputError("Error resolving ENS name");
+          setInputError('Error resolving ENS name');
           return;
         }
       }
 
       navigate(`/${address}`);
     } else {
-      setInputError("Please enter an address or ENS name");
+      setInputError('Please enter an address or ENS name');
     }
   };
 
   return (
-    <Flex
-      alignSelf="end"
-      width="50%"
-      justifyContent="flex-end"
-      alignItems="center"
-      mb="3px"
-    >
+    <Flex alignSelf="end" width="50%" justifyContent="flex-end" alignItems="center" mb="3px">
       <Input
         placeholder="Search by ENS / address"
         w="50%"
-        minW={{ base: "auto", md: "250px" }}
-        {...register("address")}
+        minW={{ base: 'auto', md: '250px' }}
+        {...register('address')}
         alignSelf="end"
-        borderColor={inputError ? "red.500" : "gray.900"}
+        borderColor={inputError ? 'red.500' : 'gray.900'}
         isInvalid={!!inputError}
         onChange={(e) => {
           if (!e.target.value.trim()) setInputError(null);
         }}
         onKeyDown={({ key }) => {
-          if (key === "Enter") {
+          if (key === 'Enter') {
             onSubmit();
           }
         }}

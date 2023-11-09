@@ -41,7 +41,10 @@ export const useMergedActions = (account?: string) => {
     mergedArray = [...(Array.isArray(data) ? data : [])];
 
     if (Array.isArray(dataKwenta)) {
-      const dataKwentaWithProp = dataKwenta.map((obj) => ({ ...obj, protocol: 'kwenta' }));
+      const dataKwentaWithProp = dataKwenta.map((obj) => ({
+        ...obj,
+        protocol: 'kwenta',
+      }));
       mergedArray = [...mergedArray, ...dataKwentaWithProp];
     }
 

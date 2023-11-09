@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { KWENTA_SUBGRAPH_URL } from '../utils';
 import { ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
-import { AccountQuery } from './useOwnerBySmartId';
+import { AccountByAddress } from './useOwnerBySmartId';
 
 const kwentaClient = new ApolloClient({
   uri: KWENTA_SUBGRAPH_URL,
@@ -24,11 +24,12 @@ const ResponseSchema = z
   .optional();
 
 export const useKwentaAccount = (address?: string) => {
-  const { data, ...rest } = useQuery(AccountQuery, {
+  const { data, ...rest } = useQuery(AccountByAddress, {
     client: kwentaClient,
     variables: { owner: address },
     skip: !address,
   });
+
   const parsedData = ResponseSchema.parse(data);
   return { ...rest, data: parsedData?.smartMarginAccounts.at(0) };
 };

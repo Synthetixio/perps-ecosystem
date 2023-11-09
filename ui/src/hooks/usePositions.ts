@@ -12,6 +12,7 @@ import { generateMarketIds } from './useActions';
 import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
 import { useEthersProvider } from '../utils/ProviderContext';
 import { initMulticall, initPerpsMarketData } from '../utils';
+import { hexlify } from 'ethers/lib/utils';
 
 export interface PositionType {
   accountType: string;
@@ -39,8 +40,10 @@ type OrderByDirection = 'asc' | 'desc';
 export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('markets') || null;
-  const accountAddressLowerCase = accountAddress?.toLowerCase();
+  const accountAddressLowerCase = accountAddress ? hexlify(accountAddress) : '';
   const { provider } = useEthersProvider();
+
+  console.log('accountAddressLowerCase', accountAddress);
 
   const direction = searchParams.get('direction') || 'desc';
   const orderBy =
@@ -98,7 +101,10 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   });
 
   const positionsData = data?.positionsFromContract
-    ? data.positionsFromContract.map((position: PositionType) => ({ ...position, accountType }))
+    ? data.positionsFromContract.map((position: PositionType) => ({
+        ...position,
+        accountType,
+      }))
     : undefined;
 
   const sortedData =

@@ -17,11 +17,13 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
     error: walletError,
     loading: walletLoading,
   } = usePositions(walletAddress, 'wallet');
+
   const {
     data: kwentaData,
     error: kwentaError,
     loading: kwentaLoading,
   } = usePositions(kwentaAccount, 'kwenta');
+
   const {
     data: polyData,
     error: polyError,
