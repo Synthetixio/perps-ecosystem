@@ -33,6 +33,7 @@
     "ethers": "^5.7.2",
     "framer-motion": "^10.16.4",
     "graphql": "^16.8.1",
+    "immer": "^10.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
@@ -41,7 +42,8 @@
     "recharts": "^2.9.3",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.3.3"
   },
   "scripts": {
     "start": "craco start",

@@ -24,43 +24,43 @@ export const Pnl = ({ ...props }: FlexProps) => {
   return (
     <>
       <Flex
-        width="49%"
+        width='49%'
         my={5}
-        borderColor="gray.900"
-        borderWidth="1px"
-        borderRadius="5px"
+        borderColor='gray.900'
+        borderWidth='1px'
+        borderRadius='5px'
         sx={{
           borderCollapse: 'separate !important',
           borderSpacing: 0,
         }}
-        bg="navy.700"
-        flexDirection="column"
+        bg='navy.700'
+        flexDirection='column'
         p={4}
         {...props}
       >
-        <Flex justifyContent="space-between" flexDir="row" w="100%">
-          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
+        <Flex justifyContent='space-between' flexDir='row' w='100%'>
+          <Text fontFamily='heading' fontSize='20px' fontWeight={700} lineHeight='28px'>
             Pnl
           </Text>
           <Box>
-            <TimeBadge title="1W" onPress={() => setState('W')} isActive={state === 'W'} />
-            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            <TimeBadge title='1W' onPress={() => setState('W')} isActive={state === 'W'} />
+            <TimeBadge title='1M' onPress={() => setState('M')} isActive={state === 'M'} />
+            <TimeBadge title='1Y' onPress={() => setState('Y')} isActive={state === 'Y'} />
           </Box>
         </Flex>
         <Flex mt={6}>
-          <KeyColour label="STAKERS" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="DAILY FEE" colour="cyan.500" />
-          <KeyColour ml={4} label="LOSS" colour="pink.300" />
-          <KeyColour ml={4} label="PROFIT" colour="teal.300" />
+          <KeyColour label='DAILY FEE' colour='whiteAlpha.400' />
+          <KeyColour ml={4} label='STAKERS' colour='cyan.500' />
+          <KeyColour ml={4} label='LOSS' colour='pink.300' />
+          <KeyColour ml={4} label='PROFIT' colour='teal.300' />
         </Flex>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
-            <Spinner size="xl" />
+          <Flex justifyContent='center' alignItems='center' height='100%' minHeight={200}>
+            <Spinner size='xl' />
           </Flex>
         ) : (
           <>
-            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
+            <Text my={3} color='white' fontSize='24px' fontFamily='heading' fontWeight={800}>
               $
               {lastStakers.toLocaleString('en-US', {
                 maximumFractionDigits: 0,
@@ -68,7 +68,7 @@ export const Pnl = ({ ...props }: FlexProps) => {
             </Text>
 
             {data && (
-              <ResponsiveContainer minWidth="100%" minHeight={200}>
+              <ResponsiveContainer minWidth='100%' minHeight={200}>
                 <ComposedChart
                   width={500}
                   height={400}
@@ -80,25 +80,25 @@ export const Pnl = ({ ...props }: FlexProps) => {
                     left: 20,
                   }}
                 >
-                  <CartesianGrid stroke="0" />
+                  <CartesianGrid stroke='0' />
                   <XAxis
-                    dataKey="dayFormatted"
+                    dataKey='dayFormatted'
                     tickLine={{ display: 'none' }}
                     tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
                   />
                   <YAxis hide={true} />
                   <Tooltip content={PnlTooltip} cursor={false} wrapperStyle={{ outline: 'none' }} />
-                  <Area type="monotone" dataKey="total_pnl" fill="#464657" stroke="0" />
-                  <Bar dataKey="loss" barSize={22} fill="#F471FF" />
-                  <Bar dataKey="profit" barSize={22} fill="#4FD1C5" />
-                  <Line type="monotone" dataKey="daily_fee" stroke="#00D1FF" dot={false} />
+                  <Area type='monotone' dataKey='total_pnl' fill='#464657' stroke='0' />
+                  <Bar dataKey='loss' barSize={22} fill='#F471FF' />
+                  <Bar dataKey='profit' barSize={22} fill='#4FD1C5' />
+                  <Line type='monotone' dataKey='daily_fee' stroke='#00D1FF' dot={false} />
                 </ComposedChart>
               </ResponsiveContainer>
             )}
           </>
         )}
         {error && (
-          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
+          <Flex justifyContent='center' alignItems='center' height='100%' minHeight={200}>
             {error.message}
           </Flex>
         )}
