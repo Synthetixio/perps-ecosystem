@@ -13,4 +13,4 @@ export const IconBox = ({ sx, icon, ...props }: IconProps) => (
   >
     {icon}
   </Box>
-)
+);

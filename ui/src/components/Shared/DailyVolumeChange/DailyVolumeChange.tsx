@@ -1,6 +1,6 @@
-import { Fade, Td, Text } from "@chakra-ui/react";
-import { formatNumberToUsd, formatPercent } from "@synthetixio/formatters";
-import { expo } from "../../../utils";
+import { Fade, Td, Text } from '@chakra-ui/react';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
+import { expo } from '../../../utils';
 
 interface DailyVolumeChangeProps {
   volume: number;
@@ -8,11 +8,7 @@ interface DailyVolumeChangeProps {
   decimals?: number;
 }
 
-export const DailyVolumeChange = ({
-  volume,
-  percentage,
-  decimals = 2,
-}: DailyVolumeChangeProps) => {
+export const DailyVolumeChange = ({ volume, percentage, decimals = 2 }: DailyVolumeChangeProps) => {
   const isPositive = percentage >= 0;
   const displayNumber =
     percentage > 1000
@@ -43,7 +39,7 @@ export const DailyVolumeChange = ({
           lineHeight="26px"
           color="gray.500"
         >
-          {isPositive ? "+" : ""}
+          {isPositive ? '+' : ''}
           {displayNumber}
         </Text>
       </Fade>

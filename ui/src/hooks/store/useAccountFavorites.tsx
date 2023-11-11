@@ -17,17 +17,20 @@ const useAccountFavoritesStore = create<AccountFavoritesState>()(
       names: {},
       setAccountFavorites: (addresses: string[]) => set({ accountFavorites: addresses }),
       setNames: (names: { [key: string]: string }) => set({ names }),
-    })), {
+    })),
+    {
       name: 'account-favorites',
       storage: createJSONStorage(() => localStorage),
-    }),
+    }
+  )
 );
 
 const useAccountFavorites = (account?: string) => {
-  const {
-    accountFavorites, names, setAccountFavorites, setNames,
-  } = useAccountFavoritesStore();
-  const isFavorite = useMemo(() => (account ? accountFavorites.includes(account) : false), [account, accountFavorites]);
+  const { accountFavorites, names, setAccountFavorites, setNames } = useAccountFavoritesStore();
+  const isFavorite = useMemo(
+    () => (account ? accountFavorites.includes(account) : false),
+    [account, accountFavorites]
+  );
 
   const saveAccountFavorite = (address: string) => {
     if (!accountFavorites.includes(address)) {
@@ -42,17 +45,18 @@ const useAccountFavorites = (account?: string) => {
     }
   };
 
-  const saveAccountName = ({ address, name }: { address: string, name: string }) => {
+  const saveAccountName = ({ address, name }: { address: string; name: string }) => {
     setNames({ ...names, [address]: name });
   };
 
   const removeAccountName = (address: string) => {
     if (names[address]) {
-      const { ...rest } = Object.fromEntries(Object.entries(names).filter(([key]) => key !== address));
+      const { ...rest } = Object.fromEntries(
+        Object.entries(names).filter(([key]) => key !== address)
+      );
       setNames(rest);
     }
   };
-
 
   return {
     isFavorite,

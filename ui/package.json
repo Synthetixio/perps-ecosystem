@@ -50,7 +50,8 @@
     "build": "craco build",
     "compile": "graphql-codegen",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\""
   },
   "eslintConfig": {
     "extends": [
@@ -72,6 +73,7 @@
   },
   "devDependencies": {
     "craco": "^0.0.3",
+    "prettier": "^3.0.3",
     "semver": "^7.5.4"
   }
 }

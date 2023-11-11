@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { apiUrl } from "../utils";
+import { apiUrl } from '../utils';
 
 const requester = axios.create({
-  baseURL: apiUrl ?? "https://synthetix.io/api",
+  baseURL: apiUrl ?? 'https://synthetix.io/api',
   timeout: 300000,
 });
 

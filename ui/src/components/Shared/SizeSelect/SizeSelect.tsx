@@ -1,52 +1,44 @@
-import { useState } from "react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuList,
-  Input,
-  Text,
-} from "@chakra-ui/react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from 'react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+import { Button, Flex, Menu, MenuButton, MenuList, Input, Text } from '@chakra-ui/react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface SizeState {
   min: string;
   max: string;
 }
 
-export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
+export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const initialMin = searchParams.get("min") || "";
-  const initialMax = searchParams.get("max") || "";
+  const initialMin = searchParams.get('min') || '';
+  const initialMax = searchParams.get('max') || '';
   const [size, setSize] = useState<SizeState>({
     min: initialMin,
     max: initialMax,
   });
 
-  const update = (input: "min" | "max", value: number) => {
-    const newSize = { ...size, [input]: value || "" };
+  const update = (input: 'min' | 'max', value: number) => {
+    const newSize = { ...size, [input]: value || '' };
     setSize(newSize);
   };
 
   const onClose = (updateSize: SizeState) => {
-    if (updateSize.min !== "" || updateSize.max !== "") {
+    if (updateSize.min !== '' || updateSize.max !== '') {
       const params: string[][] = [];
 
-      const markets = searchParams.get("markets") || "";
+      const markets = searchParams.get('markets') || '';
 
-      if (updateSize.min !== "") {
-        params.push(["min", updateSize.min]);
+      if (updateSize.min !== '') {
+        params.push(['min', updateSize.min]);
       }
 
-      if (updateSize.max !== "") {
-        params.push(["max", updateSize.max]);
+      if (updateSize.max !== '') {
+        params.push(['max', updateSize.max]);
       }
 
-      if (markets !== "") {
-        params.push(["markets", markets]);
+      if (markets !== '') {
+        params.push(['markets', markets]);
       }
 
       const newParams = new URLSearchParams(params);
@@ -57,9 +49,9 @@ export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
       });
     } else {
       const params: string[][] = [];
-      const markets = searchParams.get("markets") || "";
-      if (markets !== "") {
-        params.push(["markets", markets]);
+      const markets = searchParams.get('markets') || '';
+      if (markets !== '') {
+        params.push(['markets', markets]);
       }
       const newParams = new URLSearchParams(params);
 
@@ -80,10 +72,10 @@ export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
         fontWeight={400}
         width="25%"
         _hover={{
-          background: "none",
+          background: 'none',
         }}
         _active={{
-          background: "none",
+          background: 'none',
         }}
         textAlign="start"
         bg="none"
@@ -92,9 +84,9 @@ export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
         as={Button}
         rightIcon={<ChevronDownIcon />}
       >
-        {size.min === "" && size.max === "" && "Size"}
-        {size.min !== "" && `${size.min} - `}
-        {size.max !== "" && `${size.max}`}
+        {size.min === '' && size.max === '' && 'Size'}
+        {size.min !== '' && `${size.min} - `}
+        {size.max !== '' && `${size.max}`}
       </MenuButton>
       <MenuList>
         <Flex
@@ -110,36 +102,31 @@ export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
             <Input
               mr={2}
               _placeholder={{
-                color: "whiteAlpha.600",
-                fontSize: "14px",
-                lineHeight: "20px",
-                fontFamily: "heading",
+                color: 'whiteAlpha.600',
+                fontSize: '14px',
+                lineHeight: '20px',
+                fontFamily: 'heading',
               }}
               placeholder="Min"
               type="number"
-              onChange={(e) => update("min", e.target.valueAsNumber)}
+              onChange={(e) => update('min', e.target.valueAsNumber)}
               value={size.min}
               onBlur={() => onClose(size)}
             />
-            <Text
-              fontFamily="heading"
-              fontSize="16px"
-              lineHeight="24px"
-              color="gray.50"
-            >
+            <Text fontFamily="heading" fontSize="16px" lineHeight="24px" color="gray.50">
               to
             </Text>
             <Input
               _placeholder={{
-                color: "whiteAlpha.600",
-                fontSize: "14px",
-                lineHeight: "20px",
-                fontFamily: "heading",
+                color: 'whiteAlpha.600',
+                fontSize: '14px',
+                lineHeight: '20px',
+                fontFamily: 'heading',
               }}
               ml={2}
               placeholder="Max"
               type="number"
-              onChange={(e) => update("max", e.target.valueAsNumber)}
+              onChange={(e) => update('max', e.target.valueAsNumber)}
               value={size.max}
               onBlur={() => onClose(size)}
             />
@@ -149,8 +136,8 @@ export const SizeSelect = ({ route = "actions" }: { route?: string }) => {
             mt={2}
             variant="link"
             onClick={() => {
-              setSize({ min: "", max: "" });
-              onClose({ min: "", max: "" });
+              setSize({ min: '', max: '' });
+              onClose({ min: '', max: '' });
             }}
           >
             Clear

@@ -52,45 +52,48 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
       break;
   }
 
-  const transformedData: Record<string, Delegation> = data.reduce((prev, item) => {
-    const {
-      day,
-      blockchain,
-      tokenPrice,
-      cumDelegation,
-      daily_delegations,
-      daily_delegations_USD,
-      ID,
-    } = item;
-
-    if (!prev[day]) {
-      prev[day] = {
+  const transformedData: Record<string, Delegation> = data.reduce(
+    (prev, item) => {
+      const {
         day,
-        label: format(new Date(parseISO(day)), 'dd/MM'),
-        labelType: queryInterval,
-        totalDailyDelegations: 0,
-        totalDailyDelegationsUsd: 0,
-        totalCumDelegationsUsd: 0,
-        totalCumDelegations: 0,
-      } as Delegation;
-    }
+        blockchain,
+        tokenPrice,
+        cumDelegation,
+        daily_delegations,
+        daily_delegations_USD,
+        ID,
+      } = item;
 
-    prev[day][blockchain] = {
-      id: ID.replaceAll('-', ' '),
-      dailyDelegations: daily_delegations,
-      dailyDelegationsUsd: daily_delegations_USD,
-      cumDelegationUsd: cumDelegation * tokenPrice,
-      cumDelegation: cumDelegation,
-      tokenPrice: tokenPrice,
-    };
+      if (!prev[day]) {
+        prev[day] = {
+          day,
+          label: format(new Date(parseISO(day)), 'dd/MM'),
+          labelType: queryInterval,
+          totalDailyDelegations: 0,
+          totalDailyDelegationsUsd: 0,
+          totalCumDelegationsUsd: 0,
+          totalCumDelegations: 0,
+        } as Delegation;
+      }
 
-    prev[day].totalCumDelegations += prev[day][blockchain].cumDelegation;
-    prev[day].totalCumDelegationsUsd += prev[day][blockchain].cumDelegationUsd;
-    prev[day].totalDailyDelegationsUsd += prev[day][blockchain].dailyDelegationsUsd;
-    prev[day].totalDailyDelegations += prev[day][blockchain].dailyDelegations;
+      prev[day][blockchain] = {
+        id: ID.replaceAll('-', ' '),
+        dailyDelegations: daily_delegations,
+        dailyDelegationsUsd: daily_delegations_USD,
+        cumDelegationUsd: cumDelegation * tokenPrice,
+        cumDelegation: cumDelegation,
+        tokenPrice: tokenPrice,
+      };
 
-    return prev;
-  }, {} as Record<string, Delegation>);
+      prev[day].totalCumDelegations += prev[day][blockchain].cumDelegation;
+      prev[day].totalCumDelegationsUsd += prev[day][blockchain].cumDelegationUsd;
+      prev[day].totalDailyDelegationsUsd += prev[day][blockchain].dailyDelegationsUsd;
+      prev[day].totalDailyDelegations += prev[day][blockchain].dailyDelegations;
+
+      return prev;
+    },
+    {} as Record<string, Delegation>
+  );
 
   return Object.values(transformedData)
     .filter((e) => (queryInterval === 'ALL' ? !!e.day : isAfter(parseISO(e.day), startDate)))

@@ -21,7 +21,6 @@ export const AddressInput = () => {
     defaultValues: { address: '' },
   });
 
-
   const onSubmit: SubmitHandler<SearchFormData> = async (data) => {
     setInputError(null);
     const address = data.address.trim();
@@ -52,17 +51,17 @@ export const AddressInput = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex alignSelf='end' justifyContent='flex-end' alignItems='center' mb='3px'>
+      <Flex alignSelf="end" justifyContent="flex-end" alignItems="center" mb="3px">
         <Input
-          placeholder='Search by ENS / address'
-          w='50%'
+          placeholder="Search by ENS / address"
+          w="50%"
           minW={{ base: 'auto', md: '250px' }}
           {...register('address', {
             onChange: (e) => {
               if (!e.target.value.trim()) setInputError(null);
             },
           })}
-          alignSelf='end'
+          alignSelf="end"
           borderColor={inputError ? 'red.500' : 'gray.900'}
           isInvalid={!!inputError}
           onKeyDown={({ key }) => {
@@ -72,16 +71,16 @@ export const AddressInput = () => {
           }}
         />
         <Button
-          variant='unstyled'
-          type='submit'
+          variant="unstyled"
+          type="submit"
           ml={3}
-          borderWidth='1px'
-          borderColor='gray.900'
-          py='7px'
-          px='12px'
-          borderRadius='7px'
+          borderWidth="1px"
+          borderColor="gray.900"
+          py="7px"
+          px="12px"
+          borderRadius="7px"
         >
-          <SearchIcon color='gray.100' />
+          <SearchIcon color="gray.100" />
         </Button>
       </Flex>
     </form>

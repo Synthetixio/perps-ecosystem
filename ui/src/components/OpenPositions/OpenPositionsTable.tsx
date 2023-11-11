@@ -100,7 +100,6 @@ export const OpenPositionsTable = () => {
                         pnlPercentage={unrealizedPnlPercentage.toNumber()} //
                       />
                       {/* Liquidation Price */}
-                      {/* Liquidation Price */}
                       <Currency amount={liquidationPrice.toNumber()} />
 
                       {/* Realized PNL */}

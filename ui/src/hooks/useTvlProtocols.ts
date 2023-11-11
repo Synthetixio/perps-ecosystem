@@ -42,22 +42,25 @@ function formatData(data?: DuneTvlProtocol[], queryInterval?: 'M' | 'Y' | 'ALL')
       break;
   }
 
-  const transformedData: Record<string, TvlProtocol> = data.reduce((prev, item) => {
-    const { day, blockchain, layer_usd, total_usd } = item;
+  const transformedData: Record<string, TvlProtocol> = data.reduce(
+    (prev, item) => {
+      const { day, blockchain, layer_usd, total_usd } = item;
 
-    if (!prev[day]) {
-      prev[day] = {
-        day,
-        totalUsd: total_usd,
-        label: format(new Date(parseISO(day)), 'dd/MM'),
-        labelType: queryInterval,
-      } as TvlProtocol;
-    }
+      if (!prev[day]) {
+        prev[day] = {
+          day,
+          totalUsd: total_usd,
+          label: format(new Date(parseISO(day)), 'dd/MM'),
+          labelType: queryInterval,
+        } as TvlProtocol;
+      }
 
-    prev[day][blockchain] = layer_usd;
+      prev[day][blockchain] = layer_usd;
 
-    return prev;
-  }, {} as Record<string, TvlProtocol>);
+      return prev;
+    },
+    {} as Record<string, TvlProtocol>
+  );
 
   return Object.values(transformedData)
     .filter((e) => (queryInterval === 'ALL' ? !!e.day : isAfter(parseISO(e.day), startDate)))

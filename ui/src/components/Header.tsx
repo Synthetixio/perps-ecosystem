@@ -46,95 +46,95 @@ export const Header: FC = () => {
   return (
     <>
       <Flex
-        as='header'
+        as="header"
         px={{ base: '16px', md: '40px' }}
         py={2}
-        bg='navy.900'
-        height='65px'
-        alignItems='center'
-        justifyContent='space-between'
-        borderBottomWidth='1px'
-        borderBottomColor='gray.900'
-        borderTopWidth='1px'
-        borderTopColor='transparent'
+        bg="navy.900"
+        height="65px"
+        alignItems="center"
+        justifyContent="space-between"
+        borderBottomWidth="1px"
+        borderBottomColor="gray.900"
+        borderTopWidth="1px"
+        borderTopColor="transparent"
       >
-        <Flex alignItems='center' sx={{ gap: { base: '8px', md: '24px' } }}>
-          <RouterLink to='/' style={{ whiteSpace: 'nowrap' }}>
-            <Flex alignItems='center'>
-              <SNXIcon fill='cyan.400' />
-              <PerpsStats ml='10px' display={{ base: 'none', c900: 'initial' }} />
+        <Flex alignItems="center" sx={{ gap: { base: '8px', md: '24px' } }}>
+          <RouterLink to="/" style={{ whiteSpace: 'nowrap' }}>
+            <Flex alignItems="center">
+              <SNXIcon fill="cyan.400" />
+              <PerpsStats ml="10px" display={{ base: 'none', c900: 'initial' }} />
             </Flex>
           </RouterLink>
           <DropdownVersion />
           {['/', '/trades', '/actions', '/markets', '/positions', '/liquidations'].includes(
-            location.pathname,
+            location.pathname
           ) && (
             <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
-              <Flex as='nav' sx={{ gap: '24px' }}>
+              <Flex as="nav" sx={{ gap: '24px' }}>
                 <Box style={isActive('/') ? activeStyle : inactiveStyle}>
-                  <RouterLink to='/'>Dashboard</RouterLink>
+                  <RouterLink to="/">Dashboard</RouterLink>
                 </Box>
                 <Box style={isActive('/actions') ? activeStyle : inactiveStyle}>
-                  <RouterLink to='/actions'>Actions</RouterLink>
+                  <RouterLink to="/actions">Actions</RouterLink>
                 </Box>
                 <Box style={isActive('/markets') ? activeStyle : inactiveStyle}>
-                  <RouterLink to='/markets'>Markets</RouterLink>
+                  <RouterLink to="/markets">Markets</RouterLink>
                 </Box>
                 <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
-                  <RouterLink to='/positions'>Positions</RouterLink>
+                  <RouterLink to="/positions">Positions</RouterLink>
                 </Box>
                 <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
-                  <RouterLink to='/liquidations'>Liquidations</RouterLink>
+                  <RouterLink to="/liquidations">Liquidations</RouterLink>
                 </Box>
               </Flex>
             </Box>
           )}
           {!isActive('/v3') && (
-            <Flex alignItems='center' display={{ base: 'flex', md: 'none' }}>
+            <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
               <Menu>
                 <MenuButton
                   as={Button}
-                  border='none'
-                  variant='outline'
-                  display='flex'
-                  justifyContent='center'
-                  alignItems='center'
+                  border="none"
+                  variant="outline"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
                   padding={{ base: '8px', md: '8px 16px' }}
                 >
-                  <HamburgerIcon width='20px' height='20px' color='white' />
+                  <HamburgerIcon width="20px" height="20px" color="white" />
                 </MenuButton>
                 <MenuList>
                   <MenuItem>
-                    <RouterLink to='/'>
-                      <Text fontSize='14px' fontWeight={700} fontFamily='heading' color='gray.400'>
+                    <RouterLink to="/">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         Dashboard
                       </Text>
                     </RouterLink>
                   </MenuItem>
                   <MenuItem>
-                    <RouterLink to='/actions'>
-                      <Text fontSize='14px' fontWeight={700} fontFamily='heading' color='gray.400'>
+                    <RouterLink to="/actions">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         All Actions
                       </Text>
                     </RouterLink>
                   </MenuItem>
                   <MenuItem>
-                    <RouterLink to='/markets'>
-                      <Text fontSize='14px' fontWeight={700} fontFamily='heading' color='gray.400'>
+                    <RouterLink to="/markets">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         Markets
                       </Text>
                     </RouterLink>
                   </MenuItem>
                   <MenuItem>
-                    <RouterLink to='/positions'>
-                      <Text fontSize='14px' fontWeight={700} fontFamily='heading' color='gray.400'>
+                    <RouterLink to="/positions">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         Positions
                       </Text>
                     </RouterLink>
                   </MenuItem>
                   <MenuItem>
-                    <RouterLink to='/liquidations'>
-                      <Text fontSize='14px' fontWeight={700} fontFamily='heading' color='gray.400'>
+                    <RouterLink to="/liquidations">
+                      <Text fontSize="14px" fontWeight={700} fontFamily="heading" color="gray.400">
                         Liquidations
                       </Text>
                     </RouterLink>
@@ -144,7 +144,7 @@ export const Header: FC = () => {
             </Flex>
           )}
         </Flex>
-        <Flex justifyContent='flex-end'>
+        <Flex justifyContent="flex-end">
           <AddressInput />
           <FavoriteAction />
           <RpcSwitcher />

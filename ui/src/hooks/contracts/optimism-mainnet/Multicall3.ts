@@ -95,7 +95,7 @@ export interface Multicall3Interface extends utils.Interface {
         target: PromiseOrValue<string>;
         allowFailure: PromiseOrValue<boolean>;
         callData: PromiseOrValue<BytesLike>;
-      }[]
+      }[],
     ]
   ): string;
   encodeFunctionData(
@@ -106,7 +106,7 @@ export interface Multicall3Interface extends utils.Interface {
         allowFailure: PromiseOrValue<boolean>;
         value: PromiseOrValue<BigNumberish>;
         callData: PromiseOrValue<BytesLike>;
-      }[]
+      }[],
     ]
   ): string;
   encodeFunctionData(
@@ -130,14 +130,14 @@ export interface Multicall3Interface extends utils.Interface {
     functionFragment: 'tryAggregate',
     values: [
       PromiseOrValue<boolean>,
-      { target: PromiseOrValue<string>; callData: PromiseOrValue<BytesLike> }[]
+      { target: PromiseOrValue<string>; callData: PromiseOrValue<BytesLike> }[],
     ]
   ): string;
   encodeFunctionData(
     functionFragment: 'tryBlockAndAggregate',
     values: [
       PromiseOrValue<boolean>,
-      { target: PromiseOrValue<string>; callData: PromiseOrValue<BytesLike> }[]
+      { target: PromiseOrValue<string>; callData: PromiseOrValue<BytesLike> }[],
     ]
   ): string;
 

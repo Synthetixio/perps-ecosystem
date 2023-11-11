@@ -1,22 +1,14 @@
-import { useState } from "react";
-import { Box, Flex, Text, Spinner, FlexProps } from "@chakra-ui/react";
-import {
-  Bar,
-  Tooltip,
-  ResponsiveContainer,
-  Line,
-  ComposedChart,
-  XAxis,
-  YAxis,
-} from "recharts";
-import { TimeBadge } from "../../TimeBadge";
-import { KeyColour } from "../KeyColour";
-import { formatNumber } from "@synthetixio/formatters";
-import { TradesTooltip } from "./TradesTooltip";
-import { useStats } from "../../../hooks";
+import { useState } from 'react';
+import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
+import { Bar, Tooltip, ResponsiveContainer, Line, ComposedChart, XAxis, YAxis } from 'recharts';
+import { TimeBadge } from '../../TimeBadge';
+import { KeyColour } from '../KeyColour';
+import { formatNumber } from '@synthetixio/formatters';
+import { TradesTooltip } from './TradesTooltip';
+import { useStats } from '../../../hooks';
 
 export const Trades = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<"M" | "Y">("M");
+  const [state, setState] = useState<'M' | 'Y'>('M');
 
   const { data, loading } = useStats(state);
 
@@ -31,7 +23,7 @@ export const Trades = ({ ...props }: FlexProps) => {
         borderWidth="1px"
         borderRadius="5px"
         sx={{
-          borderCollapse: "separate !important",
+          borderCollapse: 'separate !important',
           borderSpacing: 0,
         }}
         bg="navy.700"
@@ -40,25 +32,12 @@ export const Trades = ({ ...props }: FlexProps) => {
         {...props}
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
-          <Text
-            fontFamily="heading"
-            fontSize="20px"
-            fontWeight={700}
-            lineHeight="28px"
-          >
+          <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
             Trades
           </Text>
           <Box>
-            <TimeBadge
-              title="1M"
-              onPress={() => setState("M")}
-              isActive={state === "M"}
-            />
-            <TimeBadge
-              title="1Y"
-              onPress={() => setState("Y")}
-              isActive={state === "Y"}
-            />
+            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
+            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
           </Box>
         </Flex>
         <Flex mt={6}>
@@ -66,23 +45,12 @@ export const Trades = ({ ...props }: FlexProps) => {
           <KeyColour ml={4} label="ALL TIME" colour="cyan.500" />
         </Flex>
         {loading ? (
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-            minHeight={200}
-          >
+          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
             <Spinner size="xl" />
           </Flex>
         ) : (
           <>
-            <Text
-              my={3}
-              color="white"
-              fontSize="24px"
-              fontFamily="heading"
-              fontWeight={800}
-            >
+            <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               {formatNumber(tradesNumber || 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
@@ -101,14 +69,9 @@ export const Trades = ({ ...props }: FlexProps) => {
                 <Tooltip
                   content={TradesTooltip}
                   cursor={false}
-                  wrapperStyle={{ outline: "none" }}
+                  wrapperStyle={{ outline: 'none' }}
                 />
-                <Bar
-                  yAxisId="left"
-                  dataKey="trades"
-                  stackId="a"
-                  fill="#FFFFFF3D"
-                />
+                <Bar yAxisId="left" dataKey="trades" stackId="a" fill="#FFFFFF3D" />
                 <Line
                   yAxisId="right"
                   dataKey="cumulativeTrades"
@@ -118,11 +81,11 @@ export const Trades = ({ ...props }: FlexProps) => {
                 />
                 <XAxis
                   dataKey="label"
-                  tickLine={{ display: "none" }}
+                  tickLine={{ display: 'none' }}
                   tick={{
-                    fontSize: "12px",
-                    fontFamily: "Inter",
-                    fill: "#9999AC",
+                    fontSize: '12px',
+                    fontFamily: 'Inter',
+                    fill: '#9999AC',
                   }}
                 />
                 <YAxis

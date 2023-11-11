@@ -11,19 +11,19 @@ import {
 import { CheckCircleIcon, CopyIcon } from '@chakra-ui/icons';
 
 const CopyButton = ({
-                      iconSize = '16px',
-                      variant = 'ghost',
-                      value,
-                      children,
-                      type = 'button',
-                      sx,
-                      iconSx,
-                      ...props
-                    }: ButtonProps & {
-  iconSize?: number | string
-  iconSx?: SystemStyleObject & GridProps
-  type?: 'button' | 'submit' | 'reset'
-  value: string
+  iconSize = '16px',
+  variant = 'ghost',
+  value,
+  children,
+  type = 'button',
+  sx,
+  iconSx,
+  ...props
+}: ButtonProps & {
+  iconSize?: number | string;
+  iconSx?: SystemStyleObject & GridProps;
+  type?: 'button' | 'submit' | 'reset';
+  value: string;
 }) => {
   const toast = useToast();
   const [isCopied, setIsCopied] = useState(false);
@@ -69,9 +69,8 @@ const CopyButton = ({
   }
 
   const copyIcon = useMemo(
-    () => (isCopied ? <CheckCircleIcon fontSize={iconSize} /> :
-      <CopyIcon fontSize={iconSize} />),
-    [isCopied, iconSize],
+    () => (isCopied ? <CheckCircleIcon fontSize={iconSize} /> : <CopyIcon fontSize={iconSize} />),
+    [isCopied, iconSize]
   );
   // onClick handler function for the copy button
   const handleCopyClick = (e: any) => {
@@ -101,13 +100,13 @@ const CopyButton = ({
 
   return (
     <>
-      <Tooltip placement='top' label='Press to copy' hasArrow>
+      <Tooltip placement="top" label="Press to copy" hasArrow>
         <IconButton
-          aria-label='copy-paste'
+          aria-label="copy-paste"
           type={type}
           variant={variant}
           icon={copyIcon}
-          color='white'
+          color="white"
           onClick={handleCopyClick}
           sx={{ ...iconSx }}
           {...props}

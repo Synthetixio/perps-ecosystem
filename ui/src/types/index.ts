@@ -1,7 +1,14 @@
 import Wei from '@synthetixio/wei';
 import { z } from 'zod';
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
-import { BoxProps, ButtonProps, GridProps, LayoutProps, SpaceProps, SystemStyleObject } from '@chakra-ui/react';
+import {
+  BoxProps,
+  ButtonProps,
+  GridProps,
+  LayoutProps,
+  SpaceProps,
+  SystemStyleObject,
+} from '@chakra-ui/react';
 
 export interface SubgraphPositionData {
   market: string;
@@ -58,21 +65,21 @@ export interface MarketsByKey {
 }
 
 export type VariantProps = {
-  variant?: string
-  tx?: string
-}
+  variant?: string;
+  tx?: string;
+};
 
 export type SxProps = {
-  sx?: SystemStyleObject & GridProps
-}
-export type IconProps = BoxProps & { icon: ReactNode } & HTMLAttributes<HTMLDivElement>
+  sx?: SystemStyleObject & GridProps;
+};
+export type IconProps = BoxProps & { icon: ReactNode } & HTMLAttributes<HTMLDivElement>;
 export type CustomButtonProps = {
-  block?: boolean
-  isLoading?: boolean
-  itemId?: number | string
+  block?: boolean;
+  isLoading?: boolean;
+  itemId?: number | string;
 } & ButtonProps &
   SxProps &
   LayoutProps &
   SpaceProps &
   VariantProps &
-  ButtonHTMLAttributes<HTMLButtonElement>
+  ButtonHTMLAttributes<HTMLButtonElement>;
