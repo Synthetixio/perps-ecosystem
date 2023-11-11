@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { scale } from '../utils';
 import { utils } from 'ethers';
 import { wei } from '@synthetixio/wei';
-import { getMarketsPythConfig, prices, PythPrice } from '../utils/pyth';
+import { getMarketsPythConfig, prices, type PythPrice } from '../utils/pyth';
 
 const pythItemSchema = z.object({
   pythId: z.union([z.string(), z.undefined()]),
@@ -82,7 +82,7 @@ export function useLargestOpenPosition() {
             .filter((item) => item !== null) || [];
 
         const sizeQuery = generateOpenPositionsQuery(marketIds);
-        const pythIds = marketPyth.map((item) => item?.pythId || '').filter((item) => item !== '');
+        const pythIds = marketPyth.map((item) => item?.pythId ?? '').filter((item) => item !== '');
 
         const { data: sizeData } = await client.query({ query: sizeQuery });
 
@@ -92,7 +92,7 @@ export function useLargestOpenPosition() {
 
           return {
             ...price,
-            pythId: marketPyth[index]?.pythId || '',
+            pythId: marketPyth[index]?.pythId ?? '',
             marketKey: marketPyth[index]?.marketKey,
           };
         });

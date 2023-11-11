@@ -31,7 +31,7 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
   } = usePositions(polynomialAccount, 'poly');
 
   const loading = walletLoading || kwentaLoading || polyLoading;
-  const error = walletError || kwentaError || polyError;
+  const error = walletError ?? kwentaError ?? polyError;
   const data = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
 
   const noData = !data.length;

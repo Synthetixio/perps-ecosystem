@@ -1,4 +1,4 @@
-import { Text, Tooltip, TextProps } from '@chakra-ui/react';
+import { Text, Tooltip, type TextProps } from '@chakra-ui/react';
 import { useEnsName } from '../../../hooks/useEnsName';
 import useAccountFavorites from '../../../hooks/store/useAccountFavorites';
 import { truncateAddress } from '../../../utils';
@@ -8,8 +8,7 @@ export const AccountName = ({ address, ...props }: { address: string } & TextPro
   const { names } = useAccountFavorites();
   const { addressEnsName } = useEnsName(address);
   const accountName = useMemo(
-    () =>
-      names[address] ? names[address] : addressEnsName ? addressEnsName : truncateAddress(address),
+    () => (names[address] ? names[address] : addressEnsName ?? truncateAddress(address)),
     [address, names, addressEnsName]
   );
 

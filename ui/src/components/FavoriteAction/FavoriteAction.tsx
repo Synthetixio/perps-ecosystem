@@ -137,7 +137,9 @@ export const FavoriteAction = () => {
                           variant="ghost"
                           color="white"
                           icon={isFavorite ? <StarIcon /> : <StarOutlinedIcon />}
-                          onClick={() => onSubmit(account)}
+                          onClick={() => {
+                            onSubmit(account);
+                          }}
                         />
                       </Flex>
                     </Flex>

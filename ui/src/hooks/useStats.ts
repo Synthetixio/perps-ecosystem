@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { wei } from '@synthetixio/wei';
 import { format, getDaysInMonth, parse, subDays, subMonths } from 'date-fns';
 import { DAILY_STATS_QUERY } from '../queries/dashboard';
-import { DailyStat_OrderBy, OrderDirection, StatsQueryQuery } from '../__generated__/graphql';
+import { DailyStat_OrderBy, OrderDirection, type StatsQueryQuery } from '../__generated__/graphql';
 
 function calculateMonthlyRange() {
   const daysInMonth = getDaysInMonth(new Date());

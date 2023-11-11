@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { IconProps } from '../../../types';
+import { type IconProps } from '../../../types';
 
 export const IconBox = ({ sx, icon, ...props }: IconProps) => (
   <Box

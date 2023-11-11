@@ -1,7 +1,7 @@
 import { usePolynomialAccount } from './usePolynomialAccount';
 import { useKwentaAccount } from './useKwentaAccount';
 import { useActions } from './useActions';
-import Wei from '@synthetixio/wei';
+import type Wei from '@synthetixio/wei';
 
 interface MergedAction {
   address: string;
@@ -26,12 +26,12 @@ export const useMergedActions = (account?: string) => {
     data: dataKwenta,
     loading: loadingKwenta,
     error: errorKwenta,
-  } = useActions(kwentaAccount?.account || '');
+  } = useActions(kwentaAccount?.account ?? '');
   const {
     data: dataPolynomial,
     loading: loadingPolynomial,
     error: errorPolynomial,
-  } = useActions(polynomialAccount?.account || '');
+  } = useActions(polynomialAccount?.account ?? '');
 
   const isDataLoading = loading || loadingKwenta || loadingPolynomial;
 

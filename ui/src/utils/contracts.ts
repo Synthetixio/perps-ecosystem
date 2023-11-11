@@ -1,20 +1,20 @@
-import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
+import { type InfuraProvider, type JsonRpcProvider } from '@ethersproject/providers';
 import { Contract } from 'ethers';
 import { isStaging } from './isStaging';
 import {
   abi as perpsMarketDataAbiGoerli,
   address as perpsMarketDataAddressGoerli,
-  PerpsV2MarketData as PerpsV2MarketDataGoerli,
+  type PerpsV2MarketData as PerpsV2MarketDataGoerli,
 } from '@synthetixio/contracts/build/goerli-ovm/deployment/PerpsV2MarketData';
 import {
   abi as abiPerpsMarketData,
   address as addressPerpsMarketData,
-  PerpsV2MarketData,
+  type PerpsV2MarketData,
 } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import {
   abi as multiCallAbi,
   address as multiCallAddressGoerli,
-  Multicall3,
+  type Multicall3,
 } from '../hooks/contracts/optimism-goerli/Multicall3';
 import { address as multicallMainnetAddress } from '../hooks/contracts/optimism-mainnet/Multicall3';
 

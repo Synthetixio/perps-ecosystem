@@ -1,4 +1,3 @@
-import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { OpenPositionsTable } from '../components/OpenPositions';
 import { OpenPositionsFilter } from '../components/OpenPositions/OpenPositionsFilter';

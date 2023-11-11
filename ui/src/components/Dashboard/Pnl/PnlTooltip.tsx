@@ -1,14 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { KeyColour } from '../KeyColour';
 
-type PnlTooltipProps = {
+interface PnlTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const PnlTooltip = ({ payload }: PnlTooltipProps) => {
-  const pnlInfo = payload?.[0]?.payload as any;
+  const pnlInfo = payload?.[0]?.payload;
   const formatNumberOptions = { maximumFractionDigits: 2, minimumFractionDigits: 2 };
   if (!pnlInfo) {
     return null;

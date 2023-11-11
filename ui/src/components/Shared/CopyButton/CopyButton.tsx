@@ -1,10 +1,9 @@
 import { useMemo, useRef, useState } from 'react';
-import React from 'react';
 import {
-  ButtonProps,
-  GridProps,
+  type ButtonProps,
+  type GridProps,
   IconButton,
-  SystemStyleObject,
+  type SystemStyleObject,
   Tooltip,
   useToast,
 } from '@chakra-ui/react';

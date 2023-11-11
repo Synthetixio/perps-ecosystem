@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flex, Text, FlexProps, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, type FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { PnlTooltip } from './PnlTooltip';

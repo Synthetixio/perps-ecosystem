@@ -1,8 +1,9 @@
-import { Flex, FlexProps, Spinner, Text } from '@chakra-ui/react';
+import { Flex, type FlexProps, Spinner, Text } from '@chakra-ui/react';
 import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
-import Wei, { wei } from '@synthetixio/wei';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
-import { DailyMarketStat } from '../../../__generated__/graphql';
+import { type DailyMarketStat } from '../../../__generated__/graphql';
 import { CurrencyIcon } from '../../CurrencyIcon';
 
 interface MarketData extends Partial<DailyMarketStat> {
@@ -19,14 +20,14 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
   let displayName;
 
   displayName = utils.parseBytes32String(
-    data?.market?.asset || '0x7342544300000000000000000000000000000000000000000000000000000000'
+    data?.market?.asset ?? '0x7342544300000000000000000000000000000000000000000000000000000000'
   );
 
   if (displayName === 'sETH' || displayName === 'sBTC') {
     displayName = displayName.substring(1);
   }
 
-  const percentageDifference = data?.percentageDifference.toNumber() || 0;
+  const percentageDifference = data?.percentageDifference.toNumber() ?? 0;
   const percentageDisplay =
     percentageDifference > 10000
       ? `${percentageDifference.toExponential(2)}%`
@@ -54,7 +55,7 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
                 <Flex alignItems="center">
                   <CurrencyIcon
                     currencyKey={utils.parseBytes32String(
-                      data?.market?.asset ||
+                      data?.market?.asset ??
                         '0x7342544300000000000000000000000000000000000000000000000000000000'
                     )}
                   />
@@ -83,7 +84,7 @@ export const MarketsCard = ({ loading, data, number, ...props }: MarketsCardProp
                     Volume
                   </Text>
                   <Text color="gray.50" fontSize="14px" fontWeight={500} lineHeight="20px">
-                    {formatNumberToUsd(wei(data?.volume || 0, 18, true).toNumber())}
+                    {formatNumberToUsd(wei(data?.volume ?? 0, 18, true).toNumber())}
                   </Text>
                 </Flex>
                 <Flex flexDirection="column" alignItems="flex-start">

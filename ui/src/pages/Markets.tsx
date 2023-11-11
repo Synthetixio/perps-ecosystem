@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import { Heading, Box } from '@chakra-ui/react';
 import { MarketsTable } from '../components/Markets/MarketsTable';
 

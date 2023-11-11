@@ -2,7 +2,7 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { useSearchParams } from 'react-router-dom';
 import { TableHeaderCell, PnL, Market, Size, MarkPrice, WalletTooltip, Currency } from '../Shared';
 import { OpenPositionsLoading } from './OpenPositionsLoading';
-import { usePositions, PositionType } from '../../hooks';
+import { usePositions, type PositionType } from '../../hooks';
 import { useState, useEffect, useMemo } from 'react';
 
 export const OpenPositionsTable = () => {

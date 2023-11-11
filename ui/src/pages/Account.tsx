@@ -1,6 +1,6 @@
 import { Flex, Heading, Button, Box, Link, Tooltip, IconButton } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
 import { PositionsTable } from '../components/Positions';
@@ -94,16 +94,10 @@ export const Account: FC = () => {
           <SmartWallet label="Kwenta Smart Account" account={kwentaAccount.account} />
         )}
         {kwentaOwner && (
-          <SmartWallet
-            label={kwentaEnsName ? kwentaEnsName : 'EOA Account'}
-            account={kwentaOwner}
-          />
+          <SmartWallet label={kwentaEnsName ?? 'EOA Account'} account={kwentaOwner} />
         )}
         {polynomialOwner && (
-          <SmartWallet
-            label={polynomialEnsName ? polynomialEnsName : 'EOA Account'}
-            account={polynomialOwner}
-          />
+          <SmartWallet label={polynomialEnsName ?? 'EOA Account'} account={polynomialOwner} />
         )}
         {polynomialAccount && (
           <SmartWallet

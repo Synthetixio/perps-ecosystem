@@ -3,14 +3,14 @@ import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../../Dashboard';
 import { format } from 'date-fns';
 
-type MintBurnTooltipProps = {
+interface MintBurnTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const MintBurnTooltip = ({ payload }: MintBurnTooltipProps) => {
-  const mintBurn = payload?.[0]?.payload as any;
+  const mintBurn = payload?.[0]?.payload;
 
   if (!mintBurn) {
     return null;

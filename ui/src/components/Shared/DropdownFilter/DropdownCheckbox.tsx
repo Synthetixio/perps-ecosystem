@@ -1,4 +1,4 @@
-import { Text, Flex, useCheckbox, UseCheckboxProps, chakra } from '@chakra-ui/react';
+import { Text, Flex, useCheckbox, type UseCheckboxProps, chakra } from '@chakra-ui/react';
 import { Tick } from '../../Icons';
 
 interface CheckboxProps extends UseCheckboxProps {

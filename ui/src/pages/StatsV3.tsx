@@ -1,4 +1,3 @@
-import React from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import { TvlProtocols } from '../components/V3/TvlProtocols';
 import { TvlLayer } from '../components/V3/TvlLayer';

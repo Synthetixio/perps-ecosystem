@@ -2,14 +2,14 @@ import { Flex, Text } from '@chakra-ui/react';
 import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../KeyColour';
 
-type TradersTooltipProps = {
+interface TradersTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const FeesTooltip = ({ payload }: TradersTooltipProps) => {
-  const feesInfo = payload?.[0]?.payload as any;
+  const feesInfo = payload?.[0]?.payload;
 
   if (!feesInfo) {
     return null;

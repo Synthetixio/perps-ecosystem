@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Box, Flex, Text, Spinner, FlexProps, Tooltip as ChakraTooltip } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Text,
+  Spinner,
+  type FlexProps,
+  Tooltip as ChakraTooltip,
+} from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
@@ -63,7 +70,7 @@ export const Traders = ({ ...props }: FlexProps) => {
               label={`New plus returning for the last ${state === 'M' ? 'month' : 'year'}`}
             >
               <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-                {formatNumber(tradersNumber || 0, {
+                {formatNumber(tradersNumber ?? 0, {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0,
                 })}
@@ -71,7 +78,7 @@ export const Traders = ({ ...props }: FlexProps) => {
             </ChakraTooltip>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
-                data={data || []}
+                data={data ?? []}
                 margin={{
                   top: 20,
                   right: 30,

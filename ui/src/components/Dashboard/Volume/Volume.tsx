@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flex, Text, Spinner, FlexProps } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner, type FlexProps } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, Tooltip, Line, YAxis } from 'recharts';
@@ -51,14 +51,14 @@ export const Volume = ({ ...props }: FlexProps) => {
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {formatNumber(volumeNumber || 0, {
+              {formatNumber(volumeNumber ?? 0, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
               })}
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
-                data={data || []}
+                data={data ?? []}
                 margin={{
                   top: 20,
                   right: 30,

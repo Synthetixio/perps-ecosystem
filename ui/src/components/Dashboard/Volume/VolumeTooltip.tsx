@@ -2,14 +2,14 @@ import { Flex, Text } from '@chakra-ui/react';
 import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../KeyColour';
 
-type VolumeTooltipProps = {
+interface VolumeTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const VolumeTooltip = ({ payload }: VolumeTooltipProps) => {
-  const volumeInfo = payload?.[0]?.payload as any;
+  const volumeInfo = payload?.[0]?.payload;
 
   if (!volumeInfo) {
     return null;

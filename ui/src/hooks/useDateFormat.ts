@@ -2,6 +2,7 @@ const useDateFormat = (day: string, period: 'W' | 'M' | 'Y') => {
   const [date, time] = day.split(' ');
   const maybeDate = new Date(`${date}T${time}Z`);
 
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   if (`${maybeDate}` === 'Invalid Date') {
     return '';
   }

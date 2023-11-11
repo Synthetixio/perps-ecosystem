@@ -5,9 +5,9 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AccountFavoritesState {
   accountFavorites: string[];
-  names: { [key: string]: string };
+  names: Record<string, string>;
   setAccountFavorites: (addresses: string[]) => void;
-  setNames: (names: { [key: string]: string }) => void;
+  setNames: (names: Record<string, string>) => void;
 }
 
 const useAccountFavoritesStore = create<AccountFavoritesState>()(
@@ -16,7 +16,7 @@ const useAccountFavoritesStore = create<AccountFavoritesState>()(
       accountFavorites: [],
       names: {},
       setAccountFavorites: (addresses: string[]) => set({ accountFavorites: addresses }),
-      setNames: (names: { [key: string]: string }) => set({ names }),
+      setNames: (names: Record<string, string>) => set({ names }),
     })),
     {
       name: 'account-favorites',

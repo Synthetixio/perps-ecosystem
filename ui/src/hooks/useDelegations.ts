@@ -3,7 +3,7 @@ import { QUERY_KEYS } from '../utils';
 import { useQuery } from '@tanstack/react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getDelegations } from '../api/synthetixV3';
-import { DuneDelegation } from '../api/types';
+import { type DuneDelegation } from '../api/types';
 
 export interface Delegation {
   day: string;
@@ -19,7 +19,7 @@ export interface Delegation {
 export const useDelegations = (queryInterval: 'M' | 'Y' | 'ALL') => {
   const { data, isLoading, error } = useQuery(
     [QUERY_KEYS.GET_DELEGATIONS],
-    () => getDelegations(),
+    async () => await getDelegations(),
     {
       retry: 0,
     }
@@ -52,7 +52,7 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
       break;
   }
 
-  const transformedData: Record<string, Delegation> = data.reduce(
+  const transformedData: Record<string, Delegation> = data.reduce<Record<string, Delegation>>(
     (prev, item) => {
       const {
         day,
@@ -73,7 +73,7 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
           totalDailyDelegationsUsd: 0,
           totalCumDelegationsUsd: 0,
           totalCumDelegations: 0,
-        } as Delegation;
+        } satisfies Delegation;
       }
 
       prev[day][blockchain] = {
@@ -92,7 +92,7 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
 
       return prev;
     },
-    {} as Record<string, Delegation>
+    {}
   );
 
   return Object.values(transformedData)

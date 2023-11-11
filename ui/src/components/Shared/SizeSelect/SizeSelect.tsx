@@ -11,8 +11,8 @@ interface SizeState {
 export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const initialMin = searchParams.get('min') || '';
-  const initialMax = searchParams.get('max') || '';
+  const initialMin = searchParams.get('min') ?? '';
+  const initialMax = searchParams.get('max') ?? '';
   const [size, setSize] = useState<SizeState>({
     min: initialMin,
     max: initialMax,
@@ -27,7 +27,7 @@ export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
     if (updateSize.min !== '' || updateSize.max !== '') {
       const params: string[][] = [];
 
-      const markets = searchParams.get('markets') || '';
+      const markets = searchParams.get('markets') ?? '';
 
       if (updateSize.min !== '') {
         params.push(['min', updateSize.min]);
@@ -49,7 +49,7 @@ export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
       });
     } else {
       const params: string[][] = [];
-      const markets = searchParams.get('markets') || '';
+      const markets = searchParams.get('markets') ?? '';
       if (markets !== '') {
         params.push(['markets', markets]);
       }

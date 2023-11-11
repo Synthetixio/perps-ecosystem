@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/icons';
+import { Icon, type IconProps } from '@chakra-ui/icons';
 
 export const WalletIcon = ({ width = '16px', height = '14px' }: IconProps) => {
   return (

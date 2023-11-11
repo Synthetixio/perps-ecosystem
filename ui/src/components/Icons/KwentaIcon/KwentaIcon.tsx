@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/icons';
+import { Icon, type IconProps } from '@chakra-ui/icons';
 
 export const KwentaIcon = ({ width = '25px', height = '25px', ...props }: IconProps) => (
   <Icon width={width} height={height} fill="none" {...props}>

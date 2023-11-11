@@ -53,10 +53,10 @@ export const DashboardActions = () => {
                     <Action label={label} txHash={txHash} timestamp={timestamp.toNumber()} />
                     <Market
                       asset={asset}
-                      leverage={leverage?.toNumber() || null}
+                      leverage={leverage?.toNumber() ?? null}
                       isPosition={isPosition(label)}
                     />
-                    <Currency amount={price?.toNumber() || null} />
+                    <Currency amount={price?.toNumber() ?? null} />
                     {isPosition(label) ? (
                       <Size size={size.toNumber()} marketPrice={price ? price.toNumber() : null} />
                     ) : (

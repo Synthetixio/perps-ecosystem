@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ interface SearchFormData {
   address: string;
 }
 
-export const AddressInput = () => {
+export const AddressInput = (): JSX.Element => {
   const { globalProviders } = useGlobalProvidersWithFallback();
   const L1DefaultProvider = globalProviders.mainnet;
 
@@ -25,12 +25,12 @@ export const AddressInput = () => {
     setInputError(null);
     const address = data.address.trim();
 
-    if (address) {
+    if (address.length > 0) {
       if (address.endsWith('.ens') || !ethers.utils.isAddress(address)) {
         try {
           const ens: string | null = await L1DefaultProvider.resolveName(address);
 
-          if (ens) {
+          if (ens != null) {
             navigate(`/${ens}`);
             return;
           } else {
@@ -50,7 +50,7 @@ export const AddressInput = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={() => handleSubmit(onSubmit)}>
       <Flex alignSelf="end" justifyContent="flex-end" alignItems="center" mb="3px">
         <Input
           placeholder="Search by ENS / address"

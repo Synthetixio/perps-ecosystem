@@ -1,13 +1,13 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import { ethers } from 'ethers';
-import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
+import { type InfuraProvider, type JsonRpcProvider } from '@ethersproject/providers';
 import { infuraId } from './constants';
 import { isStaging } from './isStaging';
 
-type ProviderContextType = {
+interface ProviderContextType {
   provider: ethers.providers.JsonRpcProvider | ethers.providers.InfuraProvider | null;
   setProvider: (rpcUrl: string) => void;
-};
+}
 
 const ProviderContext = createContext<ProviderContextType>({
   provider: null,

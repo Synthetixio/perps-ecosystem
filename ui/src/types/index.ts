@@ -1,13 +1,13 @@
 import Wei from '@synthetixio/wei';
 import { z } from 'zod';
-import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import { type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react';
 import {
-  BoxProps,
-  ButtonProps,
-  GridProps,
-  LayoutProps,
-  SpaceProps,
-  SystemStyleObject,
+  type BoxProps,
+  type ButtonProps,
+  type GridProps,
+  type LayoutProps,
+  type SpaceProps,
+  type SystemStyleObject,
 } from '@chakra-ui/react';
 
 export interface SubgraphPositionData {
@@ -56,22 +56,23 @@ export const PositionDataSchema = z.object({
 });
 export const PositionsDataSchema = z.array(PositionDataSchema);
 
-export interface MarketsByKey {
-  [key: string]: {
+export type MarketsByKey = Record<
+  string,
+  {
     key: string;
     pythId: string;
     asset: string;
-  };
-}
+  }
+>;
 
-export type VariantProps = {
+export interface VariantProps {
   variant?: string;
   tx?: string;
-};
+}
 
-export type SxProps = {
+export interface SxProps {
   sx?: SystemStyleObject & GridProps;
-};
+}
 export type IconProps = BoxProps & { icon: ReactNode } & HTMLAttributes<HTMLDivElement>;
 export type CustomButtonProps = {
   block?: boolean;
