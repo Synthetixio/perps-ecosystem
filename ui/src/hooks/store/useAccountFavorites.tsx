@@ -5,14 +5,18 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 interface AccountFavoritesState {
   accountFavorites: string[];
+  names: { [key: string]: string };
   setAccountFavorites: (addresses: string[]) => void;
+  setNames: (names: { [key: string]: string }) => void;
 }
 
 const useAccountFavoritesStore = create<AccountFavoritesState>()(
   persist(
     immer((set) => ({
       accountFavorites: [],
+      names: {},
       setAccountFavorites: (addresses: string[]) => set({ accountFavorites: addresses }),
+      setNames: (names: { [key: string]: string }) => set({ names }),
     })), {
       name: 'account-favorites',
       storage: createJSONStorage(() => localStorage),
@@ -21,7 +25,7 @@ const useAccountFavoritesStore = create<AccountFavoritesState>()(
 
 const useAccountFavorites = (account?: string) => {
   const {
-    accountFavorites, setAccountFavorites,
+    accountFavorites, names, setAccountFavorites, setNames,
   } = useAccountFavoritesStore();
   const isFavorite = useMemo(() => (account ? accountFavorites.includes(account) : false), [account, accountFavorites]);
 
@@ -30,16 +34,34 @@ const useAccountFavorites = (account?: string) => {
       setAccountFavorites([address, ...accountFavorites]);
     }
   };
+
   const removeAccountFavorite = (address: string) => {
     if (accountFavorites.includes(address)) {
       setAccountFavorites(accountFavorites.filter((account) => account !== address));
+      removeAccountName(address);
     }
   };
+
+  const saveAccountName = ({ address, name }: { address: string, name: string }) => {
+    setNames({ ...names, [address]: name });
+  };
+
+  const removeAccountName = (address: string) => {
+    if (names[address]) {
+      const { ...rest } = Object.fromEntries(Object.entries(names).filter(([key]) => key !== address));
+      setNames(rest);
+    }
+  };
+
+
   return {
     isFavorite,
     accountFavorites,
+    names,
     saveAccountFavorite,
     removeAccountFavorite,
+    saveAccountName,
+    removeAccountName,
   };
 };
 

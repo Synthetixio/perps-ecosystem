@@ -10,10 +10,10 @@ import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
 import { useOwnerKwenta, useOwnerPolynomial } from '../hooks/useOwnerBySmartId';
 import { useEnsName } from '../hooks/useEnsName';
 import { SmartWallet } from '../components/Shared';
-import { truncateAddress } from '../utils';
 import useAccountFavorites from '../hooks/store/useAccountFavorites';
 import CopyButton from '../components/Shared/CopyButton/CopyButton';
 import { StarOutlinedIcon } from '../components/Icons/StarOutlinedIcon';
+import { AccountName } from '../components/Shared/AccountName/AccountName';
 
 export const Account: FC = () => {
   const params = useParams();
@@ -26,7 +26,6 @@ export const Account: FC = () => {
 
   const { polynomialOwner } = useOwnerPolynomial(params?.walletAddress);
 
-  const { addressEnsName } = useEnsName(params?.walletAddress);
   const { addressEnsName: kwentaEnsName } = useEnsName(kwentaOwner);
   const { addressEnsName: polynomialEnsName } = useEnsName(polynomialOwner);
 
@@ -64,7 +63,7 @@ export const Account: FC = () => {
           hasArrow
         >
           <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-            Account: {addressEnsName ? addressEnsName : truncateAddress(walletAddress)}
+            Account: <AccountName address={walletAddress} display='inline-block' />
           </Heading>
         </Tooltip>
         <CopyButton variant='ghost' size='sm' color='white' iconSize='16px' value={walletAddress} />
