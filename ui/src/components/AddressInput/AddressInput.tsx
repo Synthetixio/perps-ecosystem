@@ -1,10 +1,14 @@
 import { ethers } from 'ethers';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { useState } from 'react';
+
+interface SearchFormData {
+  address: string;
+}
 
 export const AddressInput = () => {
   const { globalProviders } = useGlobalProvidersWithFallback();
@@ -13,13 +17,14 @@ export const AddressInput = () => {
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const { register, getValues } = useForm({
+  const { register, getValues, handleSubmit } = useForm<SearchFormData>({
     defaultValues: { address: '' },
   });
 
-  const onSubmit = async () => {
+
+  const onSubmit: SubmitHandler<SearchFormData> = async (data) => {
     setInputError(null);
-    const address = getValues('address');
+    const address = data.address.trim();
 
     if (address) {
       if (address.endsWith('.ens') || !ethers.utils.isAddress(address)) {
@@ -46,36 +51,39 @@ export const AddressInput = () => {
   };
 
   return (
-    <Flex alignSelf="end" width="50%" justifyContent="flex-end" alignItems="center" mb="3px">
-      <Input
-        placeholder="Search by ENS / address"
-        w="50%"
-        minW={{ base: 'auto', md: '250px' }}
-        {...register('address')}
-        alignSelf="end"
-        borderColor={inputError ? 'red.500' : 'gray.900'}
-        isInvalid={!!inputError}
-        onChange={(e) => {
-          if (!e.target.value.trim()) setInputError(null);
-        }}
-        onKeyDown={({ key }) => {
-          if (key === 'Enter') {
-            onSubmit();
-          }
-        }}
-      />
-      <Button
-        variant="unstyled"
-        ml={3}
-        borderWidth="1px"
-        borderColor="gray.900"
-        py="7px"
-        px="12px"
-        borderRadius="7px"
-        onClick={onSubmit}
-      >
-        <SearchIcon color="gray.100" />
-      </Button>
-    </Flex>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Flex alignSelf='end' justifyContent='flex-end' alignItems='center' mb='3px'>
+        <Input
+          placeholder='Search by ENS / address'
+          w='50%'
+          minW={{ base: 'auto', md: '250px' }}
+          {...register('address', {
+            onChange: (e) => {
+              if (!e.target.value.trim()) setInputError(null);
+            },
+          })}
+          alignSelf='end'
+          borderColor={inputError ? 'red.500' : 'gray.900'}
+          isInvalid={!!inputError}
+          onKeyDown={({ key }) => {
+            if (key === 'Enter') {
+              onSubmit(getValues());
+            }
+          }}
+        />
+        <Button
+          variant='unstyled'
+          type='submit'
+          ml={3}
+          borderWidth='1px'
+          borderColor='gray.900'
+          py='7px'
+          px='12px'
+          borderRadius='7px'
+        >
+          <SearchIcon color='gray.100' />
+        </Button>
+      </Flex>
+    </form>
   );
 };
