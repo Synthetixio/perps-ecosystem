@@ -28,16 +28,16 @@ export function useFragment<TType>(
 export function useFragment<TType>(
   _documentNode: DocumentTypeDecoration<TType, any>,
   fragmentType: ReadonlyArray<FragmentType<DocumentTypeDecoration<TType, any>>>
-): ReadonlyArray<TType>;
+): readonly TType[];
 // return array of nullable if `fragmentType` is array of nullable
 export function useFragment<TType>(
   _documentNode: DocumentTypeDecoration<TType, any>,
   fragmentType: ReadonlyArray<FragmentType<DocumentTypeDecoration<TType, any>>> | null | undefined
-): ReadonlyArray<TType> | null | undefined;
+): readonly TType[] | null | undefined;
 export function useFragment<TType>(
   _documentNode: DocumentTypeDecoration<TType, any>,
   fragmentType: FragmentType<DocumentTypeDecoration<TType, any>> | ReadonlyArray<FragmentType<DocumentTypeDecoration<TType, any>>> | null | undefined
-): TType | ReadonlyArray<TType> | null | undefined {
+): TType | readonly TType[] | null | undefined {
   return fragmentType as any;
 }
 
@@ -53,7 +53,7 @@ export function isFragmentReady<TQuery, TFrag>(
   fragmentNode: TypedDocumentNode<TFrag>,
   data: FragmentType<TypedDocumentNode<Incremental<TFrag>, any>> | null | undefined
 ): data is FragmentType<typeof fragmentNode> {
-  const deferredFields = (queryNode as { __meta__?: { deferredFields: Record<string, (keyof TFrag)[]> } }).__meta__
+  const deferredFields = (queryNode as { __meta__?: { deferredFields: Record<string, Array<keyof TFrag>> } }).__meta__
     ?.deferredFields;
 
   if (!deferredFields) return true;

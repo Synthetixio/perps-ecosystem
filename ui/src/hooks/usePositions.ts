@@ -1,15 +1,15 @@
 import { useQuery } from '@apollo/client';
-import { BytesLike } from 'ethers';
+import { type BytesLike } from 'ethers';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
-import Wei from '@synthetixio/wei';
-import { FuturesPosition_OrderBy, OrderDirection } from '../__generated__/graphql';
+import type Wei from '@synthetixio/wei';
+import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
-import { ContractData, SubgraphPositionData } from '../types';
+import { type ContractData, type SubgraphPositionData } from '../types';
 import { POSITIONS_CONTRACT_QUERY } from '../queries/resolved';
 import { useSearchParams } from 'react-router-dom';
 import { useMarketSummaries } from './useMarketSummaries';
 import { generateMarketIds } from './useActions';
-import { InfuraProvider, JsonRpcProvider } from '@ethersproject/providers';
+import { type InfuraProvider, type JsonRpcProvider } from '@ethersproject/providers';
 import { useEthersProvider } from '../utils/ProviderContext';
 import { initMulticall, initPerpsMarketData } from '../utils';
 
@@ -38,13 +38,13 @@ type OrderByDirection = 'asc' | 'desc';
 
 export const usePositions = (accountAddress?: string, accountType?: string) => {
   const [searchParams] = useSearchParams();
-  const marketAddress = searchParams.get('markets') || null;
+  const marketAddress = searchParams.get('markets') ?? null;
   const accountAddressLowerCase = accountAddress?.toLowerCase();
   const { provider } = useEthersProvider();
 
-  const direction = searchParams.get('direction') || 'desc';
+  const direction = searchParams.get('direction') ?? 'desc';
   const orderBy =
-    searchParams.get('orderby') === 'size' ? 'margin' : searchParams.get('orderby') || 'margin';
+    searchParams.get('orderby') === 'size' ? 'margin' : searchParams.get('orderby') ?? 'margin';
   const page = Number(searchParams.get('page')) || 1;
 
   // get market ids from asset name
@@ -93,7 +93,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
     context: {
       provider,
     },
-    skip: marketData?.futuresPositions ? false : true,
+    skip: !marketData?.futuresPositions,
     pollInterval: 1000,
   });
 
@@ -110,7 +110,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   return {
     data: sortedData,
     loading: loading || marketLoading,
-    error: error || marketError,
+    error: error ?? marketError,
   };
 };
 

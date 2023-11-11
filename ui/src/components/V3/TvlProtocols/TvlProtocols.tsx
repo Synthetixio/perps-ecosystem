@@ -1,4 +1,11 @@
-import { Flex, Text, Spinner, FlexProps, Box, Tooltip as ChakraTooltip } from '@chakra-ui/react';
+import {
+  Flex,
+  Text,
+  Spinner,
+  type FlexProps,
+  Box,
+  Tooltip as ChakraTooltip,
+} from '@chakra-ui/react';
 import { InfoIcon } from '@chakra-ui/icons';
 import { ResponsiveContainer, ComposedChart, XAxis, Tooltip, YAxis, Area } from 'recharts';
 import { useTvlProtocols } from '../../../hooks/useTvlProtocols';
@@ -78,7 +85,7 @@ export const TvlProtocols = ({ ...props }: FlexProps) => {
             </Text>
             <ResponsiveContainer minWidth="100%" minHeight={200}>
               <ComposedChart
-                data={data || []}
+                data={data ?? []}
                 margin={{
                   top: 20,
                   right: 30,

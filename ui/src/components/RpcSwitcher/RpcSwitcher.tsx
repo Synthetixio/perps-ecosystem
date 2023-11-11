@@ -47,7 +47,6 @@ export const RpcSwitcher = () => {
       console.log('Error', e);
       setLoading(false);
       setError('Invalid RPC');
-      return;
     }
   };
 

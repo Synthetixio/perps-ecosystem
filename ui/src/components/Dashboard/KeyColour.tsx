@@ -1,4 +1,4 @@
-import { Box, Flex, ThemeTypings, Text, FlexProps } from '@chakra-ui/react';
+import { Box, Flex, type ThemeTypings, Text, type FlexProps } from '@chakra-ui/react';
 
 interface KeyColourProps extends FlexProps {
   colour: ThemeTypings['colors'];

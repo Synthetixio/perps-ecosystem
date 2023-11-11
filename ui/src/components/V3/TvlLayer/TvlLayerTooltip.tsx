@@ -3,14 +3,14 @@ import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../../Dashboard';
 import { format } from 'date-fns';
 
-type TvlSNXTooltipProps = {
+interface TvlSNXTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const TvlLayerTooltip = ({ payload }: TvlSNXTooltipProps) => {
-  const tvlLayer = payload?.[0]?.payload as any;
+  const tvlLayer = payload?.[0]?.payload;
 
   if (!tvlLayer) {
     return null;

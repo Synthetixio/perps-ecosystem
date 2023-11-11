@@ -1,15 +1,15 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { formatNumber } from "@synthetixio/formatters";
-import { KeyColour } from "../KeyColour";
+import { Flex, Text } from '@chakra-ui/react';
+import { formatNumber } from '@synthetixio/formatters';
+import { KeyColour } from '../KeyColour';
 
-type TradersTooltipProps = {
+interface TradersTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const FeesTooltip = ({ payload }: TradersTooltipProps) => {
-  const feesInfo = payload?.[0]?.payload as any;
+  const feesInfo = payload?.[0]?.payload;
 
   if (!feesInfo) {
     return null;
@@ -25,36 +25,18 @@ export const FeesTooltip = ({ payload }: TradersTooltipProps) => {
       borderRadius="md"
       borderWidth="1px"
     >
-      <Text
-        mb={2}
-        fontFamily="heading"
-        color="gray.500"
-        fontSize="12px"
-        lineHeight="16px"
-      >
+      <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
         {feesInfo.label}
       </Text>
       <Flex my={2} justifyContent="space-between" w="100%">
         <KeyColour label="Total Fees" colour="whiteAlpha.400" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(feesInfo.fees)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="All Time Fees" colour="cyan.500" />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-        >
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${formatNumber(feesInfo.cumulativeFees)}
         </Text>
       </Flex>

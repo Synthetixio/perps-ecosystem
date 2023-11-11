@@ -1,4 +1,3 @@
-import React from 'react';
 import { theme, Fonts } from '@synthetixio/v3-theme';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -103,7 +102,7 @@ const router = createBrowserRouter([
 
 const container = document.querySelector('#app');
 
-const root = createRoot(container!);
+const root = createRoot(container as HTMLElement);
 
 const customTheme = extendTheme({
   ...theme,

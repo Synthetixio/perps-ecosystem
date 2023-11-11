@@ -12,7 +12,7 @@ interface MarketSelectProps {
 
 export const MarketSelect = ({ markets, route }: MarketSelectProps) => {
   const [searchParams] = useSearchParams();
-  const initialState = searchParams.get('markets')?.split(',') || [];
+  const initialState = searchParams.get('markets')?.split(',') ?? [];
 
   const [activeAssets, setActiveAssets] = useState<string[]>(initialState);
 

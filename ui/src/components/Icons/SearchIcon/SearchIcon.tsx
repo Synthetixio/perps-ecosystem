@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/react';
+import { Icon, type IconProps } from '@chakra-ui/react';
 
 export const SearchIcon = ({ width = '16px', height = '16px' }: IconProps) => {
   return (

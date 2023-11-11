@@ -1,4 +1,4 @@
-import { Flex, Link, Text, FlexProps } from '@chakra-ui/react';
+import { Flex, Link, Text, type FlexProps } from '@chakra-ui/react';
 import { truncateAddress } from '../../../utils';
 
 interface SmartWalletProps extends FlexProps {

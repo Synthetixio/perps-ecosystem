@@ -1,14 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { KeyColour } from '../KeyColour';
 
-type TradesTooltipProps = {
+interface TradesTooltipProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const TradesTooltip = ({ payload }: TradesTooltipProps) => {
-  const tradesInfo = payload?.[0]?.payload as any;
+  const tradesInfo = payload?.[0]?.payload;
 
   if (!tradesInfo) {
     return null;

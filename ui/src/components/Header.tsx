@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import {
   Flex,
   Text,
@@ -17,6 +17,7 @@ import { AddressInput } from './AddressInput';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { DropdownVersion } from './Shared/DropdownVersion';
 import { RpcSwitcher } from './RpcSwitcher';
+import { FavoriteAction } from './FavoriteAction';
 
 export const Header: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -145,6 +146,7 @@ export const Header: FC = () => {
         </Flex>
         <Flex justifyContent="flex-end">
           <AddressInput />
+          <FavoriteAction />
           <RpcSwitcher />
         </Flex>
       </Flex>

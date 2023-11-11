@@ -1,5 +1,6 @@
-import { Resolvers, gql } from '@apollo/client';
-import Wei, { wei } from '@synthetixio/wei';
+import { type Resolvers, gql } from '@apollo/client';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { utils } from 'ethers';
 import { fetchPositions } from '../hooks';
 import { notNill } from '../utils/notNil';
@@ -46,7 +47,7 @@ export const resolvers: Resolvers | Resolvers[] = {
       _info
     ): Promise<PositionData[]> => {
       const positionsData = await fetchPositions(openPositions, provider);
-      const offchainPrices: { asset: string; price: Wei }[] = [];
+      const offchainPrices: Array<{ asset: string; price: Wei }> = [];
       const pythConfigByMarketKey = await getMarketsPythConfig();
 
       await Promise.all(

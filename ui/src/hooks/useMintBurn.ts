@@ -3,7 +3,7 @@ import { QUERY_KEYS } from '../utils';
 import { useQuery } from '@tanstack/react-query';
 import { format, isAfter, parseISO, subDays } from 'date-fns';
 import { getMintBurns } from '../api/synthetixV3';
-import { DuneMintBurn } from '../api/types';
+import { type DuneMintBurn } from '../api/types';
 
 export interface MintBurn {
   day: string;
@@ -20,9 +20,13 @@ export interface MintBurn {
 }
 
 export const useMintBurn = (queryInterval: 'M' | 'Y' | 'ALL') => {
-  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_MINT_BURN], () => getMintBurns(), {
-    retry: 0,
-  });
+  const { data, isLoading, error } = useQuery(
+    [QUERY_KEYS.GET_MINT_BURN],
+    async () => await getMintBurns(),
+    {
+      retry: 0,
+    }
+  );
   const formattedData = formatData(data, queryInterval);
   const totalToday = getTotalToday(formattedData);
 
@@ -63,7 +67,7 @@ function formatData(data?: DuneMintBurn[], queryInterval?: 'M' | 'Y' | 'ALL') {
         labelType: queryInterval,
         totalSNXSupply,
         totalMintBurn,
-      } as MintBurn;
+      } satisfies MintBurn;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }

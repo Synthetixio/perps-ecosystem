@@ -14,7 +14,7 @@ export interface TvlLayer {
 }
 
 export const useTvlLayers = (queryInterval: 'M' | 'Y' | 'ALL') => {
-  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL], () => getTVLs(), {
+  const { data, isLoading, error } = useQuery([QUERY_KEYS.GET_TVL], async () => await getTVLs(), {
     retry: 0,
   });
   const formattedData = formatData(data?.tvlByLayer, queryInterval);
@@ -51,7 +51,7 @@ function formatData(data?: DuneTvlLayer[], queryInterval?: 'M' | 'Y' | 'ALL') {
         label: format(new Date(parseISO(stat.day)), 'dd/MM'),
         labelType: queryInterval,
         totalSNX,
-      } as TvlLayer;
+      } satisfies TvlLayer;
     })
     .sort((x, y) => (x.day < y.day ? -1 : x.day > y.day ? 1 : 0));
 }

@@ -1,5 +1,5 @@
-import { Fade, Td, Text } from "@chakra-ui/react";
-import { formatNumberToUsd } from "@synthetixio/formatters";
+import { Fade, Td, Text } from '@chakra-ui/react';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 
 interface OpenInterestProps {
   long: number;
@@ -8,12 +8,7 @@ interface OpenInterestProps {
   decimals?: number;
 }
 
-export const OpenInterest = ({
-  long,
-  short,
-  price,
-  decimals = 2,
-}: OpenInterestProps) => {
+export const OpenInterest = ({ long, short, price, decimals = 2 }: OpenInterestProps) => {
   return (
     <Td border="none">
       <Fade in>

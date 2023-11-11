@@ -4,15 +4,15 @@ import { KeyColour } from '../../Dashboard';
 import { BLOCKCHAIN_COLORS } from './TvlProtocols';
 import { format } from 'date-fns';
 
-type TvlProtocolsTooltipProps = {
+interface TvlProtocolsTooltipProps {
   active?: boolean;
   payload?: any[];
   blockchains?: string[];
   label?: string;
-};
+}
 
 export const TvlProtocolsTooltip = ({ payload, blockchains }: TvlProtocolsTooltipProps) => {
-  const tvlProtocols = payload?.[0]?.payload as any;
+  const tvlProtocols = payload?.[0]?.payload;
 
   if (!tvlProtocols) {
     return null;

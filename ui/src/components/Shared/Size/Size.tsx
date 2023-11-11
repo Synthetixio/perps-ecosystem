@@ -1,5 +1,5 @@
-import { Fade, Td, Text } from "@chakra-ui/react";
-import { formatNumberToCurrencyBasedOnSize } from "@synthetixio/formatters";
+import { Fade, Td, Text } from '@chakra-ui/react';
+import { formatNumberToCurrencyBasedOnSize } from '@synthetixio/formatters';
 
 interface SizeProps {
   size: number;
@@ -13,20 +13,10 @@ export const Size = ({ size, marketPrice }: SizeProps) => {
   return (
     <Td border="none">
       <Fade in>
-        <Text
-          fontSize="14px"
-          lineHeight="20px"
-          fontFamily="heading"
-          fontWeight={500}
-        >
+        <Text fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
           {formatNumberToCurrencyBasedOnSize(total)}
         </Text>
-        <Text
-          color="gray.500"
-          fontSize="12px"
-          lineHeight="16px"
-          fontFamily="heading"
-        >
+        <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
           {sizeAbs.toFixed(4)}
         </Text>
       </Fade>

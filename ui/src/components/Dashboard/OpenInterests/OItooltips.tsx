@@ -1,14 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { KeyColour } from '../KeyColour';
 
-type OITooltipsProps = {
+interface OITooltipsProps {
   active?: boolean;
   payload?: any[];
   label?: string;
-};
+}
 
 export const OITooltips = ({ payload }: OITooltipsProps) => {
-  const openInterestInfo = payload?.[0]?.payload as any;
+  const openInterestInfo = payload?.[0]?.payload;
 
   if (!openInterestInfo) {
     return null;

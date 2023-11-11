@@ -1,19 +1,18 @@
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { formatNumber } from '@synthetixio/formatters';
 import { KeyColour } from '../../Dashboard';
-import { BLOCKCHAIN_COLORS } from './Delegation';
+import { BLOCKCHAIN_COLORS, TOKEN_COLORS } from './Delegation';
 import { format } from 'date-fns';
-import { TOKEN_COLORS } from './Delegation';
 
-type DelegationTooltipProps = {
+interface DelegationTooltipProps {
   active?: boolean;
   payload?: any[];
   blockchains?: string[];
   label?: string;
-};
+}
 
 export const DelegationTooltip = ({ payload, blockchains }: DelegationTooltipProps) => {
-  const delegation = payload?.[0]?.payload as any;
+  const delegation = payload?.[0]?.payload;
 
   if (!delegation) {
     return null;
