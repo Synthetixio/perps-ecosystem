@@ -90,7 +90,7 @@ export const calculatePositionData = (
     leverage: calculateLeverage(contractData.size, marketPrice, contractData.remainingMargin),
     funding: netFunding,
     marketPrice,
-    notionalValue: notionalValue,
+    notionalValue,
     fees: subgraphPositionData.fees,
     address: subgraphPositionData.walletAddress,
   };

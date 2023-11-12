@@ -81,8 +81,8 @@ function formatData(data?: DuneDelegation[], queryInterval?: 'M' | 'Y' | 'ALL') 
         dailyDelegations: daily_delegations,
         dailyDelegationsUsd: daily_delegations_USD,
         cumDelegationUsd: cumDelegation * tokenPrice,
-        cumDelegation: cumDelegation,
-        tokenPrice: tokenPrice,
+        cumDelegation,
+        tokenPrice,
       };
 
       prev[day].totalCumDelegations += prev[day][blockchain].cumDelegation;
