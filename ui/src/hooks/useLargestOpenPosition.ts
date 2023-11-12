@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { gql, useApolloClient } from '@apollo/client';
 
 import { MARKETS_ID_QUERY } from '../queries/dashboard';
@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { scale } from '../utils';
 import { utils } from 'ethers';
 import { wei } from '@synthetixio/wei';
-import { getMarketsPythConfig, prices, type PythPrice } from '../utils/pyth';
+import { prices, RealtimeContext, type PythPrice, getMarketsPythConfig } from '../utils/pyth';
 
 const pythItemSchema = z.object({
   pythId: z.union([z.string(), z.undefined()]),
@@ -53,8 +53,10 @@ interface State {
 export function useLargestOpenPosition() {
   const client = useApolloClient();
   const [state, setState] = useState<State>({ loading: true, data: null, error: null });
+  const { arePricesReady } = useContext(RealtimeContext);
 
   useEffect(() => {
+    if (!arePricesReady) return;
     (async () => {
       try {
         const { data: marketsData } = await client.query({
@@ -79,6 +81,7 @@ export function useLargestOpenPosition() {
 
               return null;
             })
+
             .filter((item) => item !== null) || [];
 
         const sizeQuery = generateOpenPositionsQuery(marketIds);
@@ -137,7 +140,7 @@ export function useLargestOpenPosition() {
         setState({ loading: false, data: null, error });
       }
     })();
-  }, [client]);
+  }, [client, arePricesReady]);
 
   return state;
 }

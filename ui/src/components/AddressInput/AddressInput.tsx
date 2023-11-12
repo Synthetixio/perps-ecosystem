@@ -4,7 +4,7 @@ import { Button, Flex, Input } from '@chakra-ui/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
-import { KeyboardEvent, useRef, useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 
 interface SearchFormData {
   address: string;
@@ -12,19 +12,19 @@ interface SearchFormData {
 
 export const AddressInput = (): JSX.Element => {
   const { globalProviders } = useGlobalProvidersWithFallback();
-  const ref = useRef<HTMLInputElement>(null);
 
   const L1DefaultProvider = globalProviders.mainnet;
 
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const { register, getValues } = useForm<SearchFormData>({
+  const { register, getValues, resetField } = useForm<SearchFormData>({
     defaultValues: { address: '' },
   });
 
   const onSubmit: SubmitHandler<SearchFormData> = async (data) => {
     setInputError(null);
+    console.log('data', data);
     const address = data.address.trim();
 
     if (address.length > 0) {
@@ -33,9 +33,7 @@ export const AddressInput = (): JSX.Element => {
           const ens: string | null = await L1DefaultProvider.resolveName(address);
 
           if (ens != null) {
-            if (ref.current) {
-              ref.current.value = '';
-            }
+            resetField('address');
             navigate(`/${ens}`);
           } else {
             setInputError(`Failed to resolve ENS name: ${address}`);
@@ -44,9 +42,7 @@ export const AddressInput = (): JSX.Element => {
           setInputError('Error resolving ENS name');
         }
       } else if (ethers.utils.isAddress(address)) {
-        if (ref.current) {
-          ref.current.value = '';
-        }
+        resetField('address');
         navigate(`/${address}`);
       } else {
         setInputError('Invalid address or ENS name');
@@ -68,14 +64,13 @@ export const AddressInput = (): JSX.Element => {
               if (!e.target.value.trim()) setInputError(null);
             },
           })}
-          ref={ref}
           alignSelf="end"
           borderColor={inputError ? 'red.500 !important' : 'gray.900'}
           isInvalid={!!inputError}
           onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
-              e.currentTarget.blur();
               onSubmit(getValues());
+              e.currentTarget.blur();
             }
           }}
         />

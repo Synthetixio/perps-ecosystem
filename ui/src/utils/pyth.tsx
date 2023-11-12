@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, createContext, useState } from 'react';
 import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { type MarketsByKey } from '../types';
@@ -62,13 +62,32 @@ export interface PythPrice {
   publishTime: number;
 }
 
+export const RealtimeContext = createContext<{ arePricesReady: boolean }>({
+  arePricesReady: false,
+});
+
 export const prices: Record<string, PythPrice> = {};
 
 export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
+  const [arePricesReady, setPricesReady] = useState(false);
+
   useEffect(() => {
     (async () => {
       const pythConfigByMarketKey = await getMarketsPythConfig();
       const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+
+      // Initial cache hit
+      const initialCache = await pyth.getLatestPriceFeeds(pythIds);
+      initialCache?.forEach((price) => {
+        const { id } = price;
+        const priceData = price.getPriceUnchecked();
+
+        if (priceData) {
+          prices[id] = priceData;
+        }
+      });
+
+      setPricesReady(true);
 
       await pyth.subscribePriceFeedUpdates(pythIds, (price) => {
         const { id } = price;
@@ -88,5 +107,5 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  return <>{children}</>;
+  return <RealtimeContext.Provider value={{ arePricesReady }}>{children}</RealtimeContext.Provider>;
 };

@@ -11,7 +11,8 @@ import { useMarketSummaries } from './useMarketSummaries';
 import { generateMarketIds } from './useActions';
 import { type InfuraProvider, type JsonRpcProvider } from '@ethersproject/providers';
 import { useEthersProvider } from '../utils/ProviderContext';
-import { initMulticall, initPerpsMarketData } from '../utils';
+import { RealtimeContext, initMulticall, initPerpsMarketData } from '../utils';
+import { useContext } from 'react';
 
 export interface PositionType {
   accountType: string;
@@ -41,6 +42,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
   const marketAddress = searchParams.get('markets') ?? null;
   const accountAddressLowerCase = accountAddress?.toLowerCase();
   const { provider } = useEthersProvider();
+  const { arePricesReady } = useContext(RealtimeContext);
 
   const direction = searchParams.get('direction') ?? 'desc';
   const orderBy =
@@ -69,6 +71,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
       skip: (page - 1) * 50,
     },
     pollInterval: 10000,
+    skip: !arePricesReady,
   });
 
   const openPositions = marketData?.futuresPositions.map((item) => ({

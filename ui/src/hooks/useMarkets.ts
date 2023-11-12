@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { useApolloClient } from '@apollo/client';
 import type Wei from '@synthetixio/wei';
 import { wei } from '@synthetixio/wei';
@@ -15,6 +15,7 @@ import {
   initMulticall,
   initPerpsMarketData,
   prices,
+  RealtimeContext,
 } from '../utils';
 import { type PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
@@ -49,8 +50,11 @@ interface StateInterface {
 
 export function useMarkets() {
   const [state, setState] = useState<StateInterface>({ loading: true, data: null, error: null });
+  const [counter, setCounter] = useState(0);
+
   const client = useApolloClient();
   const { upper, lower } = getDateRange(2, 3);
+  const { arePricesReady } = useContext(RealtimeContext);
 
   const { provider } = useEthersProvider();
 
@@ -58,6 +62,16 @@ export function useMarkets() {
   const perpsV2MarketData = useMemo(() => initPerpsMarketData(provider), [provider]);
 
   useEffect(() => {
+    const id = setInterval(() => {
+      setCounter((counter) => counter + 1);
+    }, 5000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!arePricesReady) return;
+
     (async () => {
       try {
         const { data: marketData } = await client.query({
@@ -107,7 +121,7 @@ export function useMarkets() {
         setState({ loading: false, data: null, error });
       }
     })();
-  }, [client, upper, lower, perpsV2MarketData, multicall]);
+  }, [client, upper, lower, perpsV2MarketData, multicall, arePricesReady, counter]);
 
   return state;
 }
