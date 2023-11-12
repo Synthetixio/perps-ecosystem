@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client';
-import Wei, { wei } from '@synthetixio/wei';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { useSearchParams } from 'react-router-dom';
 import { FUTURES_TRADE_QUERY, MARGIN_TRANSFERRED_QUERY } from '../queries/actions';
 import {
-  FuturesMarginTransferQuery,
+  type FuturesMarginTransferQuery,
   FuturesMarginTransfer_OrderBy,
-  FuturesTradesQuery,
+  type FuturesTradesQuery,
   FuturesTrade_OrderBy,
   OrderDirection,
 } from '../__generated__/graphql';
@@ -67,7 +68,7 @@ export const getTradeLabel = (futuresTrade: FuturesTradesQuery['futuresTrades'][
   return tradeTypeHandlers[futuresTrade.type]?.() || tradeTypeHandlers.Unknown();
 };
 
-export type ActionData = {
+export interface ActionData {
   id: string;
   label: string;
   txHash: string;
@@ -78,7 +79,7 @@ export type ActionData = {
   size: Wei;
   fees: Wei | null;
   leverage: Wei | null;
-};
+}
 const mergeData = (
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
   marginData?: FuturesMarginTransferQuery['futuresMarginTransfers']
@@ -123,7 +124,7 @@ const mergeData = (
 };
 
 export function generateMarketIds(
-  marketSummaries: { asset: string; address: string }[],
+  marketSummaries: Array<{ asset: string; address: string }>,
   markets: string | null
 ): string[] | undefined {
   if (!markets || !marketSummaries) return undefined;
@@ -135,7 +136,7 @@ export function generateMarketIds(
   marketsList.forEach((market) => {
     const marketConfig = marketSummaries.find((item) => item.asset === market);
 
-    if (marketConfig && marketConfig.address) {
+    if (marketConfig?.address) {
       result.push(marketConfig.address);
     }
   });
@@ -149,8 +150,8 @@ export const useActions = (account?: string, limit?: number) => {
   const accountLower = account?.toLowerCase();
   const markets = generateMarketIds(marketConfigs, searchParams.get('markets'));
 
-  const min = searchParams.get('min') || undefined;
-  const max = searchParams.get('max') || undefined;
+  const min = searchParams.get('min') ?? undefined;
+  const max = searchParams.get('max') ?? undefined;
 
   const {
     loading: marginLoading,
@@ -160,7 +161,7 @@ export const useActions = (account?: string, limit?: number) => {
     pollInterval: 10000,
     skip: marketConfigsLoading,
     variables: {
-      first: limit ? limit : 50,
+      first: limit ?? 50,
       orderBy: FuturesMarginTransfer_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
@@ -180,7 +181,7 @@ export const useActions = (account?: string, limit?: number) => {
     pollInterval: 10000,
     skip: marketConfigsLoading,
     variables: {
-      first: limit ? limit : 50,
+      first: limit ?? 50,
       orderBy: FuturesTrade_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
       where: {
@@ -200,6 +201,6 @@ export const useActions = (account?: string, limit?: number) => {
   return {
     loading: marginLoading || futuresTradesLoading || marketConfigsLoading,
     data: sortedData,
-    error: marginError || futuresError,
+    error: marginError ?? futuresError,
   };
 };

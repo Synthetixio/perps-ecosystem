@@ -18,7 +18,7 @@ interface DropdownProps {
 
 export const DropdownFilter = ({ route, options, queryParam, label }: DropdownProps) => {
   const [searchParams] = useSearchParams();
-  const initialOptionValue = searchParams.get(queryParam) || options[0].value;
+  const initialOptionValue = searchParams.get(queryParam) ?? options[0].value;
 
   const [activeOptionValue, setActiveOptionValue] = useState<string>(initialOptionValue);
 

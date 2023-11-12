@@ -1,24 +1,26 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { useApolloClient } from '@apollo/client';
-import Wei, { wei } from '@synthetixio/wei';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { z } from 'zod';
 import { MARKETS_QUERY } from '../queries/dashboard';
 import { DailyMarketStat_OrderBy } from '../__generated__/graphql';
 import { getDateRange } from './useMarketStats';
-import { BytesLike, utils } from 'ethers';
+import { type BytesLike, utils } from 'ethers';
 import {
   calculateMarkPrice,
   getMarketsPythConfig,
-  PythConfigByMarketKey,
+  type PythConfigByMarketKey,
   scale,
   initMulticall,
   initPerpsMarketData,
   prices,
+  RealtimeContext,
 } from '../utils';
-import { PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
+import { type PerpsV2MarketData } from '@synthetixio/contracts/build/mainnet-ovm/deployment/PerpsV2MarketData';
 import { ZodStringToWei } from './useLargestOpenPosition';
 import { useEthersProvider } from '../utils/ProviderContext';
-import { Multicall3 } from './contracts/optimism-goerli/Multicall3';
+import { type Multicall3 } from './contracts/optimism-goerli/Multicall3';
 
 const DataSchema = z.object({
   market: z.object({
@@ -42,14 +44,17 @@ const DataSchema = z.object({
 
 interface StateInterface {
   loading: boolean;
-  data: z.infer<typeof DataSchema>[] | null;
+  data: Array<z.infer<typeof DataSchema>> | null;
   error: unknown | null;
 }
 
 export function useMarkets() {
   const [state, setState] = useState<StateInterface>({ loading: true, data: null, error: null });
+  const [counter, setCounter] = useState(0);
+
   const client = useApolloClient();
   const { upper, lower } = getDateRange(2, 3);
+  const { arePricesReady } = useContext(RealtimeContext);
 
   const { provider } = useEthersProvider();
 
@@ -57,6 +62,16 @@ export function useMarkets() {
   const perpsV2MarketData = useMemo(() => initPerpsMarketData(provider), [provider]);
 
   useEffect(() => {
+    const id = setInterval(() => {
+      setCounter((counter) => counter + 1);
+    }, 5000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!arePricesReady) return;
+
     (async () => {
       try {
         const { data: marketData } = await client.query({
@@ -82,10 +97,10 @@ export function useMarkets() {
           });
 
           // In the off chance there was no volume yesterday we add a small amount
-          const yesterdayVolume = wei(yesterday?.volume || 1, 18, true).add(wei(1).toBN());
+          const yesterdayVolume = wei(yesterday?.volume ?? 1, 18, true).add(wei(1).toBN());
 
           const percentageDifference = wei(market.volume, 18, true)
-            .sub(wei(yesterday?.volume || 0, 18, true))
+            .sub(wei(yesterday?.volume ?? 0, 18, true))
             .div(yesterdayVolume);
 
           return {
@@ -106,7 +121,7 @@ export function useMarkets() {
         setState({ loading: false, data: null, error });
       }
     })();
-  }, [client, upper, lower, perpsV2MarketData, multicall]);
+  }, [client, upper, lower, perpsV2MarketData, multicall, arePricesReady, counter]);
 
   return state;
 }
@@ -132,7 +147,7 @@ export async function fetchMarkets(
   pythConfigByMarketKey: PythConfigByMarketKey,
   perpsMarketDataContract: PerpsV2MarketData,
   multicall: Multicall3
-): Promise<z.infer<typeof DataSchema>[] | null> {
+): Promise<Array<z.infer<typeof DataSchema>> | null> {
   try {
     const allMarketSummaries = {
       target: perpsMarketDataContract.address,

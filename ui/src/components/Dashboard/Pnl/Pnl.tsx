@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flex, Text, FlexProps, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Text, type FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../KeyColour';
 import { PnlTooltip } from './PnlTooltip';
@@ -49,8 +49,8 @@ export const Pnl = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6}>
-          <KeyColour label="STAKERS" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="DAILY FEE" colour="cyan.500" />
+          <KeyColour label="DAILY FEE" colour="whiteAlpha.400" />
+          <KeyColour ml={4} label="STAKERS" colour="cyan.500" />
           <KeyColour ml={4} label="LOSS" colour="pink.300" />
           <KeyColour ml={4} label="PROFIT" colour="teal.300" />
         </Flex>

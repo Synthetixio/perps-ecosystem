@@ -31,7 +31,7 @@ type CurrencyKey =
   | 'BCH'
   | 'SHIB'
   | 'CRV'
-  | string; //TODO Fix
+  | string;
 
 interface CurrencyIconProps {
   currencyKey: CurrencyKey;
@@ -39,13 +39,17 @@ interface CurrencyIconProps {
   height?: number;
 }
 
-const parseCurrencyKey = (currencyKey: CurrencyKey) => {
+const parseCurrencyKey = (currencyKey: CurrencyKey): string => {
   if (currencyKey === 'sETH') return 'ETH';
   if (currencyKey === 'sBTC') return 'BTC';
   return currencyKey;
 };
 
-export const CurrencyIcon = ({ currencyKey, width = 30, height = 30 }: CurrencyIconProps) => {
+export const CurrencyIcon = ({
+  currencyKey,
+  width = 30,
+  height = 30,
+}: CurrencyIconProps): JSX.Element => {
   return (
     <img
       src={`https://synthetixio.github.io/synthetix-assets/markets/${parseCurrencyKey(

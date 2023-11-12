@@ -1,5 +1,6 @@
-import Wei, { wei } from '@synthetixio/wei';
-import { SubgraphPositionData, ContractData } from '../types';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
+import { type SubgraphPositionData, type ContractData } from '../types';
 
 export function calculateLeverage(size: Wei, markPrice: Wei, margin: Wei) {
   if (size.eq(0)) return wei(0);
@@ -77,7 +78,7 @@ export const calculatePositionData = (
 
   return {
     asset: subgraphPositionData.asset,
-    indexPrice: pythPrice ? pythPrice : contractData.indexPrice,
+    indexPrice: pythPrice ?? contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
     unrealizedPnl,
     realizedPnl,
@@ -89,7 +90,7 @@ export const calculatePositionData = (
     leverage: calculateLeverage(contractData.size, marketPrice, contractData.remainingMargin),
     funding: netFunding,
     marketPrice,
-    notionalValue: notionalValue,
+    notionalValue,
     fees: subgraphPositionData.fees,
     address: subgraphPositionData.walletAddress,
   };

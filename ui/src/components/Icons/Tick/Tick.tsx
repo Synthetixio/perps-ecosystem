@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/react';
+import { Icon, type IconProps } from '@chakra-ui/react';
 
 export const Tick = ({ width = '13px', height = '12px', ...props }: IconProps) => {
   return (

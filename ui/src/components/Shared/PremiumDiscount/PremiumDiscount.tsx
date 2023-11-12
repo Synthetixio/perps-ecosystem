@@ -1,15 +1,12 @@
-import { Fade, Td, Text } from "@chakra-ui/react";
-import { formatNumber } from "@synthetixio/formatters";
+import { Fade, Td, Text } from '@chakra-ui/react';
+import { formatNumber } from '@synthetixio/formatters';
 
 interface PremiumDiscountProps {
   amount: number;
   decimals?: number;
 }
 
-export const PremiumDiscount = ({
-  amount,
-  decimals = 4,
-}: PremiumDiscountProps) => {
+export const PremiumDiscount = ({ amount, decimals = 4 }: PremiumDiscountProps) => {
   const isPositive = amount >= 0;
   return (
     <Td border="none">
@@ -19,21 +16,16 @@ export const PremiumDiscount = ({
           fontWeight={500}
           fontSize="14px"
           lineHeight="20px"
-          color={isPositive ? "green.500" : "red.500"}
+          color={isPositive ? 'green.500' : 'red.500'}
         >
-          {isPositive ? "+" : ""}
+          {isPositive ? '+' : ''}
           {formatNumber(amount, {
             minimumFractionDigits: decimals,
             maximumFractionDigits: decimals,
           })}
         </Text>
-        <Text
-          color="gray.500"
-          fontSize="12px"
-          lineHeight="16px"
-          fontFamily="heading"
-        >
-          {isPositive ? "+" : ""}
+        <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
+          {isPositive ? '+' : ''}
           {formatNumber(amount * 100, {
             minimumFractionDigits: decimals,
             maximumFractionDigits: decimals,

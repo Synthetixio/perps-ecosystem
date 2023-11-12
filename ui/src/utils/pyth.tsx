@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { ReactNode, useEffect } from 'react';
+import { type ReactNode, useEffect, createContext, useState } from 'react';
 import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
-import { MarketsByKey } from '../types';
+import { type MarketsByKey } from '../types';
 
 export const pyth = new EvmPriceServiceConnection('https://xc-mainnet.pyth.network');
 
@@ -31,12 +31,12 @@ const formatAssetToPerpName = (x: string) => {
   return `s${x}PERP`;
 };
 
-export const getMarketsPythConfig = () => {
+export const getMarketsPythConfig = async () => {
   const network = isStaging ? 'goerli-ovm' : 'mainnet-ovm';
   const url = `https://raw.githubusercontent.com/Synthetixio/synthetix/master/publish/deployed/${network}/offchain-feeds.json`;
 
-  return fetch(url)
-    .then((response) => response.json())
+  return await fetch(url)
+    .then(async (response) => await response.json())
     .then((json) => {
       const parsedJson = OffchainFeedSchema.parse(json);
       return parsedJson
@@ -62,13 +62,32 @@ export interface PythPrice {
   publishTime: number;
 }
 
-export const prices: { [key: string]: PythPrice } = {};
+export const RealtimeContext = createContext<{ arePricesReady: boolean }>({
+  arePricesReady: false,
+});
+
+export const prices: Record<string, PythPrice> = {};
 
 export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
+  const [arePricesReady, setPricesReady] = useState(false);
+
   useEffect(() => {
     (async () => {
       const pythConfigByMarketKey = await getMarketsPythConfig();
       const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+
+      // Initial cache hit
+      const initialCache = await pyth.getLatestPriceFeeds(pythIds);
+      initialCache?.forEach((price) => {
+        const { id } = price;
+        const priceData = price.getPriceUnchecked();
+
+        if (priceData) {
+          prices[id] = priceData;
+        }
+      });
+
+      setPricesReady(true);
 
       await pyth.subscribePriceFeedUpdates(pythIds, (price) => {
         const { id } = price;
@@ -88,5 +107,5 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  return <>{children}</>;
+  return <RealtimeContext.Provider value={{ arePricesReady }}>{children}</RealtimeContext.Provider>;
 };

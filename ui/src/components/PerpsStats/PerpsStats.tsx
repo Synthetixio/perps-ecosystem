@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@chakra-ui/icons';
+import { Icon, type IconProps } from '@chakra-ui/icons';
 
 export const PerpsStats = ({ width = '88px', height = '15px', ...props }: IconProps) => (
   <Icon width={width} height={height} viewBox="0 0 88 15" fill="none" {...props}>

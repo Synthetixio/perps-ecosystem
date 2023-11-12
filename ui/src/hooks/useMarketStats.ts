@@ -26,9 +26,9 @@ export function useMarketStats(first?: number) {
 
   // First, we want to get the highest for the current and previous day
   const todaysResults =
-    marketsData?.dailyMarketStats.filter((market) => market.day === upper).slice(0, first) || [];
+    marketsData?.dailyMarketStats.filter((market) => market.day === upper).slice(0, first) ?? [];
   const yesterdaysResults =
-    marketsData?.dailyMarketStats.filter((market) => market.day === lower) || [];
+    marketsData?.dailyMarketStats.filter((market) => market.day === lower) ?? [];
 
   // Then we want to get the difference between the current day and the previous day
   const data = todaysResults.map((market) => {
@@ -39,8 +39,8 @@ export function useMarketStats(first?: number) {
 
     // In the off chance there was no volume yesterday we set volume to 0
     const percentageDifference = wei(market.volume, 18, true)
-      .sub(wei(yesterday?.volume || 0, 18, true))
-      .div(wei(yesterday?.volume || 1, 18, true));
+      .sub(wei(yesterday?.volume ?? 0, 18, true))
+      .div(wei(yesterday?.volume ?? 1, 18, true));
 
     return {
       ...market,

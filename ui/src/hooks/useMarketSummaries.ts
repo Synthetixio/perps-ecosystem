@@ -4,7 +4,7 @@ import { initPerpsMarketData } from '../utils';
 import { useEthersProvider } from '../utils/ProviderContext';
 
 export const useMarketSummaries = () => {
-  const [data, setData] = useState<{ asset: string; address: string }[]>([]);
+  const [data, setData] = useState<Array<{ asset: string; address: string }>>([]);
   const { provider } = useEthersProvider();
 
   const perpsMarketDataContract = useMemo(() => initPerpsMarketData(provider), [provider]);

@@ -6,9 +6,10 @@ import { generateMarketIds } from './useActions';
 import {
   PositionLiquidated_OrderBy,
   OrderDirection,
-  PositionsLiquidatedQuery,
+  type PositionsLiquidatedQuery,
 } from '../__generated__/graphql';
-import Wei, { wei } from '@synthetixio/wei';
+import type Wei from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 
 interface QueryLiquidation {
   __typename?: 'PositionLiquidated';

@@ -1,5 +1,5 @@
-import { Fade, Td } from "@chakra-ui/react";
-import { formatNumberToUsd } from "@synthetixio/formatters";
+import { Fade, Td } from '@chakra-ui/react';
+import { formatNumberToUsd } from '@synthetixio/formatters';
 
 interface FundingProps {
   amount: number;
@@ -16,11 +16,9 @@ export const Funding = ({ amount, withDollar = true }: FundingProps) => {
       lineHeight="20px"
       fontFamily="heading"
       fontWeight={500}
-      color={isPositive ? "green.500" : "red.500"}
+      color={isPositive ? 'green.500' : 'red.500'}
     >
-      <Fade in>
-        {withDollar ? formatNumberToUsd(amount) : amount.toFixed(6)}
-      </Fade>
+      <Fade in>{withDollar ? formatNumberToUsd(amount) : amount.toFixed(6)}</Fade>
     </Td>
   );
 };

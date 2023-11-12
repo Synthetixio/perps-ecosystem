@@ -1,5 +1,5 @@
-import { Fade, Td, Text } from "@chakra-ui/react";
-import { formatNumberToUsd, formatPercent } from "@synthetixio/formatters";
+import { Fade, Td, Text } from '@chakra-ui/react';
+import { formatNumberToUsd, formatPercent } from '@synthetixio/formatters';
 
 interface PnLProps {
   pnl: number;
@@ -15,18 +15,13 @@ export const PnL = ({ pnl, pnlPercentage }: PnLProps) => {
           fontWeight={500}
           fontSize="14px"
           lineHeight="20px"
-          color={pnl >= 0 ? "green.500" : "red.500"}
+          color={pnl >= 0 ? 'green.500' : 'red.500'}
         >
-          {`${pnl >= 0 ? "+" : ""}${formatNumberToUsd(pnl)}`}
+          {`${pnl >= 0 ? '+' : ''}${formatNumberToUsd(pnl)}`}
         </Text>
         {pnlPercentage === undefined ? null : (
-          <Text
-            color="gray.500"
-            fontSize="12px"
-            lineHeight="16px"
-            fontFamily="heading"
-          >
-            {pnlPercentage >= 0 ? "+" : ""}
+          <Text color="gray.500" fontSize="12px" lineHeight="16px" fontFamily="heading">
+            {pnlPercentage >= 0 ? '+' : ''}
             {formatPercent(pnlPercentage)}
           </Text>
         )}

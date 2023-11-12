@@ -50,17 +50,17 @@ export const AccountActionsTable = () => {
                   <Action label={label} timestamp={timestamp.toNumber()} txHash={txHash} />
                   <Market
                     asset={asset}
-                    leverage={leverage?.toNumber() || null}
+                    leverage={leverage?.toNumber() ?? null}
                     isPosition={isPosition(label)}
                     protocol={protocol}
                   />
-                  <Currency amount={price?.toNumber() || null} />
+                  <Currency amount={price?.toNumber() ?? null} />
                   {isPosition(label) ? (
-                    <Size size={size.toNumber()} marketPrice={price?.toNumber() || null} />
+                    <Size size={size.toNumber()} marketPrice={price?.toNumber() ?? null} />
                   ) : (
                     <MarginTransfer size={size.toNumber()} />
                   )}
-                  <Currency amount={fees?.toNumber() || null} />
+                  <Currency amount={fees?.toNumber() ?? null} />
                 </Tr>
               );
             })}
