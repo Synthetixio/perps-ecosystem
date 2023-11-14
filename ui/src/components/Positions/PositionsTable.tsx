@@ -34,6 +34,8 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
   const error = walletError ?? kwentaError ?? polyError;
   const data = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
 
+  console.log('the data: ', data);
+
   const noData = !data.length;
 
   return (

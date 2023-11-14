@@ -5,3 +5,4 @@ export * from './useMarketStats';
 export * from './useMarkets';
 export * from './useLargestOpenPosition';
 export * from './useLiquidations';
+export * from './useTraderPnl';

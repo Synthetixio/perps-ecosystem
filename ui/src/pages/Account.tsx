@@ -3,7 +3,7 @@ import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
-import { PositionsTable } from '../components/Positions';
+import { ClosedPositionsTable, PositionsTable } from '../components/Positions';
 import { AccountActionsTable } from '../components/Actions';
 import { useKwentaAccount } from '../hooks/useKwentaAccount';
 import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
@@ -14,6 +14,7 @@ import useAccountFavorites from '../hooks/store/useAccountFavorites';
 import CopyButton from '../components/Shared/CopyButton/CopyButton';
 import { StarOutlinedIcon } from '../components/Icons/StarOutlinedIcon';
 import { AccountName } from '../components/Shared/AccountName/AccountName';
+import { AccountPnl } from '../components/Actions/Account';
 
 export const Account: FC = () => {
   const params = useParams();
@@ -107,9 +108,13 @@ export const Account: FC = () => {
           />
         )}
       </Flex>
+      <Flex justifyContent="space-between">
+        <AccountPnl />
+        <ClosedPositionsTable />
+      </Flex>
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
-          Positions
+          Open Positions
         </Heading>
         <PositionsTable
           kwentaAccount={kwentaAccount?.account ? kwentaAccount.account : ''}

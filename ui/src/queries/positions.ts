@@ -26,6 +26,10 @@ export const POSITIONS_QUERY_MARKET = gql(`
       long
       size
       isLiquidated
+      openTimestamp
+      closeTimestamp
+      trades
+      txHash
     }
   }
 `);
