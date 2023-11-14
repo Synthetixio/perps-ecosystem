@@ -5,7 +5,7 @@ import { wei } from '@synthetixio/wei';
 import { RealtimeContext } from '../utils';
 import { useContext, useEffect, useState } from 'react';
 
-interface ProcessedPnlData {
+export interface ProcessedPnlData {
   pnl: number;
   totalPnl: number;
   timestamp: string;
@@ -47,8 +47,6 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
         .sort((a, b) => parseInt(a.openTimestamp) - parseInt(b.openTimestamp))
         .filter((item) => !item.isOpen);
 
-      // setClosedPositions(sortedAndFilteredData);
-      console.log(sortedAndFilteredData);
       const processedData = sortedAndFilteredData
 
         .map((item) => {
@@ -78,13 +76,13 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
 
       setProcessedData(processedData);
     }
-  }, [traderPnlData, traderPnlQueryLoading, traderPnlQueryError, period]);
+  }, [traderPnlData, period]);
 
   return {
-    data: processedData,
+    data: traderPnlData,
     loading: traderPnlQueryLoading,
     error: traderPnlQueryError,
-    traderPnlData,
+    processedData,
   };
 };
 
@@ -105,9 +103,7 @@ function getUnixTimestamp(period: string): string {
       throw new Error(`Invalid period: ${period}`);
   }
 
-  console.log('Date', date);
   const unixTimestamp = Math.floor(date.getTime() / 1000);
-  console.log('unixTimestamp', unixTimestamp);
 
   return unixTimestamp.toString();
 }

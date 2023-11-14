@@ -1,4 +1,15 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text, Button, Td } from '@chakra-ui/react';
+import {
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Tbody,
+  Flex,
+  Text,
+  Button,
+  Td,
+  type FlexProps,
+} from '@chakra-ui/react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { TableHeaderCell, PnL, Market } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
@@ -7,7 +18,7 @@ import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { Action } from '../Shared/Action';
 
-export const ClosedPositionsTable = () => {
+export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
   const { walletAddress } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -31,15 +42,14 @@ export const ClosedPositionsTable = () => {
     });
   };
 
-  const { traderPnlData, loading, error } = useTraderPnl(walletAddress, 'M');
+  const { data, loading, error } = useTraderPnl(walletAddress, 'M');
 
-  const noData = !traderPnlData?.futuresPositions.length;
+  const noData = !data?.futuresPositions.length;
 
   return (
     <>
       <TableContainer
-        maxW="100%"
-        width={'49%'}
+        width="100%"
         height={500}
         my={5}
         borderColor="gray.900"
@@ -69,7 +79,7 @@ export const ClosedPositionsTable = () => {
                   <PositionsLoading />
                 </>
               )}
-              {traderPnlData?.futuresPositions
+              {data?.futuresPositions
                 .sort((a, b) => parseInt(b.openTimestamp) - parseInt(a.openTimestamp))
                 .filter((item) => !item.isOpen)
                 .map(
@@ -130,7 +140,7 @@ export const ClosedPositionsTable = () => {
           {!loading && !error && noData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No open positions
+                No closed positions
               </Text>
             </Flex>
           )}

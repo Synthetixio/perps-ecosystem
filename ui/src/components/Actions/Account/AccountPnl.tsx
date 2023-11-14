@@ -23,13 +23,14 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
   const params = useParams();
   const walletAddress = params?.walletAddress ?? '';
 
-  const { data, loading, error } = useTraderPnl(walletAddress, state);
-  console.log('pnldata', data);
-  const totalPnlAmount = data?.[data.length - 1]?.totalPnl;
+  const { processedData, loading, error } = useTraderPnl(walletAddress, state);
+  const totalPnlAmount = processedData?.[processedData.length - 1]?.totalPnl;
+
   return (
     <>
       <Flex
-        width="49%"
+        height={500}
+        width="100%"
         my={5}
         borderColor="gray.900"
         borderWidth="1px"
@@ -59,26 +60,25 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
           <KeyColour ml={4} label="PROFIT" colour="teal.300" />
         </Flex>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" height="100%" minHeight={200}>
+          <Flex justifyContent="center" alignItems="center" height="100%" width="100%">
             <Spinner size="xl" />
           </Flex>
         ) : (
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
               $
-              {totalPnlAmount.toLocaleString('en-US', {
+              {totalPnlAmount?.toLocaleString('en-US', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })
-              }
+              })}
             </Text>
 
-            {data && (
+            {processedData && (
               <ResponsiveContainer minWidth="100%" minHeight={200}>
                 <ComposedChart
                   width={500}
                   height={400}
-                  data={data}
+                  data={processedData}
                   margin={{
                     top: 20,
                     right: 20,
@@ -102,7 +102,7 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
                   <Area type="monotone" dataKey="totalPnl" fill="#464657" stroke="0" />
 
                   <Bar dataKey="pnl" barSize={102}>
-                    {data.map((entry, index) => (
+                    {processedData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.pnl > 0 ? '#4FD1C5' : '#F471FF'} />
                     ))}
                   </Bar>

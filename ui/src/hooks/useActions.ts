@@ -104,8 +104,6 @@ const mergeData = (
     };
   });
 
-  console.log('parsedMarginData', parsedMarginData);
-
   const parsedTradeData: ActionData[] = futuresTradesData.map((futuresTrade) => {
     return {
       label: getTradeLabel(futuresTrade),
@@ -120,8 +118,6 @@ const mergeData = (
       leverage: null, // todo add leverage
     };
   });
-
-  console.log('parsedTradeData', parsedTradeData);
 
   const data = parsedMarginData.concat(parsedTradeData);
   return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
@@ -182,8 +178,6 @@ export const useActions = (account?: string, limit?: number) => {
     },
   });
 
-  console.log('marginData', marginData);
-
   const {
     loading: futuresTradesLoading,
     data: futuresTradesData,
@@ -204,8 +198,6 @@ export const useActions = (account?: string, limit?: number) => {
       },
     },
   });
-
-  console.log('futuresTradesData', futuresTradesData);
 
   const sortedData = mergeData(
     futuresTradesData?.futuresTrades,

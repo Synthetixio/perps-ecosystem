@@ -108,10 +108,27 @@ export const Account: FC = () => {
           />
         )}
       </Flex>
-      <Flex justifyContent="space-between">
-        <AccountPnl />
-        <ClosedPositionsTable />
+
+      {/* Headers and Tables */}
+      <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mt={8}>
+        {/* Account PNL Section */}
+        <Box flex={1} mr={{ md: 4 }}>
+          <Heading fontSize="18px" lineHeight="28px" mb={4}>
+            Account PNL
+          </Heading>
+          <AccountPnl />
+        </Box>
+
+        {/* Recently Closed Positions Section */}
+        <Box flex={1} ml={{ md: 4 }}>
+          <Heading fontSize="18px" lineHeight="28px" mb={4}>
+            Recently Closed Positions
+          </Heading>
+          <ClosedPositionsTable />
+        </Box>
       </Flex>
+
+      {/* Open Positions Section */}
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Open Positions
@@ -121,6 +138,8 @@ export const Account: FC = () => {
           polynomialAccount={polynomialAccount?.account ? polynomialAccount.account : ''}
         />
       </Box>
+
+      {/* Actions Section */}
       <Box mt={6}>
         <Heading fontSize="18px" lineHeight="28px">
           Actions

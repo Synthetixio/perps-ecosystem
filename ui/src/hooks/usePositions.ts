@@ -37,7 +37,11 @@ export interface PositionType {
 type OrderByKeys = 'realizedPnl' | 'unrealizedPnl' | 'margin';
 type OrderByDirection = 'asc' | 'desc';
 
-export const usePositions = (accountAddress?: string, accountType?: string) => {
+export const usePositions = (
+  accountAddress?: string,
+  accountType?: string,
+  marketFilter: boolean = true
+) => {
   const [searchParams] = useSearchParams();
   const marketAddress = searchParams.get('markets') ?? null;
   const accountAddressLowerCase = accountAddress?.toLowerCase();
@@ -63,7 +67,7 @@ export const usePositions = (accountAddress?: string, accountType?: string) => {
       where: {
         isOpen: false,
         trader: accountAddressLowerCase,
-        market_in: marketsFilter,
+        market_in: marketFilter ? marketsFilter : undefined,
       },
       orderBy: orderBy as FuturesPosition_OrderBy,
       orderDirection: direction as OrderDirection,
