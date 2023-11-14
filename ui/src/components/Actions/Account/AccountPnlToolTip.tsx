@@ -34,13 +34,16 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
         {pnlInfo.date}
       </Text>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="PNL" colour={pnlInfo.pnl > 0 ? '#4FD1C5' : '#F471FF'} />
+        <KeyColour
+          label={pnlInfo.pnl > 0 ? 'Profit' : 'Loss'}
+          colour={pnlInfo.pnl > 0 ? '#4FD1C5' : '#F471FF'}
+        />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${pnlInfo.pnl.toLocaleString('en-US', formatNumberOptions)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Total PNL" colour="cyan.400" />
+        <KeyColour label="Total PNL" colour="whiteAlpha.400" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
           ${pnlInfo.totalPnl.toLocaleString('en-US', formatNumberOptions)}
         </Text>

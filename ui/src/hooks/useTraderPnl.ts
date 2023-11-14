@@ -19,7 +19,6 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
   const { arePricesReady } = useContext(RealtimeContext);
 
   const [processedData, setProcessedData] = useState<ProcessedPnlData[]>([]);
-  // const [closedPositions, setClosedPositions] = useState<FuturesPosition[]>([]);
 
   const timestamper = getUnixTimestamp(period ?? 'M');
 

@@ -24,7 +24,8 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
   const walletAddress = params?.walletAddress ?? '';
 
   const { data, loading, error } = useTraderPnl(walletAddress, state);
-
+  console.log('pnldata', data);
+  const totalPnlAmount = data?.[data.length - 1]?.totalPnl;
   return (
     <>
       <Flex
@@ -44,7 +45,7 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
       >
         <Flex justifyContent="space-between" flexDir="row" w="100%">
           <Text fontFamily="heading" fontSize="20px" fontWeight={700} lineHeight="28px">
-            Pnl
+            Position PNL
           </Text>
           <Box>
             <TimeBadge title="1W" onPress={() => setState('W')} isActive={state === 'W'} />
@@ -53,8 +54,7 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
           </Box>
         </Flex>
         <Flex mt={6}>
-          <KeyColour label="" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="STAKERS" colour="cyan.500" />
+          <KeyColour label="TOTAL PNL" colour="whiteAlpha.400" />
           <KeyColour ml={4} label="LOSS" colour="pink.300" />
           <KeyColour ml={4} label="PROFIT" colour="teal.300" />
         </Flex>
@@ -65,7 +65,12 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
         ) : (
           <>
             <Text my={3} color="white" fontSize="24px" fontFamily="heading" fontWeight={800}>
-              ${100}
+              $
+              {totalPnlAmount.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+              }
             </Text>
 
             {data && (

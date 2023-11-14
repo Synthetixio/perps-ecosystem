@@ -7,12 +7,7 @@ import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { Action } from '../Shared/Action';
 
-interface PositionsProps {
-  kwentaAccount?: string;
-  polynomialAccount?: string;
-}
-
-export const ClosedPositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsProps) => {
+export const ClosedPositionsTable = () => {
   const { walletAddress } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -74,58 +69,61 @@ export const ClosedPositionsTable = ({ kwentaAccount, polynomialAccount }: Posit
                   <PositionsLoading />
                 </>
               )}
-              {traderPnlData?.futuresPositions.map(
-                (
-                  {
-                    market,
-                    avgEntryPrice,
-                    leverage,
-                    size,
-                    feesPaidToSynthetix,
-                    id,
-                    long,
-                    txHash,
-                    openTimestamp,
-                    closeTimestamp,
-                    isOpen,
-                    lastPrice,
-                    realizedPnl,
-                    unrealizedPnl,
-                    trades,
-                  },
-                  index
-                ) => {
-                  const marketId = parseBytes32String(market.asset);
-                  return (
-                    <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
-                      {/* Market and Direction */}
-                      <Action
-                        label={long ? 'Long' : 'Short'}
-                        timestamp={parseInt(openTimestamp)}
-                        txHash={txHash}
-                      />
-                      <Market
-                        asset={market.asset}
-                        leverage={wei(leverage, 18, true).toNumber()}
-                        direction={long ? 'LONG' : 'SHORT'}
-                      />
+              {traderPnlData?.futuresPositions
+                .sort((a, b) => parseInt(b.openTimestamp) - parseInt(a.openTimestamp))
+                .filter((item) => !item.isOpen)
+                .map(
+                  (
+                    {
+                      market,
+                      avgEntryPrice,
+                      leverage,
+                      size,
+                      feesPaidToSynthetix,
+                      id,
+                      long,
+                      txHash,
+                      openTimestamp,
+                      closeTimestamp,
+                      isOpen,
+                      lastPrice,
+                      realizedPnl,
+                      unrealizedPnl,
+                      trades,
+                    },
+                    index
+                  ) => {
+                    const marketId = parseBytes32String(market.asset);
+                    return (
+                      <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
+                        {/* Market and Direction */}
+                        <Action
+                          label={long ? 'Long' : 'Short'}
+                          timestamp={parseInt(openTimestamp)}
+                          txHash={txHash}
+                        />
+                        <Market
+                          asset={market.asset}
+                          leverage={wei(leverage, 18, true).toNumber()}
+                          direction={long ? 'LONG' : 'SHORT'}
+                        />
 
-                      <PnL pnl={wei(realizedPnl, 18, true).toNumber()} />
+                        <PnL pnl={wei(realizedPnl, 18, true).toNumber()} />
 
-                      <Td border="none">
-                        <Button
-                          width={50}
-                          onClick={() => {
-                            updateTradeId(id, openTimestamp, marketId, closeTimestamp as string);
-                          }}
-                        >
-                          {trades}
-                        </Button>
-                      </Td>
-                    </Tr>
-                  );
-                }
-              )}
+                        <Td border="none">
+                          <Button
+                            width={50}
+                            onClick={() => {
+                              updateTradeId(id, openTimestamp, marketId, closeTimestamp as string);
+                            }}
+                          >
+                            {trades}
+                          </Button>
+                        </Td>
+                      </Tr>
+                    );
+                  }
+                )}
             </Tbody>
           </Table>
 

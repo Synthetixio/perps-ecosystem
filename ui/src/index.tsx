@@ -16,7 +16,6 @@ import { isStaging } from './utils/isStaging';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
 import { PythRealtimePrices } from './utils/pyth';
-import Trader from './pages/Trader';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -87,15 +86,6 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Liquidations />
-      </>
-    ),
-  },
-  {
-    path: '/trader/:walletAddress',
-    element: (
-      <>
-        <Header />
-        <Trader />
       </>
     ),
   },
