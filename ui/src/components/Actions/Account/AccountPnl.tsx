@@ -20,8 +20,7 @@ import { useParams } from 'react-router-dom';
 
 export const AccountPnl = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'W' | 'M' | 'Y'>('M');
-  const params = useParams();
-  const walletAddress = params?.walletAddress ?? '';
+  const { walletAddress } = useParams();
 
   const { processedData, loading, error } = useTraderPnl(walletAddress, state);
   const totalPnlAmount = processedData?.[processedData.length - 1]?.totalPnl;
@@ -31,6 +30,7 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
       <Flex
         height={500}
         width="100%"
+        minW={500}
         my={5}
         borderColor="gray.900"
         borderWidth="1px"

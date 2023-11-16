@@ -3,13 +3,21 @@ import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
 import { RealtimeContext } from '../utils';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
 export interface ProcessedPnlData {
   pnl: number;
   totalPnl: number;
-  timestamp: string;
+  openTimestamp: string;
+  closeTimestamp: string;
   date: string;
+  market: string;
+  long: boolean;
+  txHash: string;
+  leverage: string;
+  positionId: string;
+  walletAddress: string;
+  trades: string;
 }
 
 type Period = 'W' | 'M' | 'Y';
@@ -18,9 +26,7 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
   const accountAddressLowerCase = accountAddress?.toLowerCase();
   const { arePricesReady } = useContext(RealtimeContext);
 
-  const [processedData, setProcessedData] = useState<ProcessedPnlData[]>([]);
-
-  const timestamper = getUnixTimestamp(period ?? 'M');
+  const getTimestamp = getUnixTimestamp(period ?? 'M');
 
   const {
     data: traderPnlData,
@@ -32,7 +38,7 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
       where: {
         isOpen: false,
         trader: accountAddressLowerCase,
-        openTimestamp_gte: timestamper,
+        openTimestamp_gte: getTimestamp,
       },
       orderBy: 'openTimestamp' as FuturesPosition_OrderBy,
       orderDirection: 'desc' as OrderDirection,
@@ -41,42 +47,43 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
     skip: !arePricesReady,
   });
 
-  useEffect(() => {
-    if (traderPnlData && !traderPnlQueryLoading) {
-      const sortedAndFilteredData = traderPnlData.futuresPositions
-        .sort((a, b) => parseInt(a.openTimestamp) - parseInt(b.openTimestamp))
-        .filter((item) => !item.isOpen);
-
-      const processedData = sortedAndFilteredData
-
-        .map((item) => {
-          const formatCloseTimestamp = new Date(
-            parseInt(item.openTimestamp) * 1000
-          ).toLocaleDateString('default', { month: '2-digit', day: 'numeric' });
-
-          return {
-            pnl: wei(item.realizedPnl, 18, true).toNumber(),
-            timestamp: item.closeTimestamp as string,
-            openTimestamp: item.openTimestamp,
-            date: formatCloseTimestamp,
-          };
-        })
-
-        .reduce((acc: ProcessedPnlData[], item) => {
-          const runningTotalPnl =
-            acc.length > 0 ? acc[acc.length - 1].totalPnl + item.pnl : item.pnl;
-
-          acc.push({
-            ...item,
-            totalPnl: runningTotalPnl,
-          });
-
-          return acc;
-        }, []);
-
-      setProcessedData(processedData);
+  const processedData = useMemo(() => {
+    if (!traderPnlData || traderPnlQueryLoading) {
+      return [];
     }
-  }, [traderPnlData, period]);
+    const sortedAndFilteredData2 = [...traderPnlData.futuresPositions]
+      .sort((a, b) => parseInt(a.openTimestamp) - parseInt(b.openTimestamp))
+      .filter((item) => !item.isOpen);
+    return sortedAndFilteredData2
+      .map((item) => {
+        const formatCloseTimestamp = new Date(
+          parseInt(item.openTimestamp) * 1000
+        ).toLocaleDateString('default', { month: '2-digit', day: 'numeric' });
+        return {
+          pnl: wei(item.realizedPnl, 18, true).toNumber(),
+          closeTimestamp: item.closeTimestamp as string,
+          openTimestamp: item.openTimestamp,
+          date: formatCloseTimestamp,
+          market: item.market.asset,
+          long: item.long,
+          txHash: item.txHash,
+          leverage: item.leverage,
+          positionId: item.id,
+          walletAddress: item.trader.id,
+          trades: item.trades,
+        };
+      })
+      .reduce((acc: ProcessedPnlData[], item) => {
+        const runningTotalPnl = acc.length > 0 ? acc[acc.length - 1].totalPnl + item.pnl : item.pnl;
+
+        acc.push({
+          ...item,
+          totalPnl: runningTotalPnl,
+        });
+
+        return acc;
+      }, []);
+  }, [traderPnlData, traderPnlQueryLoading]);
 
   return {
     data: traderPnlData,

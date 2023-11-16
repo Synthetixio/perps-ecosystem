@@ -14,12 +14,6 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
     return null;
   }
 
-  /*
-  const formatDate = new Date(pnlInfo.day.replace(' ', 'T').replace(' UTC', 'Z'))
-    .toISOString()
-    .slice(0, 10);
-  */
-
   return (
     <Flex
       flexDirection="column"
@@ -51,7 +45,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour label="Timestamp" colour="gray.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {pnlInfo.timestamp}
+          {pnlInfo.closeTimestamp}
         </Text>
       </Flex>
     </Flex>

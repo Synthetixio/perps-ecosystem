@@ -109,18 +109,17 @@ export const Account: FC = () => {
         )}
       </Flex>
 
-      {/* Headers and Tables */}
+      {/* Account PNL and Closed Positions Flexbox */}
       <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mt={8}>
         {/* Account PNL Section */}
-        <Box flex={1} mr={{ md: 4 }}>
+        <Box flex={1} mr={{ md: 4 }} minW="500px">
           <Heading fontSize="18px" lineHeight="28px" mb={4}>
             Account PNL
           </Heading>
           <AccountPnl />
         </Box>
-
-        {/* Recently Closed Positions Section */}
-        <Box flex={1} ml={{ md: 4 }}>
+        {/* Closed Positions Section */}
+        <Box flex={1} ml={{ md: 4 }} minW="500px">
           <Heading fontSize="18px" lineHeight="28px" mb={4}>
             Recently Closed Positions
           </Heading>

@@ -20,9 +20,9 @@ import { Action } from '../Shared/Action';
 
 export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
   const { walletAddress } = useParams();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  console.log(navigate);
   const updateTradeId = (
     tradeId: string,
     timestampOpen: string,
@@ -36,20 +36,20 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
     timestampClose
       ? newParams.set('closeTimestamp', timestampClose.toString())
       : newParams.delete('closeTimestamp');
-    navigate({
-      pathname: `/${walletAddress}`,
-      search: `?${newParams.toString()}`,
-    });
+    setSearchParams(newParams);
   };
 
-  const { data, loading, error } = useTraderPnl(walletAddress, 'M');
+  const { processedData, loading, error } = useTraderPnl(walletAddress, 'M');
 
-  const noData = !data?.futuresPositions.length;
+  const closedPositionData = [...processedData].toReversed();
+
+  const noProcessedData = !processedData?.length;
 
   return (
     <>
       <TableContainer
         width="100%"
+        minW={500}
         height={500}
         my={5}
         borderColor="gray.900"
@@ -68,6 +68,7 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                 <TableHeaderCell>Position</TableHeaderCell>
                 <TableHeaderCell>Market</TableHeaderCell>
                 <TableHeaderCell>PNL</TableHeaderCell>
+
                 <TableHeaderCell>Trades</TableHeaderCell>
               </Tr>
             </Thead>
@@ -79,72 +80,64 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                   <PositionsLoading />
                 </>
               )}
-              {data?.futuresPositions
-                .sort((a, b) => parseInt(b.openTimestamp) - parseInt(a.openTimestamp))
-                .filter((item) => !item.isOpen)
-                .map(
-                  (
-                    {
-                      market,
-                      avgEntryPrice,
-                      leverage,
-                      size,
-                      feesPaidToSynthetix,
-                      id,
-                      long,
-                      txHash,
-                      openTimestamp,
-                      closeTimestamp,
-                      isOpen,
-                      lastPrice,
-                      realizedPnl,
-                      unrealizedPnl,
-                      trades,
-                    },
-                    index
-                  ) => {
-                    const marketId = parseBytes32String(market.asset);
-                    return (
-                      <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
-                        {/* Market and Direction */}
-                        <Action
-                          label={long ? 'Long' : 'Short'}
-                          timestamp={parseInt(openTimestamp)}
-                          txHash={txHash}
-                        />
-                        <Market
-                          asset={market.asset}
-                          leverage={wei(leverage, 18, true).toNumber()}
-                          direction={long ? 'LONG' : 'SHORT'}
-                        />
+              {closedPositionData?.map(
+                (
+                  {
+                    pnl,
+                    closeTimestamp,
+                    openTimestamp,
+                    market,
+                    long,
+                    txHash,
+                    leverage,
+                    positionId,
+                    walletAddress,
+                    trades,
+                  },
+                  index
+                ) => {
+                  const marketId = parseBytes32String(market);
+                  return (
+                    <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
+                      {/* Market and Direction */}
+                      <Action
+                        label={long ? 'Long' : 'Short'}
+                        timestamp={parseInt(openTimestamp)}
+                        txHash={txHash}
+                      />
+                      <Market
+                        asset={market}
+                        leverage={wei(leverage, 18, true).toNumber()}
+                        direction={long ? 'LONG' : 'SHORT'}
+                      />
 
-                        <PnL pnl={wei(realizedPnl, 18, true).toNumber()} />
+                      <PnL pnl={pnl} />
 
-                        <Td border="none">
-                          <Button
-                            width={50}
-                            onClick={() => {
-                              updateTradeId(id, openTimestamp, marketId, closeTimestamp as string);
-                            }}
-                          >
-                            {trades}
-                          </Button>
-                        </Td>
-                      </Tr>
-                    );
-                  }
-                )}
+                      <Td border="none">
+                        <Button
+                          width={50}
+                          onClick={() => {
+                            updateTradeId(positionId, openTimestamp, marketId, closeTimestamp);
+                          }}
+                        >
+                          {trades}
+                        </Button>
+                      </Td>
+                    </Tr>
+                  );
+                }
+              )}
             </Tbody>
           </Table>
 
-          {!loading && !error && noData && (
+          {!loading && !error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 No closed positions
               </Text>
             </Flex>
           )}
-          {error && noData && (
+          {error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
                 We&apos;re having problem loading the position data
