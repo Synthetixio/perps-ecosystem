@@ -13,6 +13,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
   if (!pnlInfo) {
     return null;
   }
+  const tooltipDate = new Date(parseInt(pnlInfo.openTimestamp) * 1000).toLocaleDateString('en-GB');
 
   return (
     <Flex
@@ -25,7 +26,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
       borderColor="gray.900"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {pnlInfo.date}
+        {tooltipDate}
       </Text>
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour
