@@ -10,25 +10,27 @@ import {
   Td,
   type FlexProps,
 } from '@chakra-ui/react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { TableHeaderCell, PnL, Market } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
 import { useTraderPnl } from '../../hooks';
 import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { Action } from '../Shared/Action';
+import { useState } from 'react';
 
 export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
   const { walletAddress } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  console.log(navigate);
+  const [actionFilter, setActionFilter] = useState<boolean>(false);
+
   const updateTradeId = (
     tradeId: string,
     timestampOpen: string,
     market: string,
     timestampClose?: string
   ) => {
+    setActionFilter(true);
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set('tradeId', tradeId.toString());
     newParams.set('openTimestamp', timestampOpen.toString());
@@ -37,6 +39,12 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
       ? newParams.set('closeTimestamp', timestampClose.toString())
       : newParams.delete('closeTimestamp');
     setSearchParams(newParams);
+  };
+
+  const resetActionFilters = () => {
+    const newParams = new URLSearchParams();
+    setSearchParams(newParams);
+    setActionFilter(false);
   };
 
   const { processedData, loading, error } = useTraderPnl(walletAddress, 'M');
@@ -93,6 +101,7 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                     positionId,
                     walletAddress,
                     trades,
+                    liquidated,
                   },
                   index
                 ) => {
@@ -101,8 +110,8 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                     <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
                       <Action
-                        label={long ? 'Long' : 'Short'}
-                        timestamp={parseInt(openTimestamp)}
+                        label={`${long ? 'Long' : 'Short'}${liquidated ? ' Liquidated' : ''} `}
+                        timestamp={parseInt(closeTimestamp)}
                         txHash={txHash}
                       />
                       <Market
@@ -116,8 +125,12 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                       <Td border="none">
                         <Button
                           width={50}
+                          variant="outline"
+                          colorScheme={positionId === searchParams.get('tradeId') ? 'teal' : 'gray'}
                           onClick={() => {
-                            updateTradeId(positionId, openTimestamp, marketId, closeTimestamp);
+                            actionFilter
+                              ? resetActionFilters()
+                              : updateTradeId(positionId, openTimestamp, marketId, closeTimestamp);
                           }}
                         >
                           {trades}

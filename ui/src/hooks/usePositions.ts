@@ -65,7 +65,7 @@ export const usePositions = (
   } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       where: {
-        isOpen: false,
+        isOpen: true,
         trader: accountAddressLowerCase,
         market_in: marketFilter ? marketsFilter : undefined,
       },

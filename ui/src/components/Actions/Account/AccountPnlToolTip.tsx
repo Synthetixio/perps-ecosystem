@@ -13,7 +13,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
   if (!pnlInfo) {
     return null;
   }
-  const tooltipDate = new Date(parseInt(pnlInfo.openTimestamp) * 1000).toISOString().slice(0, 10);
+  const tooltipDate = new Date(parseInt(pnlInfo.closeTimestamp) * 1000).toISOString().slice(0, 10);
 
   return (
     <Flex

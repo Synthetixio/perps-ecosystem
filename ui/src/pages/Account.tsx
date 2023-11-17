@@ -17,23 +17,21 @@ import { AccountName } from '../components/Shared/AccountName/AccountName';
 import { AccountPnl } from '../components/Actions/Account';
 
 export const Account: FC = () => {
-  const params = useParams();
   const navigate = useNavigate();
+  const { walletAddress } = useParams();
 
-  const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
-  const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
+  const { data: kwentaAccount } = useKwentaAccount(walletAddress);
+  const { data: polynomialAccount } = usePolynomialAccount(walletAddress);
 
-  const { kwentaOwner } = useOwnerKwenta(params?.walletAddress);
+  const { kwentaOwner } = useOwnerKwenta(walletAddress);
 
-  const { polynomialOwner } = useOwnerPolynomial(params?.walletAddress);
+  const { polynomialOwner } = useOwnerPolynomial(walletAddress);
 
   const { addressEnsName: kwentaEnsName } = useEnsName(kwentaOwner);
   const { addressEnsName: polynomialEnsName } = useEnsName(polynomialOwner);
 
-  const { isFavorite, saveAccountFavorite, removeAccountFavorite } = useAccountFavorites(
-    params?.walletAddress
-  );
-  const walletAddress = params?.walletAddress ?? '';
+  const { isFavorite, saveAccountFavorite, removeAccountFavorite } =
+    useAccountFavorites(walletAddress);
 
   return (
     <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
@@ -62,11 +60,21 @@ export const Account: FC = () => {
           hasArrow
         >
           <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-            Account: <AccountName address={walletAddress} display="inline-block" />
+            Account: <AccountName address={walletAddress ?? ''} display="inline-block" />
           </Heading>
         </Tooltip>
-        <CopyButton variant="ghost" size="sm" color="white" iconSize="16px" value={walletAddress} />
-        <Link alignItems="center" href={optimisticEthercanLink(walletAddress)} target="_blank">
+        <CopyButton
+          variant="ghost"
+          size="sm"
+          color="white"
+          iconSize="16px"
+          value={walletAddress ?? ''}
+        />
+        <Link
+          alignItems="center"
+          href={optimisticEthercanLink(walletAddress ?? '')}
+          target="_blank"
+        >
           <IconButton
             aria-label="external-link"
             variant="ghost"
@@ -83,9 +91,9 @@ export const Account: FC = () => {
           size="sm"
           onClick={() => {
             if (isFavorite) {
-              removeAccountFavorite(walletAddress);
+              removeAccountFavorite(walletAddress ?? '');
             } else {
-              saveAccountFavorite(walletAddress);
+              saveAccountFavorite(walletAddress ?? '');
             }
           }}
         />
@@ -133,8 +141,8 @@ export const Account: FC = () => {
           Open Positions
         </Heading>
         <PositionsTable
-          kwentaAccount={kwentaAccount?.account ? kwentaAccount.account : ''}
-          polynomialAccount={polynomialAccount?.account ? polynomialAccount.account : ''}
+          kwentaAccount={kwentaAccount?.account ?? ''}
+          polynomialAccount={polynomialAccount?.account ?? ''}
         />
       </Box>
 
@@ -143,6 +151,7 @@ export const Account: FC = () => {
         <Heading fontSize="18px" lineHeight="28px">
           Actions
         </Heading>
+
         <AccountActionsTable />
       </Box>
     </Flex>

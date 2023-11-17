@@ -4,6 +4,8 @@ import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generate
 import { wei } from '@synthetixio/wei';
 import { RealtimeContext } from '../utils';
 import { useContext, useMemo } from 'react';
+import { useKwentaAccount } from './useKwentaAccount';
+import { usePolynomialAccount } from './usePolynomialAccount';
 
 export interface ProcessedPnlData {
   pnl: number;
@@ -18,6 +20,7 @@ export interface ProcessedPnlData {
   positionId: string;
   walletAddress: string;
   trades: string;
+  liquidated: boolean;
 }
 
 type Period = 'W' | 'M' | 'Y';
@@ -28,6 +31,9 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
 
   const getTimestamp = getUnixTimestamp(period ?? 'M');
 
+  const { data: kwentaAccount } = useKwentaAccount(accountAddressLowerCase);
+  const { data: polynomialAccount } = usePolynomialAccount(accountAddressLowerCase);
+
   const {
     data: traderPnlData,
     loading: traderPnlQueryLoading,
@@ -37,7 +43,13 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
       first: 100,
       where: {
         isOpen: false,
-        trader: accountAddressLowerCase,
+        trader_: {
+          id_in: [
+            kwentaAccount?.account ?? '',
+            polynomialAccount?.account ?? '',
+            accountAddressLowerCase ?? '',
+          ],
+        },
         openTimestamp_gte: getTimestamp,
       },
       orderBy: 'openTimestamp' as FuturesPosition_OrderBy,
@@ -51,14 +63,16 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
     if (!traderPnlData || traderPnlQueryLoading) {
       return [];
     }
-    const sortedAndFilteredData2 = [...traderPnlData.futuresPositions]
-      .sort((a, b) => parseInt(a.openTimestamp) - parseInt(b.openTimestamp))
-      .filter((item) => !item.isOpen);
-    return sortedAndFilteredData2
+    const sortedAndFilteredData = [...traderPnlData.futuresPositions]
+      .filter((item) => !item.isOpen)
+      .sort((a, b) => parseInt(a.closeTimestamp as string) - parseInt(b.closeTimestamp as string));
+
+    return sortedAndFilteredData
       .map((item) => {
         const formatCloseTimestamp = new Date(
-          parseInt(item.openTimestamp) * 1000
+          parseInt(item.closeTimestamp as string) * 1000
         ).toLocaleDateString('default', { month: '2-digit', day: 'numeric' });
+
         return {
           pnl: wei(item.realizedPnl, 18, true).toNumber(),
           closeTimestamp: item.closeTimestamp as string,
@@ -71,6 +85,7 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
           positionId: item.id,
           walletAddress: item.trader.id,
           trades: item.trades,
+          liquidated: item.isLiquidated,
         };
       })
       .reduce((acc: ProcessedPnlData[], item) => {
