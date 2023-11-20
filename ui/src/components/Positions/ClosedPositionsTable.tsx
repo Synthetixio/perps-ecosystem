@@ -10,17 +10,17 @@ import {
   Td,
   type FlexProps,
 } from '@chakra-ui/react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { TableHeaderCell, PnL, Market } from '../Shared';
+import { useSearchParams } from 'react-router-dom';
+import { TableHeaderCell, PnL, Market, Funding } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
-import { useTraderPnl } from '../../hooks';
 import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { Action } from '../Shared/Action';
 import { useState } from 'react';
+import { useTraderClosedPositions } from '../../hooks';
+import { ClosedPositionsPagination } from './ClosedPositionsPagination';
 
 export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
-  const { walletAddress } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [actionFilter, setActionFilter] = useState<boolean>(false);
 
@@ -47,9 +47,13 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
     setActionFilter(false);
   };
 
-  const { processedData, loading, error } = useTraderPnl(walletAddress, 'M');
+  const {
+    processedClosedPositionData: processedData,
+    traderClosedPositionQueryLoading: loading,
+    traderClosedPositionQueryError: error,
+  } = useTraderClosedPositions();
 
-  const closedPositionData = [...processedData].toReversed();
+  const closedPositionData = [...processedData];
 
   const noProcessedData = !processedData?.length;
 
@@ -59,7 +63,8 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
         width="100%"
         minW={500}
         height={500}
-        my={5}
+        mt={5}
+        mb={1}
         borderColor="gray.900"
         borderWidth="1px"
         borderRadius="5px"
@@ -76,7 +81,7 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                 <TableHeaderCell>Position</TableHeaderCell>
                 <TableHeaderCell>Market</TableHeaderCell>
                 <TableHeaderCell>PNL</TableHeaderCell>
-
+                <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Trades</TableHeaderCell>
               </Tr>
             </Thead>
@@ -102,6 +107,7 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                     walletAddress,
                     trades,
                     liquidated,
+                    funding,
                   },
                   index
                 ) => {
@@ -121,6 +127,8 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
                       />
 
                       <PnL pnl={pnl} />
+
+                      <Funding amount={funding} />
 
                       <Td border="none">
                         <Button
@@ -159,6 +167,9 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
           )}
         </>
       </TableContainer>
+      <Flex justifyContent="flex-end" width="100%" p="1">
+        <ClosedPositionsPagination pageParam="pg" />
+      </Flex>
     </>
   );
 };

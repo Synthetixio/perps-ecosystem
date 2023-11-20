@@ -1,11 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
-import { RealtimeContext } from '../utils';
-import { useContext, useMemo } from 'react';
-import { useKwentaAccount } from './useKwentaAccount';
-import { usePolynomialAccount } from './usePolynomialAccount';
+import { useEffect, useMemo, useState } from 'react';
+import { useWalletAddress } from './useWalletAddress';
+import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 
 export interface ProcessedPnlData {
   pnl: number;
@@ -21,46 +19,47 @@ export interface ProcessedPnlData {
   walletAddress: string;
   trades: string;
   liquidated: boolean;
+  funding: number;
 }
 
 type Period = 'W' | 'M' | 'Y';
 
-export const useTraderPnl = (accountAddress?: string, period?: Period) => {
-  const accountAddressLowerCase = accountAddress?.toLowerCase();
-  const { arePricesReady } = useContext(RealtimeContext);
+export const useTraderPnlStats = (period?: Period) => {
+  const { allAddresses } = useWalletAddress();
+  const [timestamp, setTimestamp] = useState(getUnixTimestamp(period ?? 'M'));
 
-  const getTimestamp = getUnixTimestamp(period ?? 'M');
+  useEffect(() => {
+    setTimestamp(getUnixTimestamp(period ?? 'M'));
+  }, [period]);
 
-  const { data: kwentaAccount } = useKwentaAccount(accountAddressLowerCase);
-  const { data: polynomialAccount } = usePolynomialAccount(accountAddressLowerCase);
+  const queryVariables = useMemo(
+    () => ({
+      first: 1000,
+      where: {
+        isOpen: false,
+        trader_: {
+          id_in: [...allAddresses],
+        },
+        openTimestamp_gte: timestamp,
+      },
+      orderBy: 'closeTimestamp' as FuturesPosition_OrderBy,
+      orderDirection: 'desc' as OrderDirection,
+    }),
+    [allAddresses, timestamp]
+  );
 
   const {
     data: traderPnlData,
     loading: traderPnlQueryLoading,
     error: traderPnlQueryError,
   } = useQuery(POSITIONS_QUERY_MARKET, {
-    variables: {
-      first: 100,
-      where: {
-        isOpen: false,
-        trader_: {
-          id_in: [
-            kwentaAccount?.account ?? '',
-            polynomialAccount?.account ?? '',
-            accountAddressLowerCase ?? '',
-          ],
-        },
-        openTimestamp_gte: getTimestamp,
-      },
-      orderBy: 'openTimestamp' as FuturesPosition_OrderBy,
-      orderDirection: 'desc' as OrderDirection,
-    },
-    pollInterval: 100000,
-    skip: !arePricesReady,
+    // TRADER_POSITIONS_QUERY
+    variables: queryVariables,
+    pollInterval: 10000,
   });
 
   const processedData = useMemo(() => {
-    if (!traderPnlData || traderPnlQueryLoading) {
+    if (!traderPnlData || traderPnlQueryLoading || traderPnlQueryError) {
       return [];
     }
     const sortedAndFilteredData = [...traderPnlData.futuresPositions]
@@ -86,6 +85,7 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
           walletAddress: item.trader.id,
           trades: item.trades,
           liquidated: item.isLiquidated,
+          funding: wei(item.netFunding, 18, true).toNumber(),
         };
       })
       .reduce((acc: ProcessedPnlData[], item) => {
@@ -98,13 +98,12 @@ export const useTraderPnl = (accountAddress?: string, period?: Period) => {
 
         return acc;
       }, []);
-  }, [traderPnlData, traderPnlQueryLoading]);
+  }, [traderPnlData]);
 
   return {
-    data: traderPnlData,
-    loading: traderPnlQueryLoading,
-    error: traderPnlQueryError,
     processedData,
+    traderPnlQueryError,
+    traderPnlQueryLoading,
   };
 };
 

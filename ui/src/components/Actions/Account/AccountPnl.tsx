@@ -3,7 +3,7 @@ import { Box, Flex, Text, type FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
 import { KeyColour } from '../../Dashboard/KeyColour';
 import { AccountPnlTooltip } from './AccountPnlToolTip';
-import { useTraderPnl } from '../../../hooks/useTraderPnl';
+import { useTraderPnlStats } from '../../../hooks';
 
 import {
   ComposedChart,
@@ -16,13 +16,15 @@ import {
   ResponsiveContainer,
   YAxis,
 } from 'recharts';
-import { useParams } from 'react-router-dom';
 
 export const AccountPnl = ({ ...props }: FlexProps) => {
   const [state, setState] = useState<'W' | 'M' | 'Y'>('M');
-  const { walletAddress } = useParams();
 
-  const { processedData, loading, error } = useTraderPnl(walletAddress, state);
+  const {
+    processedData,
+    traderPnlQueryLoading: loading,
+    traderPnlQueryError: error,
+  } = useTraderPnlStats(state);
   const totalPnlAmount = processedData?.[processedData.length - 1]?.totalPnl;
 
   return (

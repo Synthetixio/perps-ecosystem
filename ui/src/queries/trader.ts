@@ -103,6 +103,7 @@ export const TRADER_POSITIONS_QUERY = gql(`
       openTimestamp
       closeTimestamp
       trades
+      txHash
     }
   }
 `);

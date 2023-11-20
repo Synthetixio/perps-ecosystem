@@ -3001,6 +3001,7 @@ export type TraderPositionsMarketQuery = {
     openTimestamp: string;
     closeTimestamp?: string | null;
     trades: string;
+    txHash: string;
     market: { __typename?: 'FuturesMarket'; id: string; marketKey: string; asset: string };
     trader: { __typename?: 'Trader'; id: string };
   }>;
@@ -4163,6 +4164,7 @@ export const TraderPositionsMarketDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'trades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
               ],
             },
           },
