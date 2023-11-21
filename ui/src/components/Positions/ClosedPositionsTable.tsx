@@ -16,36 +16,29 @@ import { PositionsLoading } from './PositionsLoading';
 import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { Action } from '../Shared/Action';
-import { useState } from 'react';
 import { useTraderClosedPositions } from '../../hooks';
 import { ClosedPositionsPagination } from './ClosedPositionsPagination';
 
-export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [actionFilter, setActionFilter] = useState<boolean>(false);
-
-  const updateTradeId = (
+interface ClosedPositionsTableProps extends FlexProps {
+  actionsRef: React.RefObject<HTMLDivElement>;
+  actionFilter: boolean;
+  resetActionFilters: () => void;
+  updateTradeId: (
     tradeId: string,
     timestampOpen: string,
     market: string,
     timestampClose?: string
-  ) => {
-    setActionFilter(true);
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set('tradeId', tradeId.toString());
-    newParams.set('openTimestamp', timestampOpen.toString());
-    newParams.set('markets', market.toString());
-    timestampClose
-      ? newParams.set('closeTimestamp', timestampClose.toString())
-      : newParams.delete('closeTimestamp');
-    setSearchParams(newParams);
-  };
+  ) => void;
+}
 
-  const resetActionFilters = () => {
-    const newParams = new URLSearchParams();
-    setSearchParams(newParams);
-    setActionFilter(false);
-  };
+export const ClosedPositionsTable = ({
+  actionsRef,
+  actionFilter,
+  resetActionFilters,
+  updateTradeId,
+  ...props
+}: ClosedPositionsTableProps) => {
+  const [searchParams] = useSearchParams();
 
   const {
     processedClosedPositionData: processedData,
@@ -73,6 +66,7 @@ export const ClosedPositionsTable = ({ ...props }: FlexProps) => {
           borderSpacing: 0,
         }}
         overflowY="auto"
+        bg="navy.700"
       >
         <>
           <Table bg="navy.700">

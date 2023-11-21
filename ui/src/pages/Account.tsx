@@ -3,8 +3,6 @@ import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
-import { ClosedPositionsTable, PositionsTable } from '../components/Positions';
-import { AccountActionsTable } from '../components/Actions';
 import { useKwentaAccount } from '../hooks/useKwentaAccount';
 import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
 import { useOwnerKwenta, useOwnerPolynomial } from '../hooks/useOwnerBySmartId';
@@ -14,7 +12,7 @@ import useAccountFavorites from '../hooks/store/useAccountFavorites';
 import CopyButton from '../components/Shared/CopyButton/CopyButton';
 import { StarOutlinedIcon } from '../components/Icons/StarOutlinedIcon';
 import { AccountName } from '../components/Shared/AccountName/AccountName';
-import { AccountPnl } from '../components/Actions/Account';
+import { TraderAccountStats } from '../components/Trader/TraderAccountStats';
 
 export const Account: FC = () => {
   const navigate = useNavigate();
@@ -117,43 +115,11 @@ export const Account: FC = () => {
         )}
       </Flex>
 
-      {/* Account PNL and Closed Positions Flexbox */}
-      <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mt={8}>
-        {/* Account PNL Section */}
-        <Box flex={1} mr={{ md: 4 }} minW="500px">
-          <Heading fontSize="18px" lineHeight="28px" mb={4}>
-            Account PNL
-          </Heading>
-          <AccountPnl />
-        </Box>
-        {/* Closed Positions Section */}
-        <Box flex={1} ml={{ md: 4 }} minW="500px">
-          <Heading fontSize="18px" lineHeight="28px" mb={4}>
-            Recently Closed Positions
-          </Heading>
-          <ClosedPositionsTable />
-        </Box>
-      </Flex>
-
-      {/* Open Positions Section */}
-      <Box mt={6}>
-        <Heading fontSize="18px" lineHeight="28px">
-          Open Positions
-        </Heading>
-        <PositionsTable
-          kwentaAccount={kwentaAccount?.account ?? ''}
-          polynomialAccount={polynomialAccount?.account ?? ''}
-        />
-      </Box>
-
-      {/* Actions Section */}
-      <Box mt={6}>
-        <Heading fontSize="18px" lineHeight="28px">
-          Actions
-        </Heading>
-
-        <AccountActionsTable />
-      </Box>
+      {/* Open Positions, Account PNL, Closed Positions, Actions */}
+      <TraderAccountStats
+        kwentaAccount={kwentaAccount?.account ?? ''}
+        polynomialAccount={polynomialAccount?.account ?? ''}
+      />
     </Flex>
   );
 };

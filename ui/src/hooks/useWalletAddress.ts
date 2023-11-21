@@ -7,7 +7,7 @@ import { useOwnerKwenta, useOwnerPolynomial } from './useOwnerBySmartId';
 export const useWalletAddress = () => {
   const { walletAddress } = useParams();
   const [address, setAddress] = useState<string | null>(null);
-  const [allAddresses, setallAddresses] = useState<string[]>([]); // <Array<string | null | undefined>>([]);
+  const [allAddresses, setallAddresses] = useState<string[]>([]);
 
   const { data: kwentaAccount } = useKwentaAccount(walletAddress?.toLowerCase());
   const { kwentaOwner } = useOwnerKwenta(walletAddress?.toLowerCase());
@@ -26,11 +26,9 @@ export const useWalletAddress = () => {
         polynomialAccount?.account,
         polynomialAccount?.owner,
         polynomialOwner,
-      ].filter((address): address is string => Boolean(address)); // Remove undefined or null values
-      console.log('potential address', potentialAddresses);
+      ].filter((address): address is string => Boolean(address));
 
       const uniqueAddresses = Array.from(new Set(potentialAddresses));
-      console.log(uniqueAddresses);
 
       const newArr = JSON.stringify(uniqueAddresses.sort());
       const stateArr = JSON.stringify(allAddresses.sort());
