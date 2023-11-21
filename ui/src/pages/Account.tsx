@@ -1,4 +1,4 @@
-import { Flex, Heading, Button, Box, Link, Tooltip, IconButton } from '@chakra-ui/react';
+import { Flex, Heading, Button, Box, Link, IconButton } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -47,23 +47,9 @@ export const Account: FC = () => {
         </Button>
       </Box>
       <Flex mt={8} alignItems="center" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Tooltip
-          placement="top"
-          maxWidth="450px"
-          py={2}
-          px={4}
-          bg="gray.900"
-          color="white"
-          fontSize="14px"
-          fontFamily="heading"
-          borderRadius="4px"
-          label={walletAddress}
-          hasArrow
-        >
-          <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-            Account: <AccountName address={walletAddress} display="inline-block" />
-          </Heading>
-        </Tooltip>
+        <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
+          Account: <AccountName address={walletAddress} display="inline-block" />
+        </Heading>
         <CopyButton variant="ghost" size="sm" color="white" iconSize="16px" value={walletAddress} />
         <Link alignItems="center" href={optimisticEthercanLink(walletAddress)} target="_blank">
           <IconButton
