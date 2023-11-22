@@ -18,13 +18,13 @@ import {
 } from 'recharts';
 
 export const AccountPnl = ({ ...props }: FlexProps) => {
-  const [state, setState] = useState<'W' | 'M' | 'Y'>('M');
+  const [tradeNum, setTradeNum] = useState<number>(10);
 
   const {
     processedData,
     traderPnlQueryLoading: loading,
     traderPnlQueryError: error,
-  } = useTraderPnlStats(state);
+  } = useTraderPnlStats(tradeNum);
   const totalPnlAmount = processedData?.[processedData.length - 1]?.totalPnl;
 
   return (
@@ -51,9 +51,12 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
             Position PNL
           </Text>
           <Box>
-            <TimeBadge title="1W" onPress={() => setState('W')} isActive={state === 'W'} />
-            <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} />
+            <TimeBadge title="10" onPress={() => setTradeNum(10)} isActive={tradeNum === 10} />
+            <TimeBadge title="25" onPress={() => setTradeNum(25)} isActive={tradeNum === 25} />
+            <TimeBadge title="50" onPress={() => setTradeNum(50)} isActive={tradeNum === 50} />
+            <TimeBadge title="100" onPress={() => setTradeNum(100)} isActive={tradeNum === 100} />
+            <TimeBadge title="250" onPress={() => setTradeNum(250)} isActive={tradeNum === 250} />
+            <TimeBadge title="500" onPress={() => setTradeNum(500)} isActive={tradeNum === 500} />
           </Box>
         </Flex>
         <Flex mt={6}>

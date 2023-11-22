@@ -46,9 +46,11 @@ export const ClosedPositionsTable = ({
     traderClosedPositionQueryError: error,
   } = useTraderClosedPositions();
 
-  const closedPositionData = [...processedData];
+  const closedPositionData = [...processedData.data];
 
-  const noProcessedData = !processedData?.length;
+  const noProcessedData = !processedData.data?.length;
+
+  const hasNextPage = processedData.hasNextPage;
 
   return (
     <>
@@ -162,7 +164,7 @@ export const ClosedPositionsTable = ({
         </>
       </TableContainer>
       <Flex justifyContent="flex-end" width="100%" p="1">
-        <ClosedPositionsPagination pageParam="pg" />
+        <ClosedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
       </Flex>
     </>
   );

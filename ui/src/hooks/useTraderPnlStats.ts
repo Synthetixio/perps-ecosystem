@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useWalletAddress } from './useWalletAddress';
 import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 
@@ -22,30 +22,22 @@ export interface ProcessedPnlData {
   funding: number;
 }
 
-type Period = 'W' | 'M' | 'Y';
+type TradeNum = number;
 
-export const useTraderPnlStats = (period?: Period) => {
+export const useTraderPnlStats = (tradeNum: TradeNum) => {
   const { allAddresses } = useWalletAddress();
-  const [timestamp, setTimestamp] = useState(getUnixTimestamp(period ?? 'M'));
-
-  useEffect(() => {
-    setTimestamp(getUnixTimestamp(period ?? 'M'));
-  }, [period]);
 
   const queryVariables = useMemo(
     () => ({
-      first: 1000,
+      first: tradeNum ?? 1000,
       where: {
         isOpen: false,
-        trader_: {
-          id_in: [...allAddresses],
-        },
-        openTimestamp_gte: timestamp,
+        trader_in: [...allAddresses],
       },
       orderBy: 'closeTimestamp' as FuturesPosition_OrderBy,
       orderDirection: 'desc' as OrderDirection,
     }),
-    [allAddresses, timestamp]
+    [allAddresses, tradeNum]
   );
 
   const {
@@ -53,7 +45,6 @@ export const useTraderPnlStats = (period?: Period) => {
     loading: traderPnlQueryLoading,
     error: traderPnlQueryError,
   } = useQuery(POSITIONS_QUERY_MARKET, {
-    // TRADER_POSITIONS_QUERY
     variables: queryVariables,
     pollInterval: 10000,
   });
@@ -106,25 +97,3 @@ export const useTraderPnlStats = (period?: Period) => {
     traderPnlQueryLoading,
   };
 };
-
-function getUnixTimestamp(period: string): string {
-  const date = new Date();
-
-  switch (period) {
-    case 'Y':
-      date.setFullYear(date.getFullYear() - 1);
-      break;
-    case 'M':
-      date.setMonth(date.getMonth() - 1);
-      break;
-    case 'W':
-      date.setDate(date.getDate() - 7);
-      break;
-    default:
-      throw new Error(`Invalid period: ${period}`);
-  }
-
-  const unixTimestamp = Math.floor(date.getTime() / 1000);
-
-  return unixTimestamp.toString();
-}

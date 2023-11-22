@@ -4,9 +4,10 @@ import { useSearchParams } from 'react-router-dom';
 
 interface PageFilterProps {
   pageParam: string;
+  hasNextPage?: boolean;
 }
 
-export const ClosedPositionsPagination = ({ pageParam }: PageFilterProps) => {
+export const ClosedPositionsPagination = ({ pageParam, hasNextPage }: PageFilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get(pageParam)) || 1;
 
@@ -26,6 +27,7 @@ export const ClosedPositionsPagination = ({ pageParam }: PageFilterProps) => {
           size="xs"
           icon={<ArrowBackIcon />}
           onClick={() => updatePage(page - 1)}
+          isDisabled={page <= 1}
         />
         <Center>
           <Text fontSize="lg">{page}</Text>
@@ -37,6 +39,7 @@ export const ClosedPositionsPagination = ({ pageParam }: PageFilterProps) => {
           size="xs"
           onClick={() => updatePage(page + 1)}
           icon={<ArrowForwardIcon />}
+          isDisabled={!hasNextPage}
         />
       </Stack>
     </>
