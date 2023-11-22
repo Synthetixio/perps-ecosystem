@@ -1,4 +1,4 @@
-import { Flex, Heading, Button, Box, Link, Tooltip, IconButton } from '@chakra-ui/react';
+import { Flex, Heading, Button, Box, Link, IconButton } from '@chakra-ui/react';
 import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,21 +16,23 @@ import { TraderAccountStats } from '../components/Trader/TraderAccountStats';
 
 export const Account: FC = () => {
   const navigate = useNavigate();
-  const { walletAddress } = useParams();
+  const params = useParams();
 
-  const { data: kwentaAccount } = useKwentaAccount(walletAddress);
-  const { data: polynomialAccount } = usePolynomialAccount(walletAddress);
+  const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
+  const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
 
-  const { kwentaOwner } = useOwnerKwenta(walletAddress);
+  const { kwentaOwner } = useOwnerKwenta(params?.walletAddress);
 
-  const { polynomialOwner } = useOwnerPolynomial(walletAddress);
+  const { polynomialOwner } = useOwnerPolynomial(params?.walletAddress);
 
   const { addressEnsName: kwentaEnsName } = useEnsName(kwentaOwner);
   const { addressEnsName: polynomialEnsName } = useEnsName(polynomialOwner);
 
-  const { isFavorite, saveAccountFavorite, removeAccountFavorite } =
-    useAccountFavorites(walletAddress);
+  const { isFavorite, saveAccountFavorite, removeAccountFavorite } = useAccountFavorites(
+    params?.walletAddress
+  );
 
+  const walletAddress = params.walletAddress ?? '';
   return (
     <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
@@ -44,35 +46,11 @@ export const Account: FC = () => {
         </Button>
       </Box>
       <Flex mt={8} alignItems="center" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Tooltip
-          placement="top"
-          maxWidth="450px"
-          py={2}
-          px={4}
-          bg="gray.900"
-          color="white"
-          fontSize="14px"
-          fontFamily="heading"
-          borderRadius="4px"
-          label={walletAddress}
-          hasArrow
-        >
-          <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-            Account: <AccountName address={walletAddress ?? ''} display="inline-block" />
-          </Heading>
-        </Tooltip>
-        <CopyButton
-          variant="ghost"
-          size="sm"
-          color="white"
-          iconSize="16px"
-          value={walletAddress ?? ''}
-        />
-        <Link
-          alignItems="center"
-          href={optimisticEthercanLink(walletAddress ?? '')}
-          target="_blank"
-        >
+        <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
+          Account: <AccountName address={walletAddress} display="inline-block" />
+        </Heading>
+        <CopyButton variant="ghost" size="sm" color="white" iconSize="16px" value={walletAddress} />
+        <Link alignItems="center" href={optimisticEthercanLink(walletAddress)} target="_blank">
           <IconButton
             aria-label="external-link"
             variant="ghost"
@@ -89,9 +67,9 @@ export const Account: FC = () => {
           size="sm"
           onClick={() => {
             if (isFavorite) {
-              removeAccountFavorite(walletAddress ?? '');
+              removeAccountFavorite(walletAddress);
             } else {
-              saveAccountFavorite(walletAddress ?? '');
+              saveAccountFavorite(walletAddress);
             }
           }}
         />
