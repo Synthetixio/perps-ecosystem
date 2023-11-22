@@ -86,7 +86,11 @@ export const TraderAccountStats = ({
           <Heading fontSize="18px" lineHeight="28px">
             Actions
           </Heading>
-          {actionFilter && <Button onClick={resetActionFilters}>View All Actions</Button>}
+          {actionFilter && (
+            <Button variant="ghost" onClick={resetActionFilters}>
+              View All Actions
+            </Button>
+          )}
         </Flex>
 
         <AccountActionsTable />
