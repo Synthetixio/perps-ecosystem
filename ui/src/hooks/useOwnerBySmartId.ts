@@ -38,6 +38,15 @@ export const AccountQuery = gql`
   }
 `;
 
+export const PolynomailAccountOwner = gql`
+  query PolynomailAccountOwner($owner: String) {
+    logAccountCreateds(where: { owner: $owner }) {
+      owner
+      account
+    }
+  }
+`;
+
 const SmartMarginAccountSchema = z.object({
   owner: z.string(),
 });

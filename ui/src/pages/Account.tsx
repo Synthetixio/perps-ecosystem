@@ -3,8 +3,6 @@ import { ArrowBackIcon, ExternalLinkIcon, StarIcon } from '@chakra-ui/icons';
 import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { optimisticEthercanLink } from '../utils/constants';
-import { PositionsTable } from '../components/Positions';
-import { AccountActionsTable } from '../components/Actions';
 import { useKwentaAccount } from '../hooks/useKwentaAccount';
 import { usePolynomialAccount } from '../hooks/usePolynomialAccount';
 import { useOwnerKwenta, useOwnerPolynomial } from '../hooks/useOwnerBySmartId';
@@ -14,10 +12,11 @@ import useAccountFavorites from '../hooks/store/useAccountFavorites';
 import CopyButton from '../components/Shared/CopyButton/CopyButton';
 import { StarOutlinedIcon } from '../components/Icons/StarOutlinedIcon';
 import { AccountName } from '../components/Shared/AccountName/AccountName';
+import { TraderAccountStats } from '../components/Trader/TraderAccountStats';
 
 export const Account: FC = () => {
-  const params = useParams();
   const navigate = useNavigate();
+  const params = useParams();
 
   const { data: kwentaAccount } = useKwentaAccount(params?.walletAddress);
   const { data: polynomialAccount } = usePolynomialAccount(params?.walletAddress);
@@ -32,8 +31,8 @@ export const Account: FC = () => {
   const { isFavorite, saveAccountFavorite, removeAccountFavorite } = useAccountFavorites(
     params?.walletAddress
   );
-  const walletAddress = params?.walletAddress ?? '';
 
+  const walletAddress = params.walletAddress ?? '';
   return (
     <Flex flexDir="column" px={{ base: '16px', md: '40px' }} py={2}>
       <Box mt={12}>
@@ -93,21 +92,12 @@ export const Account: FC = () => {
           />
         )}
       </Flex>
-      <Box mt={6}>
-        <Heading fontSize="18px" lineHeight="28px">
-          Positions
-        </Heading>
-        <PositionsTable
-          kwentaAccount={kwentaAccount?.account ? kwentaAccount.account : ''}
-          polynomialAccount={polynomialAccount?.account ? polynomialAccount.account : ''}
-        />
-      </Box>
-      <Box mt={6}>
-        <Heading fontSize="18px" lineHeight="28px">
-          Actions
-        </Heading>
-        <AccountActionsTable />
-      </Box>
+
+      {/* Open Positions, Account PNL, Closed Positions, Actions */}
+      <TraderAccountStats
+        kwentaAccount={kwentaAccount?.account ?? ''}
+        polynomialAccount={polynomialAccount?.account ?? ''}
+      />
     </Flex>
   );
 };

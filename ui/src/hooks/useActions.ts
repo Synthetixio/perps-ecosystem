@@ -152,6 +152,9 @@ export const useActions = (account?: string, limit?: number) => {
 
   const min = searchParams.get('min') ?? undefined;
   const max = searchParams.get('max') ?? undefined;
+  const futuresPositionId = searchParams.get('tradeId') ?? undefined;
+  const openTimestamp = searchParams.get('openTimestamp') ?? undefined;
+  const closeTimestamp = searchParams.get('closeTimestamp') ?? undefined;
 
   const {
     loading: marginLoading,
@@ -169,6 +172,8 @@ export const useActions = (account?: string, limit?: number) => {
         market_in: markets,
         size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
         size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
+        timestamp_gte: openTimestamp,
+        timestamp_lte: closeTimestamp,
       },
     },
   });
@@ -189,6 +194,7 @@ export const useActions = (account?: string, limit?: number) => {
         market_in: markets,
         size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
         size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
+        futuresPosition: futuresPositionId,
       },
     },
   });

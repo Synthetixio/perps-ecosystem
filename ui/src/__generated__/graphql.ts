@@ -5,23 +5,27 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  BigDecimal: { input: string; output: string; }
-  BigInt: { input: string; output: string; }
-  Bytes: { input: string; output: string; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  BigDecimal: { input: string; output: string };
+  BigInt: { input: string; output: string };
+  Bytes: { input: string; output: string };
   /**
    * 8 bytes signed integer
    *
    */
-  Int8: { input: any; output: any; }
+  Int8: { input: any; output: any };
 };
 
 export type BlockChangedFilter = {
@@ -114,7 +118,7 @@ export enum CumulativeMarketStat_OrderBy {
   MarketId = 'market__id',
   MarketIsActive = 'market__isActive',
   MarketMarketKey = 'market__marketKey',
-  MarketTimestamp = 'market__timestamp'
+  MarketTimestamp = 'market__timestamp',
 }
 
 export type DailyMarketStat = {
@@ -259,7 +263,7 @@ export enum DailyMarketStat_OrderBy {
   MarketTimestamp = 'market__timestamp',
   Timestamp = 'timestamp',
   Trades = 'trades',
-  Volume = 'volume'
+  Volume = 'volume',
 }
 
 export type DailyStat = {
@@ -406,7 +410,7 @@ export enum DailyStat_OrderBy {
   NewTraders = 'newTraders',
   Timestamp = 'timestamp',
   Trades = 'trades',
-  Volume = 'volume'
+  Volume = 'volume',
 }
 
 export type Frontend = {
@@ -416,7 +420,6 @@ export type Frontend = {
   id: Scalars['ID']['output'];
   markets: Array<FuturesMarket>;
 };
-
 
 export type FrontendMarketsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -468,7 +471,7 @@ export enum Frontend_OrderBy {
   Amount = 'amount',
   Fees = 'fees',
   Id = 'id',
-  Markets = 'markets'
+  Markets = 'markets',
 }
 
 export type FundingRateUpdate = {
@@ -560,7 +563,7 @@ export enum FundingRateUpdate_OrderBy {
   MarketIsActive = 'market__isActive',
   MarketMarketKey = 'market__marketKey',
   MarketTimestamp = 'market__timestamp',
-  Timestamp = 'timestamp'
+  Timestamp = 'timestamp',
 }
 
 export type FuturesMarginTransfer = {
@@ -686,7 +689,7 @@ export enum FuturesMarginTransfer_OrderBy {
   TraderTotalLiquidations = 'trader__totalLiquidations',
   TraderTotalMarginLiquidated = 'trader__totalMarginLiquidated',
   TraderTotalVolume = 'trader__totalVolume',
-  TxHash = 'txHash'
+  TxHash = 'txHash',
 }
 
 export type FuturesMarket = {
@@ -750,7 +753,7 @@ export enum FuturesMarket_OrderBy {
   Id = 'id',
   IsActive = 'isActive',
   MarketKey = 'marketKey',
-  Timestamp = 'timestamp'
+  Timestamp = 'timestamp',
 }
 
 export type FuturesOrder = {
@@ -775,14 +778,14 @@ export type FuturesOrder = {
 export enum FuturesOrderStatus {
   Cancelled = 'Cancelled',
   Filled = 'Filled',
-  Pending = 'Pending'
+  Pending = 'Pending',
 }
 
 export enum FuturesOrderType {
   DelayedOffchainSubmitted = 'DelayedOffchainSubmitted',
   DelayedOrderSubmitted = 'DelayedOrderSubmitted',
   NextPriceOrderRemoved = 'NextPriceOrderRemoved',
-  NextPriceOrderSubmitted = 'NextPriceOrderSubmitted'
+  NextPriceOrderSubmitted = 'NextPriceOrderSubmitted',
 }
 
 export type FuturesOrder_Filter = {
@@ -1010,7 +1013,7 @@ export enum FuturesOrder_OrderBy {
   TraderTotalLiquidations = 'trader__totalLiquidations',
   TraderTotalMarginLiquidated = 'trader__totalMarginLiquidated',
   TraderTotalVolume = 'trader__totalVolume',
-  TxHash = 'txHash'
+  TxHash = 'txHash',
 }
 
 export type FuturesPosition = {
@@ -1324,7 +1327,7 @@ export enum FuturesPosition_OrderBy {
   TraderTotalVolume = 'trader__totalVolume',
   Trades = 'trades',
   TxHash = 'txHash',
-  UnrealizedPnl = 'unrealizedPnl'
+  UnrealizedPnl = 'unrealizedPnl',
 }
 
 export type FuturesTrade = {
@@ -1352,7 +1355,7 @@ export enum FuturesTradeType {
   Liquidated = 'Liquidated',
   PositionClosed = 'PositionClosed',
   PositionModified = 'PositionModified',
-  PositionOpened = 'PositionOpened'
+  PositionOpened = 'PositionOpened',
 }
 
 export type FuturesTrade_Filter = {
@@ -1617,13 +1620,13 @@ export enum FuturesTrade_OrderBy {
   TraderTotalMarginLiquidated = 'trader__totalMarginLiquidated',
   TraderTotalVolume = 'trader__totalVolume',
   TxHash = 'txHash',
-  Type = 'type'
+  Type = 'type',
 }
 
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type PositionFlagged = {
@@ -1711,7 +1714,7 @@ export enum PositionFlagged_OrderBy {
   TraderRealizedPnl = 'trader__realizedPnl',
   TraderTotalLiquidations = 'trader__totalLiquidations',
   TraderTotalMarginLiquidated = 'trader__totalMarginLiquidated',
-  TraderTotalVolume = 'trader__totalVolume'
+  TraderTotalVolume = 'trader__totalVolume',
 }
 
 export type PositionLiquidated = {
@@ -1916,7 +1919,7 @@ export enum PositionLiquidated_OrderBy {
   TraderTotalLiquidations = 'trader__totalLiquidations',
   TraderTotalMarginLiquidated = 'trader__totalMarginLiquidated',
   TraderTotalVolume = 'trader__totalVolume',
-  TxHash = 'txHash'
+  TxHash = 'txHash',
 }
 
 export type Query = {
@@ -1953,18 +1956,15 @@ export type Query = {
   traders: Array<Trader>;
 };
 
-
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type QueryCumulativeMarketStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryCumulativeMarketStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1976,13 +1976,11 @@ export type QueryCumulativeMarketStatsArgs = {
   where?: InputMaybe<CumulativeMarketStat_Filter>;
 };
 
-
 export type QueryDailyMarketStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryDailyMarketStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -1994,13 +1992,11 @@ export type QueryDailyMarketStatsArgs = {
   where?: InputMaybe<DailyMarketStat_Filter>;
 };
 
-
 export type QueryDailyStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryDailyStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2012,13 +2008,11 @@ export type QueryDailyStatsArgs = {
   where?: InputMaybe<DailyStat_Filter>;
 };
 
-
 export type QueryFrontendArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFrontendsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2030,13 +2024,11 @@ export type QueryFrontendsArgs = {
   where?: InputMaybe<Frontend_Filter>;
 };
 
-
 export type QueryFundingRateUpdateArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFundingRateUpdatesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2048,13 +2040,11 @@ export type QueryFundingRateUpdatesArgs = {
   where?: InputMaybe<FundingRateUpdate_Filter>;
 };
 
-
 export type QueryFuturesMarginTransferArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFuturesMarginTransfersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2066,13 +2056,11 @@ export type QueryFuturesMarginTransfersArgs = {
   where?: InputMaybe<FuturesMarginTransfer_Filter>;
 };
 
-
 export type QueryFuturesMarketArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFuturesMarketsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2084,13 +2072,11 @@ export type QueryFuturesMarketsArgs = {
   where?: InputMaybe<FuturesMarket_Filter>;
 };
 
-
 export type QueryFuturesOrderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFuturesOrdersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2102,13 +2088,11 @@ export type QueryFuturesOrdersArgs = {
   where?: InputMaybe<FuturesOrder_Filter>;
 };
 
-
 export type QueryFuturesPositionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFuturesPositionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2120,13 +2104,11 @@ export type QueryFuturesPositionsArgs = {
   where?: InputMaybe<FuturesPosition_Filter>;
 };
 
-
 export type QueryFuturesTradeArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryFuturesTradesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2138,13 +2120,11 @@ export type QueryFuturesTradesArgs = {
   where?: InputMaybe<FuturesTrade_Filter>;
 };
 
-
 export type QueryPositionFlaggedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPositionFlaggedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2156,13 +2136,11 @@ export type QueryPositionFlaggedsArgs = {
   where?: InputMaybe<PositionFlagged_Filter>;
 };
 
-
 export type QueryPositionLiquidatedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryPositionLiquidatedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2174,13 +2152,11 @@ export type QueryPositionLiquidatedsArgs = {
   where?: InputMaybe<PositionLiquidated_Filter>;
 };
 
-
 export type QuerySynthetixArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QuerySynthetixesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2192,13 +2168,11 @@ export type QuerySynthetixesArgs = {
   where?: InputMaybe<Synthetix_Filter>;
 };
 
-
 export type QueryTraderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type QueryTradersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2244,18 +2218,15 @@ export type Subscription = {
   traders: Array<Trader>;
 };
 
-
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
-
 
 export type SubscriptionCumulativeMarketStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionCumulativeMarketStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2267,13 +2238,11 @@ export type SubscriptionCumulativeMarketStatsArgs = {
   where?: InputMaybe<CumulativeMarketStat_Filter>;
 };
 
-
 export type SubscriptionDailyMarketStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionDailyMarketStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2285,13 +2254,11 @@ export type SubscriptionDailyMarketStatsArgs = {
   where?: InputMaybe<DailyMarketStat_Filter>;
 };
 
-
 export type SubscriptionDailyStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionDailyStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2303,13 +2270,11 @@ export type SubscriptionDailyStatsArgs = {
   where?: InputMaybe<DailyStat_Filter>;
 };
 
-
 export type SubscriptionFrontendArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFrontendsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2321,13 +2286,11 @@ export type SubscriptionFrontendsArgs = {
   where?: InputMaybe<Frontend_Filter>;
 };
 
-
 export type SubscriptionFundingRateUpdateArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFundingRateUpdatesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2339,13 +2302,11 @@ export type SubscriptionFundingRateUpdatesArgs = {
   where?: InputMaybe<FundingRateUpdate_Filter>;
 };
 
-
 export type SubscriptionFuturesMarginTransferArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFuturesMarginTransfersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2357,13 +2318,11 @@ export type SubscriptionFuturesMarginTransfersArgs = {
   where?: InputMaybe<FuturesMarginTransfer_Filter>;
 };
 
-
 export type SubscriptionFuturesMarketArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFuturesMarketsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2375,13 +2334,11 @@ export type SubscriptionFuturesMarketsArgs = {
   where?: InputMaybe<FuturesMarket_Filter>;
 };
 
-
 export type SubscriptionFuturesOrderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFuturesOrdersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2393,13 +2350,11 @@ export type SubscriptionFuturesOrdersArgs = {
   where?: InputMaybe<FuturesOrder_Filter>;
 };
 
-
 export type SubscriptionFuturesPositionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFuturesPositionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2411,13 +2366,11 @@ export type SubscriptionFuturesPositionsArgs = {
   where?: InputMaybe<FuturesPosition_Filter>;
 };
 
-
 export type SubscriptionFuturesTradeArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionFuturesTradesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2429,13 +2382,11 @@ export type SubscriptionFuturesTradesArgs = {
   where?: InputMaybe<FuturesTrade_Filter>;
 };
 
-
 export type SubscriptionPositionFlaggedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPositionFlaggedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2447,13 +2398,11 @@ export type SubscriptionPositionFlaggedsArgs = {
   where?: InputMaybe<PositionFlagged_Filter>;
 };
 
-
 export type SubscriptionPositionLiquidatedArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionPositionLiquidatedsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2465,13 +2414,11 @@ export type SubscriptionPositionLiquidatedsArgs = {
   where?: InputMaybe<PositionLiquidated_Filter>;
 };
 
-
 export type SubscriptionSynthetixArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionSynthetixesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2483,13 +2430,11 @@ export type SubscriptionSynthetixesArgs = {
   where?: InputMaybe<Synthetix_Filter>;
 };
 
-
 export type SubscriptionTraderArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
-
 
 export type SubscriptionTradersArgs = {
   block?: InputMaybe<Block_Height>;
@@ -2582,7 +2527,7 @@ export enum Synthetix_OrderBy {
   TotalLiquidations = 'totalLiquidations',
   TotalTraders = 'totalTraders',
   TotalTrades = 'totalTrades',
-  TotalVolume = 'totalVolume'
+  TotalVolume = 'totalVolume',
 }
 
 export type Trader = {
@@ -2598,7 +2543,6 @@ export type Trader = {
   totalVolume: Scalars['BigInt']['output'];
   trades: Array<FuturesTrade>;
 };
-
 
 export type TraderTradesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2704,7 +2648,7 @@ export enum Trader_OrderBy {
   TotalLiquidations = 'totalLiquidations',
   TotalMarginLiquidated = 'totalMarginLiquidated',
   TotalVolume = 'totalVolume',
-  Trades = 'trades'
+  Trades = 'trades',
 }
 
 export type _Block_ = {
@@ -2738,7 +2682,7 @@ export enum _SubgraphErrorPolicy_ {
   /** Data will be returned even if the subgraph has indexing errors */
   Allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  Deny = 'deny'
+  Deny = 'deny',
 }
 
 export type FuturesMarginTransferQueryVariables = Exact<{
@@ -2748,8 +2692,18 @@ export type FuturesMarginTransferQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type FuturesMarginTransferQuery = { __typename?: 'Query', futuresMarginTransfers: Array<{ __typename?: 'FuturesMarginTransfer', id: string, timestamp: string, size: string, txHash: string, trader: { __typename?: 'Trader', id: string }, market: { __typename?: 'FuturesMarket', asset: string } }> };
+export type FuturesMarginTransferQuery = {
+  __typename?: 'Query';
+  futuresMarginTransfers: Array<{
+    __typename?: 'FuturesMarginTransfer';
+    id: string;
+    timestamp: string;
+    size: string;
+    txHash: string;
+    trader: { __typename?: 'Trader'; id: string };
+    market: { __typename?: 'FuturesMarket'; asset: string };
+  }>;
+};
 
 export type FuturesTradesQueryVariables = Exact<{
   where?: InputMaybe<FuturesTrade_Filter>;
@@ -2758,8 +2712,26 @@ export type FuturesTradesQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type FuturesTradesQuery = { __typename?: 'Query', futuresTrades: Array<{ __typename?: 'FuturesTrade', id: string, timestamp: string, margin: string, size: string, feesPaidToSynthetix: string, type: FuturesTradeType, realizedPnl: string, positionClosed: boolean, positionSize: string, price: string, txHash: string, trader: { __typename?: 'Trader', id: string }, market: { __typename?: 'FuturesMarket', id: string, asset: string }, futuresPosition: { __typename?: 'FuturesPosition', id: string } }> };
+export type FuturesTradesQuery = {
+  __typename?: 'Query';
+  futuresTrades: Array<{
+    __typename?: 'FuturesTrade';
+    id: string;
+    timestamp: string;
+    margin: string;
+    size: string;
+    feesPaidToSynthetix: string;
+    type: FuturesTradeType;
+    realizedPnl: string;
+    positionClosed: boolean;
+    positionSize: string;
+    price: string;
+    txHash: string;
+    trader: { __typename?: 'Trader'; id: string };
+    market: { __typename?: 'FuturesMarket'; id: string; asset: string };
+    futuresPosition: { __typename?: 'FuturesPosition'; id: string };
+  }>;
+};
 
 export type TradesQueryQueryVariables = Exact<{
   where?: InputMaybe<FuturesTrade_Filter>;
@@ -2769,8 +2741,10 @@ export type TradesQueryQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type TradesQueryQuery = { __typename?: 'Query', futuresTrades: Array<{ __typename?: 'FuturesTrade', id: string, timestamp: string }> };
+export type TradesQueryQuery = {
+  __typename?: 'Query';
+  futuresTrades: Array<{ __typename?: 'FuturesTrade'; id: string; timestamp: string }>;
+};
 
 export type LiquidatedQueryQueryVariables = Exact<{
   where?: InputMaybe<PositionLiquidated_Filter>;
@@ -2778,8 +2752,17 @@ export type LiquidatedQueryQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type LiquidatedQueryQuery = { __typename?: 'Query', positionLiquidateds: Array<{ __typename?: 'PositionLiquidated', id: string, size: string, trader: { __typename?: 'Trader', id: string }, market: { __typename?: 'FuturesMarket', asset: string }, futuresPosition: { __typename?: 'FuturesPosition', margin: string } }> };
+export type LiquidatedQueryQuery = {
+  __typename?: 'Query';
+  positionLiquidateds: Array<{
+    __typename?: 'PositionLiquidated';
+    id: string;
+    size: string;
+    trader: { __typename?: 'Trader'; id: string };
+    market: { __typename?: 'FuturesMarket'; asset: string };
+    futuresPosition: { __typename?: 'FuturesPosition'; margin: string };
+  }>;
+};
 
 export type StatsQueryQueryVariables = Exact<{
   where?: InputMaybe<DailyStat_Filter>;
@@ -2789,8 +2772,24 @@ export type StatsQueryQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
-
-export type StatsQueryQuery = { __typename?: 'Query', dailyStats: Array<{ __typename?: 'DailyStat', id: string, timestamp: string, cumulativeVolume: string, volume: string, fees: string, cumulativeFees: string, day: string, existingTraders: string, newTraders: string, cumulativeTraders: string, cumulativeTrades: string, trades: string }> };
+export type StatsQueryQuery = {
+  __typename?: 'Query';
+  dailyStats: Array<{
+    __typename?: 'DailyStat';
+    id: string;
+    timestamp: string;
+    cumulativeVolume: string;
+    volume: string;
+    fees: string;
+    cumulativeFees: string;
+    day: string;
+    existingTraders: string;
+    newTraders: string;
+    cumulativeTraders: string;
+    cumulativeTrades: string;
+    trades: string;
+  }>;
+};
 
 export type MarketsQueryQueryVariables = Exact<{
   where?: InputMaybe<DailyMarketStat_Filter>;
@@ -2800,13 +2799,30 @@ export type MarketsQueryQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
+export type MarketsQueryQuery = {
+  __typename?: 'Query';
+  dailyMarketStats: Array<{
+    __typename?: 'DailyMarketStat';
+    id: string;
+    day: string;
+    volume: string;
+    market: {
+      __typename?: 'FuturesMarket';
+      id: string;
+      marketKey: string;
+      asset: string;
+      isActive: boolean;
+      timestamp: string;
+    };
+  }>;
+};
 
-export type MarketsQueryQuery = { __typename?: 'Query', dailyMarketStats: Array<{ __typename?: 'DailyMarketStat', id: string, day: string, volume: string, market: { __typename?: 'FuturesMarket', id: string, marketKey: string, asset: string, isActive: boolean, timestamp: string } }> };
+export type MarketsIdQueryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type MarketsIdQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MarketsIdQueryQuery = { __typename?: 'Query', futuresMarkets: Array<{ __typename?: 'FuturesMarket', id: string, marketKey: string }> };
+export type MarketsIdQueryQuery = {
+  __typename?: 'Query';
+  futuresMarkets: Array<{ __typename?: 'FuturesMarket'; id: string; marketKey: string }>;
+};
 
 export type PositionsLiquidatedQueryVariables = Exact<{
   where?: InputMaybe<PositionLiquidated_Filter>;
@@ -2816,8 +2832,22 @@ export type PositionsLiquidatedQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
-
-export type PositionsLiquidatedQuery = { __typename?: 'Query', positionLiquidateds: Array<{ __typename?: 'PositionLiquidated', id: string, timestamp: string, txHash: string, size: string, price: string, fee: string, liquidator: string, futuresPosition: { __typename?: 'FuturesPosition', leverage: string }, market: { __typename?: 'FuturesMarket', asset: string }, trader: { __typename?: 'Trader', id: string, totalLiquidations: string } }> };
+export type PositionsLiquidatedQuery = {
+  __typename?: 'Query';
+  positionLiquidateds: Array<{
+    __typename?: 'PositionLiquidated';
+    id: string;
+    timestamp: string;
+    txHash: string;
+    size: string;
+    price: string;
+    fee: string;
+    liquidator: string;
+    futuresPosition: { __typename?: 'FuturesPosition'; leverage: string };
+    market: { __typename?: 'FuturesMarket'; asset: string };
+    trader: { __typename?: 'Trader'; id: string; totalLiquidations: string };
+  }>;
+};
 
 export type PositionsMarketQueryVariables = Exact<{
   where?: InputMaybe<FuturesPosition_Filter>;
@@ -2827,22 +2857,1319 @@ export type PositionsMarketQueryVariables = Exact<{
   orderDirection?: InputMaybe<OrderDirection>;
 }>;
 
+export type PositionsMarketQuery = {
+  __typename?: 'Query';
+  futuresPositions: Array<{
+    __typename?: 'FuturesPosition';
+    isOpen: boolean;
+    entryPrice: string;
+    avgEntryPrice: string;
+    leverage: string;
+    feesPaidToSynthetix: string;
+    id: string;
+    realizedPnl: string;
+    unrealizedPnl: string;
+    exitPrice?: string | null;
+    lastPrice: string;
+    netFunding: string;
+    long: boolean;
+    size: string;
+    isLiquidated: boolean;
+    openTimestamp: string;
+    closeTimestamp?: string | null;
+    trades: string;
+    txHash: string;
+    market: { __typename?: 'FuturesMarket'; id: string; marketKey: string; asset: string };
+    trader: { __typename?: 'Trader'; id: string };
+  }>;
+};
 
-export type PositionsMarketQuery = { __typename?: 'Query', futuresPositions: Array<{ __typename?: 'FuturesPosition', isOpen: boolean, entryPrice: string, avgEntryPrice: string, leverage: string, feesPaidToSynthetix: string, id: string, realizedPnl: string, unrealizedPnl: string, exitPrice?: string | null, lastPrice: string, netFunding: string, long: boolean, size: string, isLiquidated: boolean, market: { __typename?: 'FuturesMarket', id: string, marketKey: string, asset: string }, trader: { __typename?: 'Trader', id: string } }> };
+export type SynthetixQueryVariables = Exact<{ [key: string]: never }>;
 
-export type SynthetixQueryVariables = Exact<{ [key: string]: never; }>;
+export type SynthetixQuery = {
+  __typename?: 'Query';
+  synthetix?: {
+    __typename?: 'Synthetix';
+    feesByLiquidations: string;
+    feesByPositionModifications: string;
+    totalVolume: string;
+    totalLiquidations: string;
+    totalTraders: string;
+  } | null;
+};
 
+export type TradersDataQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
 
-export type SynthetixQuery = { __typename?: 'Query', synthetix?: { __typename?: 'Synthetix', feesByLiquidations: string, feesByPositionModifications: string, totalVolume: string, totalLiquidations: string, totalTraders: string } | null };
+export type TradersDataQuery = {
+  __typename?: 'Query';
+  traders: Array<{
+    __typename?: 'Trader';
+    feesPaidToSynthetix: string;
+    id: string;
+    lastTradeTimestamp?: string | null;
+    margin: string;
+    realizedPnl: string;
+    totalLiquidations: string;
+    totalMarginLiquidated: string;
+    totalVolume: string;
+  }>;
+};
 
+export type TraderDataPnlQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
 
-export const FuturesMarginTransferDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FuturesMarginTransfer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesMarginTransfer_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesMarginTransfer_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresMarginTransfers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"trader"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<FuturesMarginTransferQuery, FuturesMarginTransferQueryVariables>;
-export const FuturesTradesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FuturesTrades"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesTrade_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesTrade_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresTrades"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"trader"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"margin"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"futuresPosition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"positionClosed"}},{"kind":"Field","name":{"kind":"Name","value":"positionSize"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}}]}}]}}]} as unknown as DocumentNode<FuturesTradesQuery, FuturesTradesQueryVariables>;
-export const TradesQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TradesQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesTrade_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesTrade_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresTrades"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]} as unknown as DocumentNode<TradesQueryQuery, TradesQueryQueryVariables>;
-export const LiquidatedQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LiquidatedQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PositionLiquidated_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PositionLiquidated_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positionLiquidateds"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"trader"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"futuresPosition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"margin"}}]}}]}}]}}]} as unknown as DocumentNode<LiquidatedQueryQuery, LiquidatedQueryQueryVariables>;
-export const StatsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"StatsQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DailyStat_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DailyStat_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dailyStats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"cumulativeVolume"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}},{"kind":"Field","name":{"kind":"Name","value":"fees"}},{"kind":"Field","name":{"kind":"Name","value":"cumulativeFees"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"existingTraders"}},{"kind":"Field","name":{"kind":"Name","value":"newTraders"}},{"kind":"Field","name":{"kind":"Name","value":"cumulativeTraders"}},{"kind":"Field","name":{"kind":"Name","value":"cumulativeTrades"}},{"kind":"Field","name":{"kind":"Name","value":"trades"}}]}}]}}]} as unknown as DocumentNode<StatsQueryQuery, StatsQueryQueryVariables>;
-export const MarketsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MarketsQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DailyMarketStat_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DailyMarketStat_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dailyMarketStats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketKey"}},{"kind":"Field","name":{"kind":"Name","value":"asset"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}},{"kind":"Field","name":{"kind":"Name","value":"volume"}}]}}]}}]} as unknown as DocumentNode<MarketsQueryQuery, MarketsQueryQueryVariables>;
-export const MarketsIdQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MarketsIdQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresMarkets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketKey"}}]}}]}}]} as unknown as DocumentNode<MarketsIdQueryQuery, MarketsIdQueryQueryVariables>;
-export const PositionsLiquidatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PositionsLiquidated"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PositionLiquidated_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PositionLiquidated_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positionLiquidateds"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"txHash"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"futuresPosition"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"leverage"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"liquidator"}},{"kind":"Field","name":{"kind":"Name","value":"trader"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}}]}}]}}]}}]} as unknown as DocumentNode<PositionsLiquidatedQuery, PositionsLiquidatedQueryVariables>;
-export const PositionsMarketDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PositionsMarket"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesPosition_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FuturesPosition_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"futuresPositions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketKey"}},{"kind":"Field","name":{"kind":"Name","value":"asset"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trader"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"avgEntryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"leverage"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"unrealizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaidToSynthetix"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastPrice"}},{"kind":"Field","name":{"kind":"Name","value":"netFunding"}},{"kind":"Field","name":{"kind":"Name","value":"long"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}}]}}]}}]} as unknown as DocumentNode<PositionsMarketQuery, PositionsMarketQueryVariables>;
-export const SynthetixDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Synthetix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"synthetix"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"synthetix","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feesByLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"feesByPositionModifications"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"totalTraders"}}]}}]}}]} as unknown as DocumentNode<SynthetixQuery, SynthetixQueryVariables>;
+export type TraderDataPnlQuery = {
+  __typename?: 'Query';
+  trader?: {
+    __typename?: 'Trader';
+    feesPaidToSynthetix: string;
+    id: string;
+    lastTradeTimestamp?: string | null;
+    margin: string;
+    realizedPnl: string;
+    totalLiquidations: string;
+    totalMarginLiquidated: string;
+    totalVolume: string;
+  } | null;
+};
+
+export type FuturesQueryQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type FuturesQueryQuery = {
+  __typename?: 'Query';
+  futuresPositions: Array<{
+    __typename?: 'FuturesPosition';
+    avgEntryPrice: string;
+    id: string;
+    fundingIndex: string;
+    feesPaidToSynthetix: string;
+    exitPrice?: string | null;
+    entryPrice: string;
+    closeTimestamp?: string | null;
+    initialMargin: string;
+    isLiquidated: boolean;
+    isOpen: boolean;
+    lastPrice: string;
+    leverage: string;
+    long: boolean;
+    margin: string;
+    netFunding: string;
+    netTransfers: string;
+    openTimestamp: string;
+    realizedPnl: string;
+    size: string;
+    skew?: string | null;
+    totalVolume: string;
+    trades: string;
+    txHash: string;
+    unrealizedPnl: string;
+    market: { __typename?: 'FuturesMarket'; id: string; marketKey: string; asset: string };
+  }>;
+};
+
+export type TraderPositionsMarketQueryVariables = Exact<{
+  where?: InputMaybe<FuturesPosition_Filter>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<FuturesPosition_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+}>;
+
+export type TraderPositionsMarketQuery = {
+  __typename?: 'Query';
+  futuresPositions: Array<{
+    __typename?: 'FuturesPosition';
+    isOpen: boolean;
+    entryPrice: string;
+    avgEntryPrice: string;
+    leverage: string;
+    feesPaidToSynthetix: string;
+    id: string;
+    realizedPnl: string;
+    unrealizedPnl: string;
+    exitPrice?: string | null;
+    lastPrice: string;
+    netFunding: string;
+    long: boolean;
+    size: string;
+    isLiquidated: boolean;
+    openTimestamp: string;
+    closeTimestamp?: string | null;
+    trades: string;
+    txHash: string;
+    market: { __typename?: 'FuturesMarket'; id: string; marketKey: string; asset: string };
+    trader: { __typename?: 'Trader'; id: string };
+  }>;
+};
+
+export const FuturesMarginTransferDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'FuturesMarginTransfer' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'FuturesMarginTransfer_filter' },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'FuturesMarginTransfer_orderBy' },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresMarginTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'asset' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FuturesMarginTransferQuery, FuturesMarginTransferQueryVariables>;
+export const FuturesTradesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'FuturesTrades' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesTrade_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesTrade_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresTrades' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'margin' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'futuresPosition' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'positionClosed' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'positionSize' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FuturesTradesQuery, FuturesTradesQueryVariables>;
+export const TradesQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'TradesQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesTrade_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesTrade_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresTrades' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TradesQueryQuery, TradesQueryQueryVariables>;
+export const LiquidatedQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'LiquidatedQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PositionLiquidated_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PositionLiquidated_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'positionLiquidateds' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'asset' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'futuresPosition' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'margin' } }],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LiquidatedQueryQuery, LiquidatedQueryQueryVariables>;
+export const StatsQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'StatsQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DailyStat_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DailyStat_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'dailyStats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'cumulativeVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'volume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'cumulativeFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'day' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'existingTraders' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'newTraders' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'cumulativeTraders' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'cumulativeTrades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trades' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<StatsQueryQuery, StatsQueryQueryVariables>;
+export const MarketsQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MarketsQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DailyMarketStat_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DailyMarketStat_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'dailyMarketStats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'day' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketKey' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isActive' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'volume' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MarketsQueryQuery, MarketsQueryQueryVariables>;
+export const MarketsIdQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MarketsIdQuery' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresMarkets' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'marketKey' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MarketsIdQueryQuery, MarketsIdQueryQueryVariables>;
+export const PositionsLiquidatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PositionsLiquidated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PositionLiquidated_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'PositionLiquidated_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'positionLiquidateds' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'futuresPosition' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'leverage' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'asset' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'liquidator' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PositionsLiquidatedQuery, PositionsLiquidatedQueryVariables>;
+export const PositionsMarketDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'PositionsMarket' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesPosition_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesPosition_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresPositions' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketKey' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'isOpen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'entryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'avgEntryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'leverage' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'unrealizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'exitPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'netFunding' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'long' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PositionsMarketQuery, PositionsMarketQueryVariables>;
+export const SynthetixDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Synthetix' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'synthetix' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'synthetix', block: false },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'feesByLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesByPositionModifications' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalTraders' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SynthetixQuery, SynthetixQueryVariables>;
+export const TradersDataDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'TradersData' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'traders' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastTradeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'margin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalMarginLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TradersDataQuery, TradersDataQueryVariables>;
+export const TraderDataPnlDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'TraderDataPNL' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'trader' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastTradeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'margin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalMarginLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TraderDataPnlQuery, TraderDataPnlQueryVariables>;
+export const FuturesQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'FuturesQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresPositions' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'trader_' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'closeTimestamp' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'EnumValue', value: 'desc' },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'avgEntryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fundingIndex' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'exitPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'entryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'initialMargin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isOpen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'leverage' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'long' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'margin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'netFunding' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'netTransfers' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'skew' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'unrealizedPnl' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketKey' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FuturesQueryQuery, FuturesQueryQueryVariables>;
+export const TraderPositionsMarketDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'TraderPositionsMarket' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesPosition_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'FuturesPosition_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'futuresPositions' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'skip' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'skip' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketKey' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trader' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'isOpen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'entryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'avgEntryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'leverage' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'unrealizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaidToSynthetix' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'exitPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'netFunding' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'long' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txHash' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TraderPositionsMarketQuery, TraderPositionsMarketQueryVariables>;

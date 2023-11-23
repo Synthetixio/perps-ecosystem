@@ -16,19 +16,19 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
     data: walletData,
     error: walletError,
     loading: walletLoading,
-  } = usePositions(walletAddress, 'wallet');
+  } = usePositions(walletAddress, 'wallet', false);
 
   const {
     data: kwentaData,
     error: kwentaError,
     loading: kwentaLoading,
-  } = usePositions(kwentaAccount, 'kwenta');
+  } = usePositions(kwentaAccount, 'kwenta', false);
 
   const {
     data: polyData,
     error: polyError,
     loading: polyLoading,
-  } = usePositions(polynomialAccount, 'poly');
+  } = usePositions(polynomialAccount, 'poly', false);
 
   const loading = walletLoading || kwentaLoading || polyLoading;
   const error = walletError ?? kwentaError ?? polyError;
