@@ -14,7 +14,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
     return null;
   }
   const tooltipDate = new Date(parseInt(pnlInfo.closeTimestamp) * 1000).toISOString().slice(0, 10);
-
+  console.log('pnlInfo', pnlInfo);
   return (
     <Flex
       flexDirection="column"
@@ -44,9 +44,9 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Timestamp" colour="gray.500" />
+        <KeyColour label="Position" colour="gray.500" />
         <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {pnlInfo.closeTimestamp}
+          {pnlInfo.long ? 'Long' : 'Short'}
         </Text>
       </Flex>
     </Flex>
