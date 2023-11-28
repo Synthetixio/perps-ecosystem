@@ -11,13 +11,13 @@ import {
   type FlexProps,
 } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
-import { TableHeaderCell, PnL, Market, Funding } from '../Shared';
-import { PositionsLoading } from './PositionsLoading';
+import { TableHeaderCell, PnL, Market, Funding } from '../../Shared';
 import { wei } from '@synthetixio/wei';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { Action } from '../Shared/Action';
-import { useTraderClosedPositions } from '../../hooks';
+import { Action } from '../../Shared/Action';
+import { useTraderClosedPositions } from '../../../hooks';
 import { ClosedPositionsPagination } from './ClosedPositionsPagination';
+import { ClosedPositionsLoading } from './ClosedPositionsLoading';
 
 interface ClosedPositionsTableProps extends FlexProps {
   actionsRef: React.RefObject<HTMLDivElement>;
@@ -55,8 +55,7 @@ export const ClosedPositionsTable = ({
   return (
     <>
       <TableContainer
-        width="100%"
-        minW={500}
+        maxW="100%"
         height={500}
         mt={5}
         mb={1}
@@ -84,9 +83,7 @@ export const ClosedPositionsTable = ({
             <Tbody>
               {loading && (
                 <>
-                  <PositionsLoading />
-                  <PositionsLoading />
-                  <PositionsLoading />
+                  <ClosedPositionsLoading />
                 </>
               )}
               {closedPositionData?.map(

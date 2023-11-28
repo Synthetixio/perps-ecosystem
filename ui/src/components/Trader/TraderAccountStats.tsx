@@ -1,6 +1,7 @@
 import { Flex, Heading, Button, Box } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
-import { ClosedPositionsTable, PositionsTable } from '../Positions';
+import { PositionsTable } from '../Positions';
+import { ClosedPositionsTable } from './ClosedPositions';
 import { AccountActionsTable } from '../Actions';
 import { AccountPnl } from '../Actions/Account';
 import { useSearchParams } from 'react-router-dom';
