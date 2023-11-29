@@ -14,7 +14,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
     return null;
   }
   const tooltipDate = new Date(parseInt(pnlInfo.closeTimestamp) * 1000).toISOString().slice(0, 10);
-  console.log('pnlInfo', pnlInfo);
+
   return (
     <Flex
       flexDirection="column"
