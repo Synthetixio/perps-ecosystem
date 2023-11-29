@@ -1,4 +1,4 @@
-import { Skeleton, Td, Tr, Box } from '@chakra-ui/react';
+import { Skeleton, Td, Tr, Box, Flex, SkeletonCircle } from '@chakra-ui/react';
 
 // A loading skeleton with dummy values
 export const AllActionsLoading = () => {
@@ -9,11 +9,12 @@ export const AllActionsLoading = () => {
           Lorem Ipsum
         </Skeleton>
       </Box>
-      <Box as={Td} border="none">
+      <Flex as={Td} border="none" alignItems="center">
+        <SkeletonCircle mr={4} startColor="gray.700" endColor="gray.900" />
         <Skeleton startColor="gray.700" endColor="gray.900" my={2}>
           Lorem Ipsum
         </Skeleton>
-      </Box>
+      </Flex>
       <Box as={Td} border="none">
         <Skeleton startColor="gray.700" endColor="gray.900" my={2}>
           Lorem Ipsum
