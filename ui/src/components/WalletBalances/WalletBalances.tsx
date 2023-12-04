@@ -53,7 +53,7 @@ const Row = ({
 };
 
 export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => {
-  const { totalSNX, snxStakedAmount, userSUSD, feeSUSD, estimatedUserFee, totalDept } =
+  const { totalSNX, snxStakedAmount, userSUSD, feeSUSD, estimatedUserFee, totalDebt } =
     useAccountBalances(walletAddress);
 
   return (
@@ -70,7 +70,7 @@ export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => 
         tooltip={
           <Flex alignItems="flex-start" flexDirection="column">
             <Text>On Optimism + Ethereum</Text>
-            <Text>Total Dept: ${formatNumber(totalDept)}</Text>
+            <Text>Total Debt: ${formatNumber(totalDebt)}</Text>
           </Flex>
         }
       />

@@ -66,7 +66,7 @@ export function useAccountBalances(walletAddress?: string) {
     () => feeSUSD * (userSDS / totalSDS),
     [feeSUSD, userSDS, totalSDS]
   );
-  const totalDept = useMemo(() => userSDS * sdsPrice, [userSDS, sdsPrice]);
+  const totalDebt = useMemo(() => userSDS * sdsPrice, [userSDS, sdsPrice]);
 
   return {
     totalSNX,
@@ -74,6 +74,6 @@ export function useAccountBalances(walletAddress?: string) {
     userSUSD,
     feeSUSD,
     estimatedUserFee,
-    totalDept,
+    totalDebt,
   };
 }
