@@ -64,7 +64,12 @@ export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => 
         value={totalSNX}
         tooltip={'On Optimism + Ethereum'}
       />
-      <Row label={'Total Debt: '} value={totalDebt} tooltip={'On Optimism + Ethereum'} />
+      <Row
+        label={'Total Debt: '}
+        value={totalDebt}
+        prefix={'$'}
+        tooltip={'On Optimism + Ethereum'}
+      />
       {/* <Row */}
       {/*  label={'SNX Staked: '} */}
       {/*  value={snxStakedAmount} */}
@@ -75,7 +80,12 @@ export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => 
       {/*    </Flex> */}
       {/*  } */}
       {/* /> */}
-      <Row label={'Current Estimated Epoch Fees: '} value={estimatedUserFee} prefix={'$'} />
+      <Row
+        label={'Current Estimated Epoch Fees: '}
+        value={estimatedUserFee}
+        prefix={'$'}
+        tooltip={'Fee earned from SNX Staking'}
+      />
       <Row
         label={'Current Total Epoch Fees: '}
         value={feeSUSD}
