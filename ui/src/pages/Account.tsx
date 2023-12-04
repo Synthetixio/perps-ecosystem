@@ -13,6 +13,7 @@ import CopyButton from '../components/Shared/CopyButton/CopyButton';
 import { StarOutlinedIcon } from '../components/Icons/StarOutlinedIcon';
 import { AccountName } from '../components/Shared/AccountName/AccountName';
 import { TraderAccountStats } from '../components/Trader/TraderAccountStats';
+import { WalletBalances } from '../components/WalletBalances';
 
 export const Account: FC = () => {
   const navigate = useNavigate();
@@ -45,52 +46,65 @@ export const Account: FC = () => {
           Back
         </Button>
       </Box>
-      <Flex mt={8} alignItems="center" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
-        <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
-          Account: <AccountName address={walletAddress} display="inline-block" />
-        </Heading>
-        <CopyButton variant="ghost" size="sm" color="white" iconSize="16px" value={walletAddress} />
-        <Link alignItems="center" href={optimisticEthercanLink(walletAddress)} target="_blank">
-          <IconButton
-            aria-label="external-link"
-            variant="ghost"
-            icon={<ExternalLinkIcon fontSize="16px" />}
-            color="white"
-            size="sm"
-          />
-        </Link>
-        <IconButton
-          aria-label="favorites"
-          variant="ghost"
-          icon={isFavorite ? <StarIcon fontSize="16px" /> : <StarOutlinedIcon fontSize="16px" />}
-          color="white"
-          size="sm"
-          onClick={() => {
-            if (isFavorite) {
-              removeAccountFavorite(walletAddress);
-            } else {
-              saveAccountFavorite(walletAddress);
-            }
-          }}
-        />
-      </Flex>
-      <Flex mt={8} wrap="wrap">
-        {kwentaAccount && (
-          <SmartWallet label="Kwenta Smart Account" account={kwentaAccount.account} />
-        )}
-        {kwentaOwner && (
-          <SmartWallet label={kwentaEnsName ?? 'EOA Account'} account={kwentaOwner} />
-        )}
-        {polynomialOwner && (
-          <SmartWallet label={polynomialEnsName ?? 'EOA Account'} account={polynomialOwner} />
-        )}
-        {polynomialAccount && (
-          <SmartWallet
-            ml="30px"
-            label="Polynomial Smart Wallet"
-            account={polynomialAccount.account}
-          />
-        )}
+      <Flex mt={8} justifyContent="space-between" flexWrap="wrap">
+        <Flex flexDirection="column">
+          <Flex alignItems="center" flexWrap={{ base: 'wrap', md: 'nowrap' }}>
+            <Heading fontSize={{ base: '14px', md: '24px' }} p={0} mr={2}>
+              Account: <AccountName address={walletAddress} display="inline-block" />
+            </Heading>
+            <CopyButton
+              variant="ghost"
+              size="sm"
+              color="white"
+              iconSize="16px"
+              value={walletAddress}
+            />
+            <Link alignItems="center" href={optimisticEthercanLink(walletAddress)} target="_blank">
+              <IconButton
+                aria-label="external-link"
+                variant="ghost"
+                icon={<ExternalLinkIcon fontSize="16px" />}
+                color="white"
+                size="sm"
+              />
+            </Link>
+            <IconButton
+              aria-label="favorites"
+              variant="ghost"
+              icon={
+                isFavorite ? <StarIcon fontSize="16px" /> : <StarOutlinedIcon fontSize="16px" />
+              }
+              color="white"
+              size="sm"
+              onClick={() => {
+                if (isFavorite) {
+                  removeAccountFavorite(walletAddress);
+                } else {
+                  saveAccountFavorite(walletAddress);
+                }
+              }}
+            />
+          </Flex>
+          <Flex mt={8} wrap="wrap">
+            {kwentaAccount && (
+              <SmartWallet label="Kwenta Smart Account" account={kwentaAccount.account} />
+            )}
+            {kwentaOwner && (
+              <SmartWallet label={kwentaEnsName ?? 'EOA Account'} account={kwentaOwner} />
+            )}
+            {polynomialOwner && (
+              <SmartWallet label={polynomialEnsName ?? 'EOA Account'} account={polynomialOwner} />
+            )}
+            {polynomialAccount && (
+              <SmartWallet
+                ml="30px"
+                label="Polynomial Smart Wallet"
+                account={polynomialAccount.account}
+              />
+            )}
+          </Flex>
+        </Flex>
+        {!!walletAddress && <WalletBalances walletAddress={walletAddress} />}
       </Flex>
 
       {/* Open Positions, Account PNL, Closed Positions, Actions */}
