@@ -53,7 +53,7 @@ const Row = ({
 };
 
 export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => {
-  const { totalSNX, snxStakedAmount, userSUSD, feeSUSD, estimatedUserFee, totalDebt } =
+  const { totalSNX, userSUSD, feeSUSD, estimatedUserFee, totalDebt } =
     useAccountBalances(walletAddress);
 
   return (
@@ -64,16 +64,17 @@ export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => 
         value={totalSNX}
         tooltip={'On Optimism + Ethereum'}
       />
-      <Row
-        label={'SNX Staked: '}
-        value={snxStakedAmount}
-        tooltip={
-          <Flex alignItems="flex-start" flexDirection="column">
-            <Text>On Optimism + Ethereum</Text>
-            <Text>Total Debt: ${formatNumber(totalDebt)}</Text>
-          </Flex>
-        }
-      />
+      <Row label={'Total Debt: '} value={totalDebt} tooltip={'On Optimism + Ethereum'} />
+      {/* <Row */}
+      {/*  label={'SNX Staked: '} */}
+      {/*  value={snxStakedAmount} */}
+      {/*  tooltip={ */}
+      {/*    <Flex alignItems="flex-start" flexDirection="column"> */}
+      {/*      <Text>On Optimism + Ethereum</Text> */}
+      {/*      <Text>Total Debt: ${formatNumber(totalDebt)}</Text> */}
+      {/*    </Flex> */}
+      {/*  } */}
+      {/* /> */}
       <Row label={'Current Estimated Epoch Fees: '} value={estimatedUserFee} prefix={'$'} />
       <Row
         label={'Current Total Epoch Fees: '}
