@@ -51,19 +51,19 @@ export function useAccountBalances(walletAddress?: string) {
   );
   const protocolIssuanceRatio = useMemo(() => debtData?.issuanceRatio?.toNumber() ?? 0, [debtData]);
   const userIssuanceRatio = useMemo(() => {
-    const issuanceRatio = (snxPrice * (userSNX + userEscrowSNX)) / (userSDS * sdsPrice);
+    const issuanceRatio = (userSDS + sdsPrice) / ((userSNX + userEscrowSNX) * snxPrice);
     return issuanceRatio > 0.2 ? 0.2 : issuanceRatio;
   }, [snxPrice, userSNX, userSDS, userEscrowSNX, sdsPrice]);
   const snxStakedAmount = useMemo(
     () =>
-      userIssuanceRatio > 0
+      userIssuanceRatio
         ? (protocolIssuanceRatio / userIssuanceRatio) * (userSNX + userEscrowSNX)
         : 0,
     [protocolIssuanceRatio, userIssuanceRatio, userSNX, userEscrowSNX]
   );
   const totalSNX = useMemo(() => userSNX + userEscrowSNX, [userSNX, userEscrowSNX]);
   const estimatedUserFee = useMemo(
-    () => feeSUSD * (userSDS / totalSDS),
+    () => (totalSDS ? feeSUSD * (userSDS / totalSDS) : undefined),
     [feeSUSD, userSDS, totalSDS]
   );
   const totalDebt = useMemo(() => userSDS * sdsPrice, [userSDS, sdsPrice]);
