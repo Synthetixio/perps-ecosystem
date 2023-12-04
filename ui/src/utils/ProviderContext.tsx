@@ -24,8 +24,11 @@ interface EthersProviderProps {
 
 const OPTIMISM_GOERLI_NETWORK_ID = 420;
 const OPTIMISM__ID = 10;
+const MAINNET_GOERLI_NETWORK_ID = 5;
+const MAINNET__ID = 1;
 
 export const networkId = isStaging ? OPTIMISM_GOERLI_NETWORK_ID : OPTIMISM__ID;
+export const mainnetNetworkId = isStaging ? MAINNET_GOERLI_NETWORK_ID : MAINNET__ID;
 
 function getDefaultProvider() {
   const defaultRPC = localStorage.getItem('DEFAULT_RPC');
