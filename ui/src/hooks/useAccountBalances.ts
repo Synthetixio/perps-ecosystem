@@ -57,7 +57,7 @@ export function useAccountBalances(walletAddress?: string) {
   const snxStakedAmount = useMemo(
     () =>
       userIssuanceRatio
-        ? (protocolIssuanceRatio / userIssuanceRatio) * (userSNX + userEscrowSNX)
+        ? (userIssuanceRatio / protocolIssuanceRatio) * (userSNX + userEscrowSNX)
         : 0,
     [protocolIssuanceRatio, userIssuanceRatio, userSNX, userEscrowSNX]
   );
