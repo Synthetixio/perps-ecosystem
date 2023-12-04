@@ -42,24 +42,24 @@ export const useDebtData = ({
   });
   const { data: Synthetix } = useSynthetix({ networkId, walletAddress });
   const { data: MainnetSynthetix } = useSynthetix({ networkId: mainnetNetworkId, walletAddress });
-  const { data: SynthetixDeptShare } = useSynthetixDebtShare({
+  const { data: SynthetixDebtShare } = useSynthetixDebtShare({
     networkId,
     walletAddress,
   });
-  const { data: MainnetSynthetixDeptShare } = useSynthetixDebtShare({
+  const { data: MainnetSynthetixDebtShare } = useSynthetixDebtShare({
     networkId: mainnetNetworkId,
     walletAddress,
   });
   return useQuery(
-    [QUERY_KEYS.GET_DEPT_DATA, networkId, walletAddress],
+    [QUERY_KEYS.GET_DEBT_DATA, networkId, walletAddress],
     async () => {
       if (
         !walletAddress ||
         !Synthetix ||
         !SystemSettings ||
         !MainnetSynthetix ||
-        !SynthetixDeptShare ||
-        !MainnetSynthetixDeptShare
+        !SynthetixDebtShare ||
+        !MainnetSynthetixDebtShare
       )
         throw Error('Query should not be enabled if contracts are missing');
 
@@ -67,10 +67,10 @@ export const useDebtData = ({
         SystemSettings.issuanceRatio(),
         Synthetix.balanceOf(walletAddress),
         MainnetSynthetix.balanceOf(walletAddress),
-        SynthetixDeptShare.balanceOf(walletAddress),
-        MainnetSynthetixDeptShare.balanceOf(walletAddress),
-        SynthetixDeptShare.totalSupply(),
-        MainnetSynthetixDeptShare.totalSupply(),
+        SynthetixDebtShare.balanceOf(walletAddress),
+        MainnetSynthetixDebtShare.balanceOf(walletAddress),
+        SynthetixDebtShare.totalSupply(),
+        MainnetSynthetixDebtShare.totalSupply(),
       ]);
     },
     {
@@ -80,8 +80,8 @@ export const useDebtData = ({
           Synthetix &&
           SystemSettings &&
           MainnetSynthetix &&
-          SynthetixDeptShare &&
-          MainnetSynthetixDeptShare
+          SynthetixDebtShare &&
+          MainnetSynthetixDebtShare
       ),
       select: processQueryData,
       staleTime: 10000,

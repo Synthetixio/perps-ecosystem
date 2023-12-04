@@ -49,7 +49,7 @@ export const useSynthetixDebtShare = ({
 }) => {
   const { globalProviders } = useGlobalProvidersWithFallback();
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_SYNTHETIX_DEPT_SHARE, { networkId, walletAddress }],
+    queryKey: [QUERY_KEYS.GET_SYNTHETIX_DEBT_SHARE, { networkId, walletAddress }],
     queryFn: async () => {
       if (!networkId) throw Error('Network id required');
 
