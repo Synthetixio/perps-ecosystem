@@ -79,6 +79,7 @@ export interface ActionData {
   size: Wei;
   fees: Wei | null;
   leverage: Wei | null;
+  sizeInUsd: number;
 }
 const mergeData = (
   futuresTradesData?: FuturesTradesQuery['futuresTrades'],
@@ -101,6 +102,7 @@ const mergeData = (
       timestamp: wei(marginTransfer.timestamp),
       txHash: marginTransfer.txHash,
       leverage: null,
+      sizeInUsd: Math.abs(wei(marginTransfer.size, 18, true).toNumber()),
     };
   });
 
@@ -116,11 +118,17 @@ const mergeData = (
       timestamp: wei(futuresTrade.timestamp),
       size: wei(futuresTrade.size, 18, true),
       leverage: null, // todo add leverage
+      sizeInUsd: Math.abs(
+        wei(futuresTrade.size, 18, true)
+          .mul(wei(futuresTrade.price, 18, true))
+          .toNumber()
+      ),
     };
   });
 
   const data = parsedMarginData.concat(parsedTradeData);
-  return data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
+  const sortedData = data.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber());
+  return sortedData;
 };
 
 export function generateMarketIds(
@@ -149,7 +157,6 @@ export const useActions = (account?: string, limit?: number) => {
   const { data: marketConfigs, isLoading: marketConfigsLoading } = useMarketSummaries();
   const accountLower = account?.toLowerCase();
   const markets = generateMarketIds(marketConfigs, searchParams.get('markets'));
-
   const min = searchParams.get('min') ?? undefined;
   const max = searchParams.get('max') ?? undefined;
   const futuresPositionId = searchParams.get('tradeId') ?? undefined;
@@ -170,8 +177,6 @@ export const useActions = (account?: string, limit?: number) => {
       where: {
         trader: accountLower,
         market_in: markets,
-        size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
-        size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
         timestamp_gte: openTimestamp,
         timestamp_lte: closeTimestamp,
       },
@@ -192,8 +197,6 @@ export const useActions = (account?: string, limit?: number) => {
       where: {
         trader: accountLower,
         market_in: markets,
-        size_gte: min ? wei(min).toBN().toString() : undefined, // Should be divided by current price
-        size_lte: max ? wei(max).toBN().toString() : undefined, // Should be divided by current price
         futuresPosition: futuresPositionId,
       },
     },
@@ -204,9 +207,25 @@ export const useActions = (account?: string, limit?: number) => {
     marginData?.futuresMarginTransfers
   );
 
+  const filteredData = filterData(sortedData, min, max);
+
   return {
     loading: marginLoading || futuresTradesLoading || marketConfigsLoading,
-    data: sortedData,
+    data: filteredData,
     error: marginError ?? futuresError,
   };
+};
+
+const filterData = (data: ActionData[], min: string | undefined, max: string | undefined) => {
+  if (!min && !max) {
+    return data;
+  }
+  const minNumber = min !== undefined ? Number(min) : -Infinity;
+  const maxNumber = max !== undefined ? Number(max) : Infinity;
+  return data?.filter(({ sizeInUsd }) => {
+    if (sizeInUsd === null) {
+      return false;
+    }
+    return sizeInUsd >= minNumber && sizeInUsd <= maxNumber;
+  });
 };
