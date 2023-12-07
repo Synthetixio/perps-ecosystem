@@ -85,8 +85,8 @@ export const SizeSelect = ({ route = 'actions' }: { route?: string }) => {
         rightIcon={<ChevronDownIcon />}
       >
         {size.min === '' && size.max === '' && 'Size'}
-        {size.min !== '' && `${size.min} - `}
-        {size.max !== '' && `${size.max}`}
+        {size.min !== '' && `$${size.min} - `}
+        {size.max !== '' && `$${size.max}`}
       </MenuButton>
       <MenuList>
         <Flex
