@@ -1,7 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { KeyColour } from '../../Dashboard';
 import { ChartPnlData, ProcessedPnlData } from '../../../hooks';
-import { format } from 'date-fns';
 import { useMemo } from 'react';
 interface PnlTooltipProps {
   active?: boolean;
@@ -35,7 +34,7 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
       borderColor="gray.900"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {format(new Date(pnlInfo.day), 'yyyy-MM-dd')}
+        {pnlInfo.day}
       </Text>
       {positions?.map((position: any) => (
         <Flex key={position.positionId} mt={2} justifyContent="space-between" w="100%">
