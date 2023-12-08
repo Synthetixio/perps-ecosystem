@@ -132,14 +132,14 @@ function formatData(data?: ProcessedPnlData[], queryInterval?: 'M' | 'Y') {
 
   const transformedData: Record<string, ChartPnlData> = data.reduce<Record<string, ChartPnlData>>(
     (prev, item) => {
-      const { date, positionId, market, totalPnl } = item;
+      const { date, positionId, market, totalPnl, closeTimestamp } = item;
 
       if (!prev[date]) {
         prev[date] = {
           day: date,
           dailyTotalPnl: 0,
           totalPnl: 0,
-          label: format(new Date(date), 'dd/MM'),
+          label: format(new Date(parseInt(closeTimestamp) * 1000), 'dd/MM'),
           labelType: queryInterval,
           positions: {},
         } satisfies ChartPnlData;
