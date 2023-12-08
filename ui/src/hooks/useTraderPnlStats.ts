@@ -73,9 +73,10 @@ export const useTraderPnlStats = (tradeNum: TradeNum) => {
       .filter((item) => !item.isOpen)
       .sort((a, b) => parseInt(a.closeTimestamp as string) - parseInt(b.closeTimestamp as string))
       .map((item) => {
-        const formatCloseTimestamp = new Date(
-          parseInt(item.closeTimestamp as string) * 1000
-        ).toLocaleDateString('default');
+        const formatCloseTimestamp = format(
+          new Date(parseInt(item.closeTimestamp as string) * 1000),
+          'yyyy-MM-dd'
+        );
 
         return {
           pnl: wei(item.realizedPnl, 18, true).toNumber(),
