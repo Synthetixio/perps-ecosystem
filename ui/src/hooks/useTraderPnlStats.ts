@@ -75,7 +75,7 @@ export const useTraderPnlStats = (tradeNum: TradeNum) => {
       .map((item) => {
         const formatCloseTimestamp = new Date(
           parseInt(item.closeTimestamp as string) * 1000
-        ).toLocaleDateString('en-EN');
+        ).toLocaleDateString('default');
 
         return {
           pnl: wei(item.realizedPnl, 18, true).toNumber(),
@@ -162,9 +162,7 @@ function formatData(data?: ProcessedPnlData[], queryInterval?: 'M' | 'Y') {
     {}
   );
 
-  return Object.values(transformedData).sort((x, y) =>
-    x.day < y.day ? -1 : x.day > y.day ? 1 : 0
-  );
+  return Object.values(transformedData);
 }
 
 function getUniqueMarkets(data?: ProcessedPnlData[]): string[] {
