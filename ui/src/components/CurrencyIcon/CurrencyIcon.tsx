@@ -39,7 +39,7 @@ interface CurrencyIconProps {
   height?: number;
 }
 
-const parseCurrencyKey = (currencyKey: CurrencyKey): string => {
+export const parseCurrencyKey = (currencyKey: CurrencyKey): string => {
   if (currencyKey === 'sETH') return 'ETH';
   if (currencyKey === 'sBTC') return 'BTC';
   return currencyKey;

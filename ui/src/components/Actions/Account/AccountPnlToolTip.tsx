@@ -1,6 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react';
-import { KeyColour } from '../../Dashboard/KeyColour';
-
+import { KeyColour } from '../../Dashboard';
+import { ChartPnlData, ProcessedPnlData } from '../../../hooks';
+import { format } from 'date-fns';
+import { useMemo } from 'react';
 interface PnlTooltipProps {
   active?: boolean;
   payload?: any[];
@@ -8,12 +10,19 @@ interface PnlTooltipProps {
 }
 
 export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
-  const pnlInfo = payload?.[0]?.payload;
+  const pnlInfo = payload?.[0]?.payload satisfies ChartPnlData;
   const formatNumberOptions = { maximumFractionDigits: 2, minimumFractionDigits: 2 };
   if (!pnlInfo) {
     return null;
   }
-  const tooltipDate = new Date(parseInt(pnlInfo.closeTimestamp) * 1000).toISOString().slice(0, 10);
+
+  const positions: ProcessedPnlData[] = useMemo(
+    () =>
+      Object.values(pnlInfo.positions as Record<string, ProcessedPnlData>)?.sort((x, y) =>
+        x.marketName < y.marketName ? -1 : x.marketName > y.marketName ? 1 : 0
+      ),
+    [pnlInfo]
+  );
 
   return (
     <Flex
@@ -26,27 +35,47 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
       borderColor="gray.900"
     >
       <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
-        {tooltipDate}
+        {format(new Date(pnlInfo.day), 'yyyy-MM-dd')}
       </Text>
+      {positions?.map((position: any) => (
+        <Flex key={position.positionId} mt={2} justifyContent="space-between" w="100%">
+          <KeyColour label={position.marketName ?? ''} colour={position.color ?? ''} />
+          <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+            ${position.pnl.toLocaleString('en-US', formatNumberOptions)} |{' '}
+            {position.leverage.toLocaleString('en-US', formatNumberOptions)}x |{' '}
+            {position.long ? 'LONG' : 'SHORT'}
+            {position.liquidated && ` (LIQUIDATED)`}
+          </Text>
+        </Flex>
+      ))}
       <Flex mt={2} justifyContent="space-between" w="100%">
         <KeyColour
-          label={pnlInfo.pnl > 0 ? 'Profit' : 'Loss'}
-          colour={pnlInfo.pnl > 0 ? '#4FD1C5' : '#F471FF'}
+          label="Daily PNL"
+          colour={pnlInfo.dailyTotalPnl > 0 ? '#4FD1C5' : '#F471FF'}
+          fontWeight={700}
         />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          ${pnlInfo.pnl.toLocaleString('en-US', formatNumberOptions)}
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+          fontWeight={700}
+        >
+          ${pnlInfo.dailyTotalPnl.toLocaleString('en-US', formatNumberOptions)}
         </Text>
       </Flex>
       <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Total PNL" colour="whiteAlpha.400" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
+        <KeyColour label="Total PNL" colour="whiteAlpha.400" fontWeight={700} />
+        <Text
+          ml={3}
+          fontFamily="heading"
+          fontSize="12px"
+          lineHeight="16px"
+          textAlign="center"
+          fontWeight={700}
+        >
           ${pnlInfo.totalPnl.toLocaleString('en-US', formatNumberOptions)}
-        </Text>
-      </Flex>
-      <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Position" colour="gray.500" />
-        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
-          {pnlInfo.long ? 'Long' : 'Short'}
         </Text>
       </Flex>
     </Flex>
