@@ -3,11 +3,23 @@ import { Currency, TableHeaderCell, Market, Size, MarginTransfer, WalletTooltip 
 import { AllActionsLoading } from './AllActionsLoading';
 import { useActions } from '../../hooks';
 import { Action } from '../Shared/Action';
+import { ActionsPagination } from './ActionsPagination';
+import { useSearchParams } from 'react-router-dom';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AllActionsTable = () => {
-  const { loading, data, error } = useActions();
+  const { loading, data, error } = useActions(undefined, 1000);
+  const [searchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const itemsPerPage = 25;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const hasNextPage = endIndex < data.length;
+  const paginatedData = data.slice(startIndex, endIndex);
+
+  console.log('startIndex', startIndex);
+  console.log('endIndex', endIndex);
 
   return (
     <>
@@ -45,7 +57,7 @@ export const AllActionsTable = () => {
               </>
             )}
 
-            {data?.map(
+            {paginatedData?.map(
               ({ label, address, asset, price, fees, size, txHash, timestamp, leverage, id }) => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
@@ -77,6 +89,9 @@ export const AllActionsTable = () => {
           </Flex>
         )}
       </TableContainer>
+      <Flex justifyContent="flex-end" width="100%" p="1">
+        <ActionsPagination pageParam="page" hasNextPage={hasNextPage} />
+      </Flex>
     </>
   );
 };
