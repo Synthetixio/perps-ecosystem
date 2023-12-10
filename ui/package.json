@@ -41,6 +41,7 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.9.3",
     "typescript": "*",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4",
     "zod": "^3.22.4",
     "zustand": "^4.3.3"
@@ -83,6 +84,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.0.3",
-    "semver": "^7.5.4"
+    "semver": "^7.5.4",
+    "@types/uuid": "9.0.7"
   }
 }

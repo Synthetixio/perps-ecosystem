@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { Box, Flex, Text, type FlexProps, Spinner } from '@chakra-ui/react';
 import { TimeBadge } from '../../TimeBadge';
-import { KeyColour } from '../../Dashboard/KeyColour';
+import { KeyColour } from '../../Dashboard';
 import { AccountPnlTooltip } from './AccountPnlToolTip';
 import { useTraderPnlStats } from '../../../hooks';
 
 import {
   ComposedChart,
   Area,
-  Bar,
-  Cell,
   XAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   YAxis,
+  Bar,
+  Cell,
 } from 'recharts';
 
 export const AccountPnl = ({ ...props }: FlexProps) => {
@@ -59,10 +59,10 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
             <TimeBadge title="500" onPress={() => setTradeNum(500)} isActive={tradeNum === 500} />
           </Box>
         </Flex>
-        <Flex mt={6}>
+        <Flex mt={6} gap={4} flexWrap="wrap">
           <KeyColour label="TOTAL PNL" colour="whiteAlpha.400" />
-          <KeyColour ml={4} label="LOSS" colour="pink.300" />
-          <KeyColour ml={4} label="PROFIT" colour="teal.300" />
+          <KeyColour label="DAILY LOSS" colour="pink.300" />
+          <KeyColour label="DAILY PROFIT" colour="teal.300" />
         </Flex>
         {loading ? (
           <Flex justifyContent="center" alignItems="center" height="100%" width="100%">
@@ -90,10 +90,11 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
                     bottom: 20,
                     left: 20,
                   }}
+                  stackOffset="sign"
                 >
                   <CartesianGrid stroke="0" />
                   <XAxis
-                    dataKey="date"
+                    dataKey="label"
                     tickLine={{ display: 'none' }}
                     tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
                   />
@@ -105,11 +106,15 @@ export const AccountPnl = ({ ...props }: FlexProps) => {
                     wrapperStyle={{ outline: 'none' }}
                   />
                   <Area type="monotone" dataKey="totalPnl" fill="#464657" stroke="0" />
-
-                  <Bar dataKey="pnl" barSize={102}>
-                    {processedData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.pnl > 0 ? '#4FD1C5' : '#F471FF'} />
-                    ))}
+                  <Bar type="monotone" dataKey="dailyTotalPnl">
+                    {processedData.map((item, i) => {
+                      return (
+                        <Cell
+                          key={`cell-${i}`}
+                          fill={item.dailyTotalPnl > 0 ? '#4FD1C5' : '#F471FF'}
+                        />
+                      );
+                    })}
                   </Bar>
                 </ComposedChart>
               </ResponsiveContainer>
