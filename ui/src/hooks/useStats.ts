@@ -13,9 +13,10 @@ function calculateMonthlyRange() {
 }
 
 function calculateYearlyRange() {
-  const upper = format(new Date(), 'yyyy-MM-dd');
-  const lower = format(subMonths(new Date(), 12), 'yyyy-MM-dd');
-
+  const today = new Date();
+  const upper = format(today, 'yyyy-MM-dd');
+  const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lower = format(subMonths(currentMonth, 11), 'yyyy-MM-dd');
   return { upper, lower };
 }
 
