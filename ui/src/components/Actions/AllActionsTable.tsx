@@ -18,9 +18,6 @@ export const AllActionsTable = () => {
   const hasNextPage = endIndex < data.length;
   const paginatedData = data.slice(startIndex, endIndex);
 
-  console.log('startIndex', startIndex);
-  console.log('endIndex', endIndex);
-
   return (
     <>
       <TableContainer
