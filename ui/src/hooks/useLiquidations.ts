@@ -84,7 +84,7 @@ function parsedLiquidationData(
   }));
 }
 
-export function useLiquidations() {
+export function useLiquidations(accountAddresses?: string[]) {
   const [searchParams] = useSearchParams();
   const { data: marketConfigs, isLoading: marketConfigsLoading } = useMarketSummaries();
 
@@ -98,6 +98,7 @@ export function useLiquidations() {
     variables: {
       where: {
         market_in: markets,
+        trader_in: accountAddresses,
       },
       orderBy: PositionLiquidated_OrderBy.Timestamp,
       orderDirection: OrderDirection.Desc,
