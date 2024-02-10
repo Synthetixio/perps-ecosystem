@@ -11,7 +11,7 @@ import {
   DEFAULT_REQUEST_REFRESH_INTERVAL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets, Positions, Liquidations, StatsV3 } from './pages';
+import { Dashboard, Actions, Markets, Positions, Liquidations, StatsV3, AccountNew } from './pages';
 import { isStaging } from './utils/isStaging';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
@@ -59,6 +59,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <Account />
+      </>
+    ),
+  },
+  {
+    path: ':walletAddress/new',
+    element: (
+      <>
+        <Header />
+        <AccountNew />
       </>
     ),
   },

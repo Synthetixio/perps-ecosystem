@@ -11,8 +11,12 @@ import {
 import { useLiquidations } from '../../hooks';
 import { LiquidationsLoading } from './LiquidationsLoading';
 
-export const LiquidationsTable = () => {
-  const { loading, data, error } = useLiquidations();
+interface LiquidationsTableProps {
+  addresses?: string[];
+}
+
+export const LiquidationsTable = ({ addresses }: LiquidationsTableProps) => {
+  const { loading, data, error } = useLiquidations(addresses);
 
   return (
     <>
