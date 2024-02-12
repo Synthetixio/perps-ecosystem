@@ -12,7 +12,7 @@ export const WalletTooltip = ({ address }: WalletTooltipProps) => {
   return (
     <Td border="none" onMouseEnter={onOpen} onMouseLeave={onClose} position="relative">
       <Flex height="100%">
-        <WalletIcon />
+        <WalletIcon color="white" />
       </Flex>
       <Popover isOpen={isOpen}>
         <PopoverContent

@@ -35,7 +35,7 @@ export const Market = ({
       <Fade in>
         <Flex alignItems="center">
           <Flex alignItems="center">
-            <Box style={{ position: 'relative', width: '30px' }} mr={2}>
+            <Box style={{ position: 'relative', width: '30px' }}>
               <CurrencyIcon currencyKey={marketName} />
               <Box
                 style={{

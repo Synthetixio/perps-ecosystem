@@ -48,7 +48,7 @@ export const Traders = ({ ...props }: FlexProps) => {
 
           <Box>
             <TimeBadge title="1M" onPress={() => setState('M')} isActive={state === 'M'} />
-            {/* <TimeBadge title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
+            {/* <DashboardBanner title="1Y" onPress={() => setState('Y')} isActive={state === 'Y'} /> */}
           </Box>
         </Flex>
         <Flex mt={6}>

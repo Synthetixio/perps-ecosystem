@@ -1,15 +1,36 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
-import { Currency, TableHeaderCell, PnL, Market, Size, Funding, MarkPrice } from '../Shared';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { TableHeaderCell } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
-import { usePositions } from '../../hooks';
+import { PositionType, usePositions } from '../../hooks';
+import { parseBytes32String } from 'ethers/lib/utils';
+import OpenPositionItem from '../Trader/OpenPositionItem';
+import { useEffect } from 'react';
 
 interface PositionsProps {
   kwentaAccount?: string;
   polynomialAccount?: string;
+  actionsRef: React.RefObject<HTMLDivElement>;
+  actionFilter: boolean;
+  resetActionFilters: () => void;
+  updateTradeId: (
+    tradeId: string,
+    timestampOpen: string,
+    market: string,
+    timestampClose?: string
+  ) => void;
+  currentPosition?: PositionType;
+  onSelectPosition: (position: PositionType) => void;
 }
 
-export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsProps) => {
+export const PositionsTable = ({
+  kwentaAccount,
+  polynomialAccount,
+  updateTradeId,
+  currentPosition,
+  onSelectPosition,
+}: PositionsProps) => {
+  const [searchParams] = useSearchParams();
   const { walletAddress } = useParams();
 
   const {
@@ -35,6 +56,16 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
   const data = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
 
   const noData = !data.length;
+
+  const tradeIdParam = searchParams.get('tradeId');
+
+  useEffect(() => {
+    if (!tradeIdParam || !data?.length || currentPosition?.id === tradeIdParam) return;
+    const position = data.find((e) => e.id === tradeIdParam);
+    if (position) {
+      onSelectPosition(position);
+    }
+  }, [tradeIdParam, currentPosition, data]);
 
   return (
     <>
@@ -73,63 +104,21 @@ export const PositionsTable = ({ kwentaAccount, polynomialAccount }: PositionsPr
                   <PositionsLoading />
                 </>
               )}
-              {data?.map(
-                (
-                  {
-                    asset,
-                    avgEntryPrice,
-                    indexPrice,
-                    leverage,
-                    unrealizedPnl,
-                    realizedPnl,
-                    remainingMargin,
-                    size,
-                    long,
-                    address,
-                    funding,
-                    liquidationPrice,
-                    marketPrice,
-                    fees,
-                    unrealizedPnlPercentage,
-                  },
-                  index
-                ) => {
-                  return (
-                    <Tr key={address?.concat(index.toString())} borderTopWidth="1px">
-                      {/* Market and Direction */}
-                      <Market
-                        asset={asset}
-                        leverage={leverage.toNumber()}
-                        direction={long ? 'LONG' : 'SHORT'}
-                      />
-                      {/* Mark Price */}
-                      <MarkPrice
-                        indexPrice={indexPrice.toNumber()}
-                        markPrice={marketPrice.toNumber()}
-                      />
-                      <Size size={size.toNumber()} marketPrice={marketPrice.toNumber()} />
-
-                      <PnL
-                        pnl={unrealizedPnl.toNumber()}
-                        pnlPercentage={unrealizedPnlPercentage.toNumber()} //
-                      />
-                      <PnL pnl={realizedPnl.toNumber()} />
-
-                      {/* Collateral */}
-                      <Currency amount={remainingMargin.toNumber()} />
-                      {/* Funding */}
-                      <Funding amount={funding.toNumber()} />
-                      {/* Fees */}
-                      <Currency amount={fees.toNumber()} />
-                      {/* Entry Price */}
-                      <Currency amount={avgEntryPrice.toNumber()} />
-
-                      {/* Liquidation Price */}
-                      <Currency amount={liquidationPrice.toNumber()} />
-                    </Tr>
-                  );
-                }
-              )}
+              {data?.map((position, index) => {
+                const marketId = parseBytes32String(position.asset);
+                const isSelected = position.id === searchParams.get('tradeId');
+                return (
+                  <OpenPositionItem
+                    key={position.address?.concat(index.toString())}
+                    position={position}
+                    isSelected={isSelected}
+                    onSelect={() => {
+                      updateTradeId(position.id, position.openTimestamp, marketId);
+                      onSelectPosition(position);
+                    }}
+                  />
+                );
+              })}
             </Tbody>
           </Table>
 

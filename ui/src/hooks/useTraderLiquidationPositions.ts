@@ -8,12 +8,12 @@ import { useWalletAddress } from './useWalletAddress';
 import { ProcessedPositionData } from '../types';
 // import { TRADER_POSITIONS_QUERY } from '../queries/trader';
 
-export interface ClosedPositionsWithPageInfo {
+export interface LiquidatedPositionsWithPageInfo {
   data: ProcessedPositionData[];
   hasNextPage: boolean;
 }
 
-export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidated: boolean }) => {
+export const useTraderLiquidatedPositions = () => {
   const { allAddresses } = useWalletAddress();
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get('pg')) || 1;
@@ -22,15 +22,15 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
   const EXTRA_ITEM = 1;
 
   const {
-    data: traderClosedPositionData,
-    loading: traderClosedPositionQueryLoading,
-    error: traderClosedPositionQueryError,
+    data: traderLiquidatedPositionData,
+    loading: traderLiquidatedPositionQueryLoading,
+    error: traderLiquidatedPositionQueryError,
   } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
       first: ITEMS_PER_PAGE + EXTRA_ITEM,
       where: {
         isOpen: false,
-        isLiquidated,
+        isLiquidated: true,
         trader_in: [...allAddresses],
       },
       orderBy: 'closeTimestamp' as FuturesPosition_OrderBy,
@@ -40,16 +40,16 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
     pollInterval: 100000,
   });
 
-  const processedClosedPositionData: ClosedPositionsWithPageInfo = useMemo(() => {
+  const processedLiquidatedPositionData: LiquidatedPositionsWithPageInfo = useMemo(() => {
     if (
-      !traderClosedPositionData ||
-      traderClosedPositionQueryLoading ||
-      traderClosedPositionQueryError
+      !traderLiquidatedPositionData ||
+      traderLiquidatedPositionQueryLoading ||
+      traderLiquidatedPositionQueryError
     ) {
       return { data: [], hasNextPage: false };
     }
 
-    const processedClosedPositions = [...traderClosedPositionData.futuresPositions]
+    const processedLiquidatedPositions = [...traderLiquidatedPositionData.futuresPositions]
       .filter((item) => !item.isOpen)
       .map((item) => {
         const formatCloseTimestamp = new Date(
@@ -79,19 +79,23 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
         };
       });
 
-    const hasNextPage = processedClosedPositions.length > ITEMS_PER_PAGE;
+    const hasNextPage = processedLiquidatedPositions.length > ITEMS_PER_PAGE;
 
-    const slicedData = processedClosedPositions.slice(0, ITEMS_PER_PAGE);
+    const slicedData = processedLiquidatedPositions.slice(0, ITEMS_PER_PAGE);
 
     return {
       data: slicedData,
       hasNextPage,
     };
-  }, [traderClosedPositionData, traderClosedPositionQueryLoading, traderClosedPositionQueryError]);
+  }, [
+    traderLiquidatedPositionData,
+    traderLiquidatedPositionQueryLoading,
+    traderLiquidatedPositionQueryError,
+  ]);
 
   return {
-    processedClosedPositionData,
-    traderClosedPositionQueryLoading,
-    traderClosedPositionQueryError,
+    processedLiquidatedPositionData,
+    traderLiquidatedPositionQueryLoading,
+    traderLiquidatedPositionQueryError,
   };
 };

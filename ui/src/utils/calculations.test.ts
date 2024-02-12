@@ -75,6 +75,7 @@ describe('calculatePnlPercentage', () => {
 describe('calculatePositionData', () => {
   it('should correctly calculate the position data', () => {
     const subgraphPositionData = {
+      id: '1',
       asset: 'BTC',
       market: '0xxxx',
       walletAddress: '0xxxxx',
@@ -85,6 +86,8 @@ describe('calculatePositionData', () => {
       avgEntryPrice: wei(100),
       leverage: wei(9),
       fees: wei(0.1),
+      size: wei(10),
+      openTimestamp: '1707402691',
     };
     const contractData = {
       size: wei(10),
@@ -102,6 +105,7 @@ describe('calculatePositionData', () => {
     const result = calculatePositionData(subgraphPositionData, pythPrice, contractData);
 
     expect(result).toEqual({
+      id: '1',
       address: '0xxxxx',
       asset: 'BTC',
       indexPrice: wei(120),
@@ -118,6 +122,7 @@ describe('calculatePositionData', () => {
       marketPrice: wei(180), // 120 * (1 + (10 / 20) )
       notionalValue: wei(1800),
       fees: wei(0.1),
+      openTimestamp: '1707402691',
     });
   });
 

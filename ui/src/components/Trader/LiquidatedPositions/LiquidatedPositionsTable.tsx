@@ -11,14 +11,14 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { TableHeaderCell } from '../../Shared';
 import { parseBytes32String } from 'ethers/lib/utils';
+import { LiquidatedPositionsPagination } from './LiquidatedPositionsPagination';
+import { LiquidatedPositionsLoading } from './LiquidatedPositionsLoading';
 import { useTraderClosedPositions } from '../../../hooks';
-import { ClosedPositionsPagination } from './ClosedPositionsPagination';
-import { ClosedPositionsLoading } from './ClosedPositionsLoading';
-import { useEffect } from 'react';
 import { ProcessedPositionData } from '../../../types';
+import { useEffect } from 'react';
 import PositionItem from '../PositionItem';
 
-interface ClosedPositionsTableProps extends FlexProps {
+interface LiquidatedPositionsTableProps extends FlexProps {
   actionsRef: React.RefObject<HTMLDivElement>;
   actionFilter: boolean;
   resetActionFilters: () => void;
@@ -32,7 +32,7 @@ interface ClosedPositionsTableProps extends FlexProps {
   onSelectPosition: (position: ProcessedPositionData) => void;
 }
 
-export const ClosedPositionsTable = ({
+export const LiquidatedPositionsTable = ({
   actionsRef,
   actionFilter,
   resetActionFilters,
@@ -40,16 +40,16 @@ export const ClosedPositionsTable = ({
   currentPosition,
   onSelectPosition,
   ...props
-}: ClosedPositionsTableProps) => {
+}: LiquidatedPositionsTableProps) => {
   const [searchParams] = useSearchParams();
 
   const {
     processedClosedPositionData: processedData,
     traderClosedPositionQueryLoading: loading,
     traderClosedPositionQueryError: error,
-  } = useTraderClosedPositions({ isLiquidated: false });
+  } = useTraderClosedPositions({ isLiquidated: true });
 
-  const closedPositionData = [...processedData.data];
+  const liquidatedPositionData = [...processedData.data];
 
   const noProcessedData = !processedData.data?.length;
 
@@ -60,15 +60,15 @@ export const ClosedPositionsTable = ({
   useEffect(() => {
     if (
       !tradeIdParam ||
-      !closedPositionData?.length ||
+      !liquidatedPositionData?.length ||
       currentPosition?.positionId === tradeIdParam
     )
       return;
-    const position = closedPositionData.find((e) => e.positionId === tradeIdParam);
+    const position = liquidatedPositionData.find((e) => e.positionId === tradeIdParam);
     if (position) {
       onSelectPosition(position);
     }
-  }, [tradeIdParam, currentPosition, closedPositionData]);
+  }, [tradeIdParam, currentPosition, liquidatedPositionData]);
 
   return (
     <>
@@ -96,16 +96,16 @@ export const ClosedPositionsTable = ({
                 <TableHeaderCell>Funding</TableHeaderCell>
                 <TableHeaderCell>Fees</TableHeaderCell>
                 <TableHeaderCell>Avg Entry Price</TableHeaderCell>
-                <TableHeaderCell>Avg Exit Price</TableHeaderCell>
+                <TableHeaderCell>Liquidation Price</TableHeaderCell>
               </Tr>
             </Thead>
             <Tbody>
               {loading && (
                 <>
-                  <ClosedPositionsLoading />
+                  <LiquidatedPositionsLoading />
                 </>
               )}
-              {closedPositionData?.map((position, index) => {
+              {liquidatedPositionData?.map((position, index) => {
                 const marketId = parseBytes32String(position.market);
                 const isSelected = position.positionId === searchParams.get('tradeId');
                 return (
@@ -126,7 +126,7 @@ export const ClosedPositionsTable = ({
           {!loading && !error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
               <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No closed positions
+                No liquidated positions
               </Text>
             </Flex>
           )}
@@ -140,7 +140,7 @@ export const ClosedPositionsTable = ({
         </>
       </TableContainer>
       <Flex justifyContent="flex-end" width="100%" p="1">
-        <ClosedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
+        <LiquidatedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
       </Flex>
     </>
   );
