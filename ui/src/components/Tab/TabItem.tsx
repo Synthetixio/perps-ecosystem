@@ -4,20 +4,12 @@ import { SystemStyleObject, Tab } from '@chakra-ui/react';
 interface TabItemProps {
   tabKey: string;
   children: ReactNode;
-  isActive: boolean;
   onTabClick: (title: string) => void;
   sx?: SystemStyleObject;
   activeSx?: SystemStyleObject;
 }
 
-const TabItem: React.FC<TabItemProps> = ({
-  tabKey,
-  children,
-  isActive,
-  onTabClick,
-  sx,
-  activeSx,
-}) => {
+const TabItem: React.FC<TabItemProps> = ({ tabKey, children, onTabClick, sx, activeSx }) => {
   return (
     <Tab
       onClick={() => onTabClick(tabKey)}
@@ -30,6 +22,7 @@ const TabItem: React.FC<TabItemProps> = ({
         ...activeSx,
       }}
       _focus={{ boxShadow: 'none' }}
+      sx={sx}
     >
       {children}
     </Tab>

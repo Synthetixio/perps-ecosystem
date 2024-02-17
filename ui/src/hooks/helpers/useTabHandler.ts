@@ -1,20 +1,25 @@
 import { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+export const getTab = (searchParams: URLSearchParams, defaultTab: string, tabKey?: string) =>
+  (searchParams.get(tabKey ?? 'tab') as string) || defaultTab;
+
 const useTabHandler = (defaultTab: string, shouldChangeUrl = true, tabKey?: string) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [tab, setTab] = useState<string>(
-    shouldChangeUrl ? (searchParams.get(tabKey ?? 'tab') as string) || defaultTab : defaultTab
+    shouldChangeUrl ? getTab(searchParams, defaultTab, tabKey) : defaultTab
   );
+
   const handleTab = useCallback(
-    (t: string) => {
-      setTab(t);
-      shouldChangeUrl &&
-        setSearchParams({
-          [tabKey ?? 'tab']: t,
-        });
+    (currentTab: string) => {
+      setTab(currentTab);
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set(tabKey ?? 'tab', currentTab.toString());
+      setTimeout(() => {
+        shouldChangeUrl && setSearchParams(newParams);
+      }, 100);
     },
-    [setSearchParams]
+    [searchParams, tabKey, shouldChangeUrl]
   );
   return { tab, handleTab };
 };

@@ -7,10 +7,12 @@ import { InfoIcon } from '@chakra-ui/icons';
 const CardStats = ({
   value,
   label,
-  formatFn = formatNumber,
+  minDigit = 2,
+  maxDigit = 2,
   prefix = '',
   postfix = '',
   tooltip,
+  isLoading,
   hasOptimism,
   hasMainnet,
   ...props
@@ -18,11 +20,13 @@ const CardStats = ({
   value?: number;
   label: string;
   color?: string;
-  formatFn?: (x: number | string) => string;
+  minDigit?: number;
+  maxDigit?: number;
   fontWeight?: string;
   prefix?: string;
   postfix?: string;
   tooltip?: ReactNode;
+  isLoading?: boolean;
   hasOptimism?: boolean;
   hasMainnet?: boolean;
 } & CardProps) => {
@@ -65,7 +69,10 @@ const CardStats = ({
       {value !== undefined ? (
         <Text color="gray.50" fontSize="24px" fontWeight="800">
           {prefix}
-          {formatFn(value)}
+          {formatNumber(value, {
+            minimumFractionDigits: minDigit,
+            maximumFractionDigits: maxDigit,
+          })}
           {postfix}
         </Text>
       ) : (

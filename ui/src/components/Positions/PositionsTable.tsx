@@ -5,7 +5,14 @@ import { PositionsLoading } from './PositionsLoading';
 import { PositionType, usePositions } from '../../hooks';
 import { parseBytes32String } from 'ethers/lib/utils';
 import OpenPositionItem from '../Trader/OpenPositionItem';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import {
+  pageToOffset,
+  PaginationConfigProps,
+  PaginationWithLimit,
+  totalToPages,
+} from '../Pagination';
+import { usePageChangeWithLimit } from '../../hooks/helpers/usePageChange';
 
 interface PositionsProps {
   kwentaAccount?: string;
@@ -21,6 +28,8 @@ interface PositionsProps {
   ) => void;
   currentPosition?: PositionType;
   onSelectPosition: (position: PositionType) => void;
+  totalOpenPositions?: number;
+  setTotalOpenPositions?: (total?: number) => void;
 }
 
 export const PositionsTable = ({
@@ -29,6 +38,8 @@ export const PositionsTable = ({
   updateTradeId,
   currentPosition,
   onSelectPosition,
+  totalOpenPositions,
+  setTotalOpenPositions,
 }: PositionsProps) => {
   const [searchParams] = useSearchParams();
   const { walletAddress } = useParams();
@@ -53,19 +64,43 @@ export const PositionsTable = ({
 
   const loading = walletLoading || kwentaLoading || polyLoading;
   const error = walletError ?? kwentaError ?? polyError;
-  const data = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
+  const allData = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
 
-  const noData = !data.length;
+  const noData = !allData.length;
 
   const tradeIdParam = searchParams.get('tradeId');
 
   useEffect(() => {
-    if (!tradeIdParam || !data?.length || currentPosition?.id === tradeIdParam) return;
-    const position = data.find((e) => e.id === tradeIdParam);
+    if (!tradeIdParam || !allData?.length || currentPosition?.id === tradeIdParam) return;
+    const position = allData.find((e) => e.id === tradeIdParam);
     if (position) {
       onSelectPosition(position);
     }
-  }, [tradeIdParam, currentPosition, data]);
+  }, [tradeIdParam, currentPosition, allData]);
+
+  const totalRecords = allData?.length ?? 0;
+  useEffect(() => {
+    if (totalOpenPositions) return;
+    setTotalOpenPositions && setTotalOpenPositions(totalRecords);
+  }, [totalOpenPositions, allData]);
+
+  const ITEMS_PER_PAGE = 5;
+
+  const { currentPage, changeCurrentPage, currentLimit, changeCurrentLimit } =
+    usePageChangeWithLimit({ pageName: 'pg', limitName: 'limit', defaultLimit: ITEMS_PER_PAGE });
+  const paginationConfig = useMemo(() => {
+    return {
+      limit: currentLimit,
+      offset: pageToOffset(currentPage, currentLimit),
+      total: totalRecords,
+      totalPages: totalToPages(totalRecords, currentLimit),
+    } satisfies PaginationConfigProps;
+  }, [currentLimit, currentPage, totalRecords]);
+
+  const data = useMemo(
+    () => allData?.slice(paginationConfig.offset, paginationConfig.offset + currentLimit),
+    [allData, paginationConfig.offset, currentLimit]
+  );
 
   return (
     <>
@@ -138,6 +173,14 @@ export const PositionsTable = ({
           )}
         </>
       </TableContainer>
+      <PaginationWithLimit
+        currentPage={currentPage}
+        currentLimit={currentLimit}
+        onPageChange={changeCurrentPage}
+        onLimitChange={changeCurrentLimit}
+        config={paginationConfig}
+        mt={4}
+      />
     </>
   );
 };

@@ -5,7 +5,7 @@ import { ViewOutlinedIcon } from '../Icons/ViewOutlinedIcon';
 import { wei } from '@synthetixio/wei';
 import { ProcessedPositionData } from '../../types';
 
-const PositionItem = ({
+const ClosedPositionItem = ({
   position,
   isSelected,
   onSelect,
@@ -58,4 +58,4 @@ const PositionItem = ({
   );
 };
 
-export default PositionItem;
+export default ClosedPositionItem;

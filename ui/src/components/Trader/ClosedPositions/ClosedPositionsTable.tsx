@@ -12,11 +12,11 @@ import { useSearchParams } from 'react-router-dom';
 import { TableHeaderCell } from '../../Shared';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { useTraderClosedPositions } from '../../../hooks';
-import { ClosedPositionsPagination } from './ClosedPositionsPagination';
 import { ClosedPositionsLoading } from './ClosedPositionsLoading';
 import { useEffect } from 'react';
 import { ProcessedPositionData } from '../../../types';
-import PositionItem from '../PositionItem';
+import ClosedPositionItem from '../ClosedPositionItem';
+import { PaginationWithLimit } from '../../Pagination';
 
 interface ClosedPositionsTableProps extends FlexProps {
   actionsRef: React.RefObject<HTMLDivElement>;
@@ -47,13 +47,16 @@ export const ClosedPositionsTable = ({
     processedClosedPositionData: processedData,
     traderClosedPositionQueryLoading: loading,
     traderClosedPositionQueryError: error,
+    currentPage,
+    currentLimit,
+    changeCurrentPage,
+    changeCurrentLimit,
+    paginationConfig,
   } = useTraderClosedPositions({ isLiquidated: false });
 
   const closedPositionData = [...processedData.data];
 
   const noProcessedData = !processedData.data?.length;
-
-  const hasNextPage = processedData.hasNextPage;
 
   const tradeIdParam = searchParams.get('tradeId');
 
@@ -109,7 +112,7 @@ export const ClosedPositionsTable = ({
                 const marketId = parseBytes32String(position.market);
                 const isSelected = position.positionId === searchParams.get('tradeId');
                 return (
-                  <PositionItem
+                  <ClosedPositionItem
                     key={position.walletAddress?.concat(index.toString())}
                     position={position}
                     isSelected={isSelected}
@@ -139,9 +142,14 @@ export const ClosedPositionsTable = ({
           )}
         </>
       </TableContainer>
-      <Flex justifyContent="flex-end" width="100%" p="1">
-        <ClosedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
-      </Flex>
+      <PaginationWithLimit
+        currentPage={currentPage}
+        currentLimit={currentLimit}
+        onPageChange={changeCurrentPage}
+        onLimitChange={changeCurrentLimit}
+        config={paginationConfig}
+        mt={4}
+      />
     </>
   );
 };

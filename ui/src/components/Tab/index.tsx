@@ -19,18 +19,13 @@ export interface TabHeaderProps {
 const TabHeader: React.FC<TabHeaderProps> = ({ tabs, activeTab, onTabChange, sx }) => {
   return (
     <TabList gap={1} sx={sx}>
-      {tabs.map((tab) => {
+      {tabs.map((tab, index) => {
         const isActive = tab.tabKey === activeTab;
         return (
-          <TabItem
-            key={tab.tabKey}
-            tabKey={tab.tabKey}
-            isActive={isActive}
-            onTabClick={onTabChange}
-          >
+          <TabItem key={index} tabKey={tab.tabKey} onTabClick={onTabChange}>
             <Flex alignItems="center" gap={2}>
               {tab.title}
-              {tab.badgeNumber && (
+              {tab.badgeNumber !== undefined && (
                 <Badge
                   borderRadius="9px"
                   width="18px"
@@ -43,10 +38,12 @@ const TabHeader: React.FC<TabHeaderProps> = ({ tabs, activeTab, onTabChange, sx 
                   bgColor={isActive ? 'white' : 'gray.500'}
                   color="black"
                 >
-                  {formatNumber(tab.badgeNumber ?? 0, {
-                    maximumFractionDigits: 0,
-                    minimumFractionDigits: 0,
-                  })}
+                  {tab.badgeNumber > 999
+                    ? '1K+'
+                    : formatNumber(tab.badgeNumber ?? 0, {
+                        maximumFractionDigits: 0,
+                        minimumFractionDigits: 0,
+                      })}
                 </Badge>
               )}
             </Flex>

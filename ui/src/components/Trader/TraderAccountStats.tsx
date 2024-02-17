@@ -19,7 +19,9 @@ import TabHeader, { TabHeaderItemProps } from '../Tab';
 import useTabHandler from '../../hooks/helpers/useTabHandler';
 import { LiquidatedPositionsTable } from './LiquidatedPositions';
 import OpenPositionItem from './OpenPositionItem';
-import PositionItem from './PositionItem';
+import ClosedPositionItem from './ClosedPositionItem';
+import { useTraderStats } from '../../hooks/useTraderStats';
+import { useTraderClosedPositions } from '../../hooks';
 
 interface TraderAccountStatsProps {
   kwentaAccount?: string;
@@ -32,6 +34,8 @@ enum TabKeyEnum {
   LIQUIDATED = 'liquidated',
 }
 
+const TAB_NAME: string = 'position';
+
 export const TraderAccountStats = ({
   kwentaAccount,
   polynomialAccount,
@@ -40,6 +44,10 @@ export const TraderAccountStats = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const [actionFilter, setActionFilter] = useState<boolean>(false);
   const [currentPosition, setCurrentPosition] = useState<any | undefined>();
+  const [totalOpenPositions, setTotalOpenPositions] = useState<number | undefined>();
+
+  const { traderTotalStats } = useTraderStats();
+  const { paginationConfig } = useTraderClosedPositions({ isLiquidated: false });
 
   const updateTradeId = (
     tradeId: string,
@@ -69,20 +77,32 @@ export const TraderAccountStats = ({
   };
 
   const resetActionFilters = () => {
-    const newParams = new URLSearchParams();
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete('tradeId');
+    newParams.delete('openTimestamp');
+    newParams.delete('closeTimestamp');
+    newParams.delete('markets');
     setSearchParams(newParams);
     setActionFilter(false);
     setCurrentPosition(undefined);
   };
 
-  const { tab, handleTab } = useTabHandler(TabKeyEnum.OPENING, false);
+  const { tab, handleTab } = useTabHandler(TabKeyEnum.OPENING, true, TAB_NAME);
   const tabHeaders = useMemo(() => {
     return [
-      { tabKey: TabKeyEnum.OPENING, title: 'Opening', badgeNumber: 5 },
-      { tabKey: TabKeyEnum.CLOSED, title: 'Closed', badgeNumber: 6 },
-      { tabKey: TabKeyEnum.LIQUIDATED, title: 'Liquidated', badgeNumber: 7 },
+      { tabKey: TabKeyEnum.OPENING, title: 'Opening', badgeNumber: totalOpenPositions },
+      { tabKey: TabKeyEnum.CLOSED, title: 'Closed', badgeNumber: paginationConfig?.total },
+      {
+        tabKey: TabKeyEnum.LIQUIDATED,
+        title: 'Liquidated',
+        badgeNumber: traderTotalStats?.totalLiquidations,
+      },
     ] as TabHeaderItemProps[];
-  }, []);
+  }, [traderTotalStats]);
+  const defaultTabIndex = useMemo(
+    () => tabHeaders.findIndex((e) => e.tabKey === tab),
+    [tabHeaders, tab]
+  );
 
   const onTabChange = (tab: string) => {
     handleTab(tab);
@@ -95,7 +115,7 @@ export const TraderAccountStats = ({
       <Text mb="10px" fontSize="18px" fontWeight="700">
         Positions
       </Text>
-      <Tabs variant="soft-rounded" colorScheme="blue.900">
+      <Tabs defaultIndex={defaultTabIndex} variant="soft-rounded" colorScheme="blue.900">
         <TabHeader tabs={tabHeaders} activeTab={tab} onTabChange={onTabChange} />
         <TabPanels>
           <TabPanel p={0}>
@@ -110,6 +130,8 @@ export const TraderAccountStats = ({
                   updateTradeId={updateTradeId}
                   onSelectPosition={onSelectPosition}
                   currentPosition={currentPosition}
+                  totalOpenPositions={totalOpenPositions}
+                  setTotalOpenPositions={setTotalOpenPositions}
                 />
               </Box>
             )}
@@ -166,7 +188,7 @@ export const TraderAccountStats = ({
             <Table bg="navy.700">
               <Tbody>
                 {currentPosition.closeTimestamp ? (
-                  <PositionItem
+                  <ClosedPositionItem
                     isSelected
                     hasClear
                     position={currentPosition}

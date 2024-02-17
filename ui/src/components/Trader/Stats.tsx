@@ -1,6 +1,5 @@
 import { Flex, Text, Tabs, TabPanels, TabPanel } from '@chakra-ui/react';
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 import { AccountPnl } from '../Actions/Account';
 import useTabHandler from '../../hooks/helpers/useTabHandler';
 import TabHeader, { TabHeaderItemProps } from '../Tab';
@@ -11,25 +10,26 @@ enum TabKeyEnum {
   TRADING = 'trading',
   STAKING = 'staking',
 }
-const TAB_NAME: string = 'statsTab';
+const TAB_NAME: string = 'stats';
 export const Stats = ({ walletAddress }: { walletAddress?: string }) => {
-  const params = useParams();
-
-  const defaultTab = params?.[TAB_NAME] ?? TabKeyEnum.TRADING;
-  const { tab, handleTab } = useTabHandler(defaultTab, true, TAB_NAME);
+  const { tab, handleTab } = useTabHandler(TabKeyEnum.TRADING, true, TAB_NAME);
   const tabHeaders = useMemo(() => {
     return [
       { tabKey: TabKeyEnum.TRADING, title: 'Trading' },
       { tabKey: TabKeyEnum.STAKING, title: 'Staking' },
     ] as TabHeaderItemProps[];
   }, []);
+  const defaultTabIndex = useMemo(
+    () => tabHeaders.findIndex((e) => e.tabKey === tab),
+    [tabHeaders, tab]
+  );
 
   return (
     <Flex flexDir="column" my={{ base: '16px', md: '40px' }}>
       <Text mb="10px" fontSize="18px" fontWeight="700">
         Stats
       </Text>
-      <Tabs variant="soft-rounded" colorScheme="blue.900">
+      <Tabs defaultIndex={defaultTabIndex} variant="soft-rounded" colorScheme="blue.900">
         <TabHeader tabs={tabHeaders} activeTab={tab} onTabChange={handleTab} />
         <TabPanels>
           <TabPanel p={0}>

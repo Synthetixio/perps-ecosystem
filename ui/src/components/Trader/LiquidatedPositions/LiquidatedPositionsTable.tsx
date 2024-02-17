@@ -11,12 +11,12 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { TableHeaderCell } from '../../Shared';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { LiquidatedPositionsPagination } from './LiquidatedPositionsPagination';
 import { LiquidatedPositionsLoading } from './LiquidatedPositionsLoading';
 import { useTraderClosedPositions } from '../../../hooks';
 import { ProcessedPositionData } from '../../../types';
 import { useEffect } from 'react';
-import PositionItem from '../PositionItem';
+import ClosedPositionItem from '../ClosedPositionItem';
+import { PaginationWithLimit } from '../../Pagination';
 
 interface LiquidatedPositionsTableProps extends FlexProps {
   actionsRef: React.RefObject<HTMLDivElement>;
@@ -47,13 +47,16 @@ export const LiquidatedPositionsTable = ({
     processedClosedPositionData: processedData,
     traderClosedPositionQueryLoading: loading,
     traderClosedPositionQueryError: error,
+    currentPage,
+    currentLimit,
+    changeCurrentPage,
+    changeCurrentLimit,
+    paginationConfig,
   } = useTraderClosedPositions({ isLiquidated: true });
 
   const liquidatedPositionData = [...processedData.data];
 
   const noProcessedData = !processedData.data?.length;
-
-  const hasNextPage = processedData.hasNextPage;
 
   const tradeIdParam = searchParams.get('tradeId');
 
@@ -109,7 +112,7 @@ export const LiquidatedPositionsTable = ({
                 const marketId = parseBytes32String(position.market);
                 const isSelected = position.positionId === searchParams.get('tradeId');
                 return (
-                  <PositionItem
+                  <ClosedPositionItem
                     key={position.walletAddress?.concat(index.toString())}
                     position={position}
                     isSelected={isSelected}
@@ -139,9 +142,14 @@ export const LiquidatedPositionsTable = ({
           )}
         </>
       </TableContainer>
-      <Flex justifyContent="flex-end" width="100%" p="1">
-        <LiquidatedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
-      </Flex>
+      <PaginationWithLimit
+        currentPage={currentPage}
+        currentLimit={currentLimit}
+        onPageChange={changeCurrentPage}
+        onLimitChange={changeCurrentLimit}
+        config={paginationConfig}
+        mt={4}
+      />
     </>
   );
 };

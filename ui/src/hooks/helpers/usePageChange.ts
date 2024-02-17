@@ -47,16 +47,19 @@ export function usePageChangeWithLimit({
     if (page === currentPage) return;
     shouldExecuteCallback && callbackFunc && callbackFunc({ page, limit: currentLimit });
     setCurrentPage(page);
-    setTimeout(() => setSearchParams({ [pageName]: page.toString() }), 100);
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set(pageName, page.toString());
+    setTimeout(() => setSearchParams(newParams), 100);
   };
   const changeCurrentLimit = (limit: number) => {
     if (limit === currentLimit) return;
     callbackFunc && callbackFunc({ limit, page: 1 });
     setCurrentLimit(limit);
     setCurrentPage(1);
-    setTimeout(() => {
-      setSearchParams({ [limitName]: limit.toString(), [pageName]: '1' });
-    }, 100);
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set(pageName, '1');
+    newParams.set(limitName, limit.toString());
+    setTimeout(() => setSearchParams(newParams), 100);
   };
   return { currentPage, setCurrentPage, changeCurrentPage, currentLimit, changeCurrentLimit };
 }

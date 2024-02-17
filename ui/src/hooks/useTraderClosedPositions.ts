@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/client';
-import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 import { type FuturesPosition_OrderBy, type OrderDirection } from '../__generated__/graphql';
 import { wei } from '@synthetixio/wei';
-import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import { useWalletAddress } from './useWalletAddress';
 import { ProcessedPositionData } from '../types';
-// import { TRADER_POSITIONS_QUERY } from '../queries/trader';
+import { usePageChangeWithLimit } from './helpers/usePageChange';
+import { pageToOffset, PaginationConfigProps, totalToPages } from '../components/Pagination';
+import { POSITIONS_QUERY_MARKET } from '../queries/positions';
 
 export interface ClosedPositionsWithPageInfo {
   data: ProcessedPositionData[];
@@ -15,19 +15,21 @@ export interface ClosedPositionsWithPageInfo {
 
 export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidated: boolean }) => {
   const { allAddresses } = useWalletAddress();
-  const [searchParams] = useSearchParams();
-  const page = Number(searchParams.get('pg')) || 1;
+  // const [searchParams] = useSearchParams();
+  // const page = Number(searchParams.get('pg')) || 1;
 
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 5;
   const EXTRA_ITEM = 1;
 
-  const {
-    data: traderClosedPositionData,
-    loading: traderClosedPositionQueryLoading,
-    error: traderClosedPositionQueryError,
-  } = useQuery(POSITIONS_QUERY_MARKET, {
+  const [tempPage, setTempPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const { currentPage, changeCurrentPage, currentLimit, changeCurrentLimit } =
+    usePageChangeWithLimit({ pageName: 'pg', limitName: 'limit', defaultLimit: ITEMS_PER_PAGE });
+
+  const ITEMS = 200;
+  const { data, loading, error } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: {
-      first: ITEMS_PER_PAGE + EXTRA_ITEM,
+      first: ITEMS + EXTRA_ITEM,
       where: {
         isOpen: false,
         isLiquidated,
@@ -35,7 +37,37 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
       },
       orderBy: 'closeTimestamp' as FuturesPosition_OrderBy,
       orderDirection: 'desc' as OrderDirection,
-      skip: (page - 1) * 6,
+      skip: pageToOffset(tempPage, ITEMS),
+    },
+  });
+
+  useEffect(() => {
+    if (
+      loading ||
+      !!error ||
+      !data?.futuresPositions ||
+      data.futuresPositions.length < currentLimit
+    )
+      return;
+    setTotalRecords(totalRecords + Math.min(data.futuresPositions.length, ITEMS));
+    setTempPage(tempPage + 1);
+  }, [data]);
+
+  const {
+    data: traderClosedPositionData,
+    loading: traderClosedPositionQueryLoading,
+    error: traderClosedPositionQueryError,
+  } = useQuery(POSITIONS_QUERY_MARKET, {
+    variables: {
+      first: currentLimit,
+      where: {
+        isOpen: false,
+        isLiquidated,
+        trader_in: [...allAddresses],
+      },
+      orderBy: 'closeTimestamp' as FuturesPosition_OrderBy,
+      orderDirection: 'desc' as OrderDirection,
+      skip: pageToOffset(currentPage, currentLimit),
     },
     pollInterval: 100000,
   });
@@ -79,9 +111,9 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
         };
       });
 
-    const hasNextPage = processedClosedPositions.length > ITEMS_PER_PAGE;
+    const hasNextPage = processedClosedPositions.length > currentLimit;
 
-    const slicedData = processedClosedPositions.slice(0, ITEMS_PER_PAGE);
+    const slicedData = processedClosedPositions.slice(0, currentLimit);
 
     return {
       data: slicedData,
@@ -89,9 +121,23 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
     };
   }, [traderClosedPositionData, traderClosedPositionQueryLoading, traderClosedPositionQueryError]);
 
+  const paginationConfig = useMemo(() => {
+    return {
+      limit: currentLimit,
+      offset: pageToOffset(currentPage, currentLimit),
+      total: totalRecords,
+      totalPages: totalToPages(totalRecords, currentLimit),
+    } satisfies PaginationConfigProps;
+  }, [currentLimit, currentPage, totalRecords]);
+
   return {
     processedClosedPositionData,
     traderClosedPositionQueryLoading,
     traderClosedPositionQueryError,
+    currentPage,
+    currentLimit,
+    changeCurrentPage,
+    changeCurrentLimit,
+    paginationConfig,
   };
 };

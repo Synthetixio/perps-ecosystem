@@ -1,13 +1,35 @@
 import { SimpleGrid } from '@chakra-ui/react';
 import CardStats from './CardStats';
+import { useTraderStats } from '../../hooks/useTraderStats';
 
 export const TradingStats = () => {
+  const { traderTotalStats } = useTraderStats();
   return (
     <SimpleGrid column={1} minChildWidth="500px" spacing="16px">
-      <CardStats label={'Total Volume'} value={23839.31} prefix={'$'} tooltip={'Total Volume'} />
-      <CardStats label={'Total PNL'} value={426.5} tooltip={'Total PNL'} />
-      <CardStats label={'Total Fees'} value={426.5} prefix={'$'} tooltip={'Total Fees'} />
-      <CardStats label={'Total Trades'} value={1021} tooltip={'Total Trades'} />
+      <CardStats
+        label={'Total Volume'}
+        value={traderTotalStats?.totalVolume?.toNumber()}
+        prefix={'$'}
+        tooltip={'Total Volume'}
+      />
+      <CardStats
+        label={'Total PNL'}
+        value={traderTotalStats?.totalPnl?.toNumber()}
+        tooltip={'Total PNL'}
+      />
+      <CardStats
+        label={'Total Fees'}
+        value={traderTotalStats?.totalFees?.toNumber()}
+        prefix={'$'}
+        tooltip={'Total Fees'}
+      />
+      <CardStats
+        label={'Total Liquidations'}
+        value={traderTotalStats?.totalLiquidations?.toNumber()}
+        minDigit={0}
+        maxDigit={0}
+        tooltip={'Total Liquidations'}
+      />
     </SimpleGrid>
   );
 };
