@@ -13,6 +13,7 @@ import {
   totalToPages,
 } from '../Pagination';
 import { usePageChangeWithLimit } from '../../hooks/helpers/usePageChange';
+import { PositionStatsTable } from './PositionStatsTable';
 
 interface PositionsProps {
   kwentaAccount?: string;
@@ -98,12 +99,19 @@ export const PositionsTable = ({
   }, [currentLimit, currentPage, totalRecords]);
 
   const data = useMemo(
-    () => allData?.slice(paginationConfig.offset, paginationConfig.offset + currentLimit),
+    () =>
+      allData?.slice(
+        paginationConfig.offset,
+        paginationConfig.offset + currentLimit > totalRecords
+          ? undefined
+          : paginationConfig.offset + currentLimit
+      ),
     [allData, paginationConfig.offset, currentLimit]
   );
 
   return (
     <>
+      <PositionStatsTable data={data} loading={loading} />
       <TableContainer
         maxW="100%"
         my={5}
@@ -156,6 +164,19 @@ export const PositionsTable = ({
               })}
             </Tbody>
           </Table>
+          <PaginationWithLimit
+            currentPage={currentPage}
+            currentLimit={currentLimit}
+            onPageChange={changeCurrentPage}
+            onLimitChange={changeCurrentLimit}
+            config={paginationConfig}
+            py={3}
+            px={6}
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          />
 
           {!loading && !error && noData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
@@ -173,14 +194,6 @@ export const PositionsTable = ({
           )}
         </>
       </TableContainer>
-      <PaginationWithLimit
-        currentPage={currentPage}
-        currentLimit={currentLimit}
-        onPageChange={changeCurrentPage}
-        onLimitChange={changeCurrentLimit}
-        config={paginationConfig}
-        mt={4}
-      />
     </>
   );
 };

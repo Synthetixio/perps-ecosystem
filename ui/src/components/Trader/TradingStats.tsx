@@ -8,24 +8,28 @@ export const TradingStats = () => {
     <SimpleGrid column={1} minChildWidth="500px" spacing="16px">
       <CardStats
         label={'Total Volume'}
-        value={traderTotalStats?.totalVolume?.toNumber()}
+        value={traderTotalStats?.totalVolume ? Number(traderTotalStats?.totalVolume) : undefined}
         prefix={'$'}
         tooltip={'Total Volume'}
       />
       <CardStats
         label={'Total PNL'}
-        value={traderTotalStats?.totalPnl?.toNumber()}
+        value={traderTotalStats?.totalPnl ? Number(traderTotalStats?.totalVolume) : undefined}
         tooltip={'Total PNL'}
       />
       <CardStats
         label={'Total Fees'}
-        value={traderTotalStats?.totalFees?.toNumber()}
+        value={traderTotalStats?.totalFees ? Number(traderTotalStats?.totalFees) : undefined}
         prefix={'$'}
         tooltip={'Total Fees'}
       />
       <CardStats
         label={'Total Liquidations'}
-        value={traderTotalStats?.totalLiquidations?.toNumber()}
+        value={
+          traderTotalStats?.totalLiquidations
+            ? Number(traderTotalStats?.totalLiquidations)
+            : undefined
+        }
         minDigit={0}
         maxDigit={0}
         tooltip={'Total Liquidations'}

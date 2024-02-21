@@ -10,7 +10,7 @@ export interface PaginationConfigProps {
   totalPages: number;
 }
 
-export const DEFAULT_LIMIT_VALUES = [5, 10, 20];
+export const DEFAULT_LIMIT_VALUES = [5, 10, 50];
 
 export const pageToOffset = (page: number, limit: number) => (page - 1) * limit;
 export const offsetToPage = (offset: number, limit: number) => offset / limit + 1;

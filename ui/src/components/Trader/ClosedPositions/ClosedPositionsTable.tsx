@@ -125,6 +125,19 @@ export const ClosedPositionsTable = ({
               })}
             </Tbody>
           </Table>
+          <PaginationWithLimit
+            currentPage={currentPage}
+            currentLimit={currentLimit}
+            onPageChange={changeCurrentPage}
+            onLimitChange={changeCurrentLimit}
+            config={paginationConfig}
+            py={3}
+            px={6}
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          />
 
           {!loading && !error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
@@ -142,14 +155,6 @@ export const ClosedPositionsTable = ({
           )}
         </>
       </TableContainer>
-      <PaginationWithLimit
-        currentPage={currentPage}
-        currentLimit={currentLimit}
-        onPageChange={changeCurrentPage}
-        onLimitChange={changeCurrentLimit}
-        config={paginationConfig}
-        mt={4}
-      />
     </>
   );
 };

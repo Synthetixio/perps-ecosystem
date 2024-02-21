@@ -90,7 +90,7 @@ export const LiquidatedPositionsTable = ({
         bg="navy.700"
       >
         <>
-          <Table bg="navy.700">
+          <Table bg="navy.700" __css={{ 'table-layout': 'fixed', width: 'full' }}>
             <Thead>
               <Tr>
                 <TableHeaderCell>Market</TableHeaderCell>
@@ -125,6 +125,19 @@ export const LiquidatedPositionsTable = ({
               })}
             </Tbody>
           </Table>
+          <PaginationWithLimit
+            currentPage={currentPage}
+            currentLimit={currentLimit}
+            onPageChange={changeCurrentPage}
+            onLimitChange={changeCurrentLimit}
+            config={paginationConfig}
+            py={3}
+            px={6}
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          />
 
           {!loading && !error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
@@ -142,14 +155,6 @@ export const LiquidatedPositionsTable = ({
           )}
         </>
       </TableContainer>
-      <PaginationWithLimit
-        currentPage={currentPage}
-        currentLimit={currentLimit}
-        onPageChange={changeCurrentPage}
-        onLimitChange={changeCurrentLimit}
-        config={paginationConfig}
-        mt={4}
-      />
     </>
   );
 };

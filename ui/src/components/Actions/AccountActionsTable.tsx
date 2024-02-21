@@ -4,12 +4,22 @@ import { Currency, TableHeaderCell, Market, Size, MarginTransfer } from '../Shar
 import { Action } from '../Shared/Action';
 import { AccountActionsLoading } from './AccountActionsLoading';
 import { useMergedActions } from '../../hooks/useMergedActions';
+import { PaginationWithLimit } from '../Pagination';
 
 const isPosition = (l: string) => l !== 'Deposit Margin' && l !== 'Withdraw Margin';
 
 export const AccountActionsTable = () => {
   const { walletAddress } = useParams();
-  const { data, loading, error } = useMergedActions(walletAddress);
+  const {
+    data,
+    loading,
+    error,
+    currentPage,
+    changeCurrentPage,
+    currentLimit,
+    changeCurrentLimit,
+    paginationConfig,
+  } = useMergedActions(walletAddress);
 
   return (
     <>
@@ -66,6 +76,20 @@ export const AccountActionsTable = () => {
             })}
           </Tbody>
         </Table>
+        <PaginationWithLimit
+          currentPage={currentPage}
+          currentLimit={currentLimit}
+          onPageChange={changeCurrentPage}
+          onLimitChange={changeCurrentLimit}
+          config={paginationConfig}
+          py={3}
+          px={6}
+          width="100%"
+          justifyContent="center"
+          bg="navy.700"
+          borderTopWidth="1px"
+        />
+
         {(!loading && data.length === 0) ||
           (error && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
