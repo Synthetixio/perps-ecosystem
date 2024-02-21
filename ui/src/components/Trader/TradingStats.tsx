@@ -14,7 +14,7 @@ export const TradingStats = () => {
       />
       <CardStats
         label={'Total PNL'}
-        value={traderTotalStats?.totalPnl ? Number(traderTotalStats?.totalVolume) : undefined}
+        value={traderTotalStats?.totalPnl ? Number(traderTotalStats?.totalPnl) : undefined}
         tooltip={'Total PNL'}
       />
       <CardStats
