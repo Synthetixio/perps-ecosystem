@@ -12,7 +12,9 @@ interface TabItemProps {
 const TabItem: React.FC<TabItemProps> = ({ tabKey, children, onTabClick, sx, activeSx }) => {
   return (
     <Tab
-      onClick={() => onTabClick(tabKey)}
+      onClick={() => {
+        onTabClick(tabKey);
+      }}
       color="gray.500"
       fontSize="12px"
       _selected={{

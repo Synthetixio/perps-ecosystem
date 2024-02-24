@@ -42,13 +42,7 @@ export const useTraderClosedPositions = ({ isLiquidated = false }: { isLiquidate
   });
 
   useEffect(() => {
-    if (
-      loading ||
-      !!error ||
-      !data?.futuresPositions ||
-      data.futuresPositions.length < currentLimit
-    )
-      return;
+    if (loading || !!error || !data?.futuresPositions) return;
     setTotalRecords(totalRecords + Math.min(data.futuresPositions.length, ITEMS));
     setTempPage(tempPage + 1);
   }, [data]);

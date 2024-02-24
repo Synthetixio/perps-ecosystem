@@ -29,7 +29,7 @@ interface TraderAccountStatsProps {
 }
 
 enum TabKeyEnum {
-  OPENING = 'opening',
+  OPEN = 'open',
   CLOSED = 'closed',
   LIQUIDATED = 'liquidated',
 }
@@ -87,10 +87,10 @@ export const TraderAccountStats = ({
     setCurrentPosition(undefined);
   };
 
-  const { tab, handleTab } = useTabHandler(TabKeyEnum.OPENING, true, TAB_NAME);
+  const { tab, handleTab } = useTabHandler(TabKeyEnum.OPEN, true, TAB_NAME);
   const tabHeaders = useMemo(() => {
     return [
-      { tabKey: TabKeyEnum.OPENING, title: 'Opening', badgeNumber: totalOpenPositions },
+      { tabKey: TabKeyEnum.OPEN, title: 'Open', badgeNumber: totalOpenPositions },
       { tabKey: TabKeyEnum.CLOSED, title: 'Closed', badgeNumber: paginationConfig?.total },
       {
         tabKey: TabKeyEnum.LIQUIDATED,
@@ -99,7 +99,7 @@ export const TraderAccountStats = ({
       },
     ] as TabHeaderItemProps[];
   }, [traderTotalStats]);
-  const defaultTabIndex = useMemo(
+  const selectedTabIndex = useMemo(
     () => tabHeaders.findIndex((e) => e.tabKey === tab),
     [tabHeaders, tab]
   );
@@ -115,11 +115,17 @@ export const TraderAccountStats = ({
       <Text mb="10px" fontSize="18px" fontWeight="700">
         Positions
       </Text>
-      <Tabs defaultIndex={defaultTabIndex} variant="soft-rounded" colorScheme="blue.900">
+      <Tabs
+        isManual
+        isLazy
+        tabIndex={selectedTabIndex}
+        variant="soft-rounded"
+        colorScheme="blue.900"
+      >
         <TabHeader tabs={tabHeaders} activeTab={tab} onTabChange={onTabChange} />
         <TabPanels>
           <TabPanel p={0}>
-            {tab === TabKeyEnum.OPENING && (
+            {tab === TabKeyEnum.OPEN && (
               <Box>
                 <PositionsTable
                   kwentaAccount={kwentaAccount ?? ''}

@@ -12,12 +12,12 @@ const useTabHandler = (defaultTab: string, shouldChangeUrl = true, tabKey?: stri
 
   const handleTab = useCallback(
     (currentTab: string) => {
-      setTab(currentTab);
       const newParams = new URLSearchParams(searchParams.toString());
       newParams.set(tabKey ?? 'tab', currentTab.toString());
       setTimeout(() => {
         shouldChangeUrl && setSearchParams(newParams);
-      }, 100);
+      }, 10);
+      setTab(currentTab);
     },
     [searchParams, tabKey, shouldChangeUrl]
   );

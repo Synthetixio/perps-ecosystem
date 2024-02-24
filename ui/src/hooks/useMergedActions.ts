@@ -69,6 +69,8 @@ export const useMergedActions = (account?: string) => {
     }
   }
 
+  const uniqueAssets: string[] = Array.from(new Set(mergedArray.map((item) => item.asset)));
+
   const paginationConfig = useMemo(() => {
     return {
       limit: currentLimit,
@@ -91,11 +93,13 @@ export const useMergedActions = (account?: string) => {
         ),
     [mergedArray, paginationConfig.offset, currentLimit]
   );
+  console.log('parsedData', parsedData);
 
   return {
     loading: isDataLoading,
     data: parsedData,
     error: errors.length > 0 ? errors : null,
+    uniqueAssets,
     currentPage,
     currentLimit,
     changeCurrentPage,

@@ -19,7 +19,7 @@ export const Stats = ({ walletAddress }: { walletAddress?: string }) => {
       { tabKey: TabKeyEnum.STAKING, title: 'Staking' },
     ] as TabHeaderItemProps[];
   }, []);
-  const defaultTabIndex = useMemo(
+  const selectedTabIndex = useMemo(
     () => tabHeaders.findIndex((e) => e.tabKey === tab),
     [tabHeaders, tab]
   );
@@ -29,7 +29,7 @@ export const Stats = ({ walletAddress }: { walletAddress?: string }) => {
       <Text mb="10px" fontSize="18px" fontWeight="700">
         Stats
       </Text>
-      <Tabs defaultIndex={defaultTabIndex} variant="soft-rounded" colorScheme="blue.900">
+      <Tabs isManual isLazy index={selectedTabIndex} variant="soft-rounded" colorScheme="blue.900">
         <TabHeader tabs={tabHeaders} activeTab={tab} onTabChange={handleTab} />
         <TabPanels>
           <TabPanel p={0}>

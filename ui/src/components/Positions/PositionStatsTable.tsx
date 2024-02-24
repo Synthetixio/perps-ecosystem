@@ -15,7 +15,9 @@ export const PositionStatsTable = ({ data, loading }: { data: any[]; loading?: b
   const openStats: OpenStats | undefined = data?.reduce(
     (acc: OpenStats, position: PositionType) => {
       return {
-        currentOI: wei(acc.currentOI, 18, true).add(wei(position.size, 18, true)),
+        currentOI: wei(acc.currentOI, 18, true).add(
+          wei(position.size.abs().mul(position.marketPrice), 18, true)
+        ),
         totalUnrealisedPnl: wei(acc.totalUnrealisedPnl, 18, true).add(
           wei(position.unrealizedPnl, 18, true)
         ),
