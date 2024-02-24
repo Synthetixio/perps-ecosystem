@@ -93,7 +93,6 @@ export const useMergedActions = (account?: string) => {
         ),
     [mergedArray, paginationConfig.offset, currentLimit]
   );
-  console.log('parsedData', parsedData);
 
   return {
     loading: isDataLoading,
