@@ -13,6 +13,7 @@ export const POSITIONS_CONTRACT_QUERY = gql(`
 `);
 
 interface PositionData {
+  id: string;
   asset: string;
   indexPrice: Wei;
   liquidationPrice: Wei;
@@ -29,6 +30,8 @@ interface PositionData {
   notionalValue: Wei;
   fees: Wei;
   address: string;
+  openTimestamp: string;
+  closeTimestamp?: string;
 }
 
 // TODO: Figure out return type

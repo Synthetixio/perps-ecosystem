@@ -1,8 +1,8 @@
 import { Icon, type IconProps } from '@chakra-ui/icons';
 
-export const WalletIcon = ({ width = '16px', height = '14px' }: IconProps) => {
+export const WalletIcon = ({ width = '16px', height = '14px', ...props }: IconProps) => {
   return (
-    <Icon width={width} height={height} viewBox="0 0 16 14" color="#00D1FF">
+    <Icon width={width} height={height} viewBox="0 0 16 14" color="#00D1FF" {...props}>
       <path
         d="M4.58154 3.2701C4.23637 3.2701 3.95654 3.54993 3.95654 3.8951C3.95654 4.24028 4.23637 4.5201 4.58154 4.5201H8.31012C8.65529 4.5201 8.93512 4.24028 8.93512 3.8951C8.93512 3.54993 8.65529 3.2701 8.31012 3.2701H4.58154Z"
         fill="currentColor"

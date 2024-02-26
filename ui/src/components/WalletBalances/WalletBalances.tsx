@@ -1,97 +1,35 @@
-import { Flex, Text, Skeleton, Tooltip } from '@chakra-ui/react';
-import { formatNumber } from '@synthetixio/formatters';
+import { SimpleGrid } from '@chakra-ui/react';
 import { useAccountBalances } from '../../hooks/useAccountBalances';
-import { ReactNode } from 'react';
-
-const Row = ({
-  value,
-  label,
-  color = 'gray.500',
-  formatFn = formatNumber,
-  fontWeight,
-  prefix = '',
-  postfix = '',
-  tooltip,
-}: {
-  value?: number;
-  label: string;
-  color?: string;
-  formatFn?: (x: number | string) => string;
-  fontWeight?: string;
-  prefix?: string;
-  postfix?: string;
-  tooltip?: ReactNode;
-}) => {
-  return (
-    <Tooltip
-      placement="top"
-      maxWidth="450px"
-      py={2}
-      px={4}
-      bg="gray.900"
-      color="white"
-      fontSize="14px"
-      fontFamily="heading"
-      borderRadius="4px"
-      label={tooltip}
-      hasArrow
-    >
-      <Flex color={color} justifyContent="space-between" gap={10}>
-        <Text fontWeight={fontWeight}>{label}</Text>
-        {value !== undefined ? (
-          <Text fontWeight={fontWeight}>
-            {prefix}
-            {formatFn(value)}
-            {postfix}
-          </Text>
-        ) : (
-          <Skeleton my={1} width={8} height={4} />
-        )}
-      </Flex>
-    </Tooltip>
-  );
-};
+import CardStats from '../Trader/CardStats';
 
 export const WalletBalances = ({ walletAddress }: { walletAddress: string }) => {
   const { totalSNX, userSUSD, feeSUSD, estimatedUserFee, totalDebt } =
     useAccountBalances(walletAddress);
 
   return (
-    <Flex flexDirection="column">
-      <Row label={'SUSD Balance: '} value={userSUSD} tooltip={'On Optimism'} />
-      <Row
-        label={'SNX Balance (Escrow + User): '}
+    <SimpleGrid mt="10px" minChildWidth="300px" spacing="10px">
+      <CardStats label={'sUSD Balance on'} value={userSUSD} hasOptimism />
+      <CardStats
+        label={'SNX Balance on'}
         value={totalSNX}
-        tooltip={'On Optimism + Ethereum'}
+        tooltip={'Escrow + User'}
+        hasMainnet
+        hasOptimism
       />
-      <Row
-        label={'Total Debt: '}
-        value={totalDebt}
-        prefix={'$'}
-        tooltip={'On Optimism + Ethereum'}
-      />
-      {/* <Row */}
-      {/*  label={'SNX Staked: '} */}
-      {/*  value={snxStakedAmount} */}
-      {/*  tooltip={ */}
-      {/*    <Flex alignItems="flex-start" flexDirection="column"> */}
-      {/*      <Text>On Optimism + Ethereum</Text> */}
-      {/*      <Text>Total Debt: ${formatNumber(totalDebt)}</Text> */}
-      {/*    </Flex> */}
-      {/*  } */}
-      {/* /> */}
-      <Row
-        label={'Current Estimated Epoch Fees: '}
+      <CardStats label={'Total Debt on '} value={totalDebt} prefix={'$'} hasMainnet hasOptimism />
+      <CardStats
+        label={'Current Estimated Epoch Fees'}
         value={estimatedUserFee}
         prefix={'$'}
         tooltip={'Fee earned from SNX Staking'}
       />
-      <Row
-        label={'Current Total Epoch Fees: '}
+      <CardStats
+        label={'Current Total Epoch Fees on'}
         value={feeSUSD}
         prefix={'$'}
-        tooltip={'On Optimism + Ethereum'}
+        hasMainnet
+        hasOptimism
       />
-    </Flex>
+    </SimpleGrid>
   );
 };

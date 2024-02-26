@@ -77,6 +77,7 @@ export const calculatePositionData = (
   );
 
   return {
+    id: subgraphPositionData.id,
     asset: subgraphPositionData.asset,
     indexPrice: pythPrice ?? contractData.indexPrice,
     liquidationPrice: contractData.liquidationPrice,
@@ -93,6 +94,8 @@ export const calculatePositionData = (
     notionalValue,
     fees: subgraphPositionData.fees,
     address: subgraphPositionData.walletAddress,
+    openTimestamp: subgraphPositionData.openTimestamp,
+    closeTimestamp: subgraphPositionData.closeTimestamp,
   };
 };
 

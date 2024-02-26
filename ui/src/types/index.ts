@@ -10,10 +10,34 @@ import {
   type SystemStyleObject,
 } from '@chakra-ui/react';
 
+export interface ProcessedPositionData {
+  pnl: number;
+  openTimestamp: string;
+  closeTimestamp: string;
+  date: string;
+  market: string;
+  long: boolean;
+  txHash: string;
+  leverage: string;
+  positionId: string;
+  walletAddress: string;
+  trades: string;
+  liquidated: boolean;
+  funding: number;
+  fees: number;
+  size: number;
+  entryPrice: number;
+  avgEntryPrice: number;
+  exitPrice: number;
+  lastPrice: number;
+}
+
 export interface SubgraphPositionData {
+  id: string;
   market: string;
   asset: string;
   walletAddress: string;
+  size: Wei;
   avgEntryPrice: Wei;
   leverage: Wei;
   fees: Wei;
@@ -21,6 +45,8 @@ export interface SubgraphPositionData {
   unrealizedPnlAtLastModification: Wei;
   netFundingAtLastModification: Wei;
   fillPriceAtLastInteraction: Wei;
+  openTimestamp: string;
+  closeTimestamp?: string;
 }
 
 export interface ContractData {
@@ -37,6 +63,7 @@ export interface ContractData {
 const ZodWei = z.custom<Wei>((x) => Wei.is(x));
 
 export const PositionDataSchema = z.object({
+  id: z.string(),
   asset: z.string(),
   indexPrice: ZodWei,
   liquidationPrice: ZodWei,

@@ -15,6 +15,9 @@ import { RealtimeContext, initMulticall, initPerpsMarketData } from '../utils';
 import { useContext } from 'react';
 
 export interface PositionType {
+  id: string;
+  openTimestamp: string;
+  closeTimestamp?: string;
   accountType: string;
   address: string;
   asset: string;
@@ -81,6 +84,8 @@ export const usePositions = (
   const openPositions = marketData?.futuresPositions.map((item) => ({
     ...item,
     accountType,
+    id: item.id,
+    openTimestamp: item.openTimestamp,
     market: item.market.marketKey,
     asset: item.market.asset,
     walletAddress: item.trader.id,

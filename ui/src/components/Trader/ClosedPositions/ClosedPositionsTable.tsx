@@ -6,18 +6,17 @@ import {
   Tbody,
   Flex,
   Text,
-  Button,
-  Td,
   type FlexProps,
 } from '@chakra-ui/react';
 import { useSearchParams } from 'react-router-dom';
-import { TableHeaderCell, PnL, Market, Funding } from '../../Shared';
-import { wei } from '@synthetixio/wei';
+import { TableHeaderCell } from '../../Shared';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { Action } from '../../Shared/Action';
 import { useTraderClosedPositions } from '../../../hooks';
-import { ClosedPositionsPagination } from './ClosedPositionsPagination';
 import { ClosedPositionsLoading } from './ClosedPositionsLoading';
+import { useEffect } from 'react';
+import { ProcessedPositionData } from '../../../types';
+import ClosedPositionItem from '../ClosedPositionItem';
+import { PaginationWithLimit } from '../../Pagination';
 
 interface ClosedPositionsTableProps extends FlexProps {
   actionsRef: React.RefObject<HTMLDivElement>;
@@ -29,6 +28,8 @@ interface ClosedPositionsTableProps extends FlexProps {
     market: string,
     timestampClose?: string
   ) => void;
+  currentPosition?: ProcessedPositionData;
+  onSelectPosition: (position: ProcessedPositionData) => void;
 }
 
 export const ClosedPositionsTable = ({
@@ -36,6 +37,8 @@ export const ClosedPositionsTable = ({
   actionFilter,
   resetActionFilters,
   updateTradeId,
+  currentPosition,
+  onSelectPosition,
   ...props
 }: ClosedPositionsTableProps) => {
   const [searchParams] = useSearchParams();
@@ -44,19 +47,36 @@ export const ClosedPositionsTable = ({
     processedClosedPositionData: processedData,
     traderClosedPositionQueryLoading: loading,
     traderClosedPositionQueryError: error,
-  } = useTraderClosedPositions();
+    currentPage,
+    currentLimit,
+    changeCurrentPage,
+    changeCurrentLimit,
+    paginationConfig,
+  } = useTraderClosedPositions({ isLiquidated: false });
 
   const closedPositionData = [...processedData.data];
 
   const noProcessedData = !processedData.data?.length;
 
-  const hasNextPage = processedData.hasNextPage;
+  const tradeIdParam = searchParams.get('tradeId');
+
+  useEffect(() => {
+    if (
+      !tradeIdParam ||
+      !closedPositionData?.length ||
+      currentPosition?.positionId === tradeIdParam
+    )
+      return;
+    const position = closedPositionData.find((e) => e.positionId === tradeIdParam);
+    if (position) {
+      onSelectPosition(position);
+    }
+  }, [tradeIdParam, currentPosition, closedPositionData]);
 
   return (
     <>
       <TableContainer
         maxW="100%"
-        height={500}
         mt={5}
         mb={1}
         borderColor="gray.900"
@@ -73,11 +93,13 @@ export const ClosedPositionsTable = ({
           <Table bg="navy.700">
             <Thead>
               <Tr>
-                <TableHeaderCell>Position</TableHeaderCell>
                 <TableHeaderCell>Market</TableHeaderCell>
-                <TableHeaderCell>PNL</TableHeaderCell>
+                <TableHeaderCell>Size</TableHeaderCell>
+                <TableHeaderCell>Realised PnL</TableHeaderCell>
                 <TableHeaderCell>Funding</TableHeaderCell>
-                <TableHeaderCell>Trades</TableHeaderCell>
+                <TableHeaderCell>Fees</TableHeaderCell>
+                <TableHeaderCell>Avg Entry Price</TableHeaderCell>
+                <TableHeaderCell>Avg Exit Price</TableHeaderCell>
               </Tr>
             </Thead>
             <Tbody>
@@ -86,63 +108,36 @@ export const ClosedPositionsTable = ({
                   <ClosedPositionsLoading />
                 </>
               )}
-              {closedPositionData?.map(
-                (
-                  {
-                    pnl,
-                    closeTimestamp,
-                    openTimestamp,
-                    market,
-                    long,
-                    txHash,
-                    leverage,
-                    positionId,
-                    walletAddress,
-                    trades,
-                    liquidated,
-                    funding,
-                  },
-                  index
-                ) => {
-                  const marketId = parseBytes32String(market);
-                  return (
-                    <Tr key={walletAddress?.concat(index.toString())} borderTopWidth="1px">
-                      {/* Market and Direction */}
-                      <Action
-                        label={`${long ? 'Long' : 'Short'}${liquidated ? ' Liquidated' : ''} `}
-                        timestamp={parseInt(closeTimestamp)}
-                        txHash={txHash}
-                      />
-                      <Market
-                        asset={market}
-                        leverage={wei(leverage, 18, true).toNumber()}
-                        direction={long ? 'LONG' : 'SHORT'}
-                      />
-
-                      <PnL pnl={pnl} />
-
-                      <Funding amount={funding} />
-
-                      <Td border="none">
-                        <Button
-                          width={50}
-                          variant="outline"
-                          colorScheme={positionId === searchParams.get('tradeId') ? 'teal' : 'gray'}
-                          onClick={() => {
-                            actionFilter
-                              ? resetActionFilters()
-                              : updateTradeId(positionId, openTimestamp, marketId, closeTimestamp);
-                          }}
-                        >
-                          {trades}
-                        </Button>
-                      </Td>
-                    </Tr>
-                  );
-                }
-              )}
+              {closedPositionData?.map((position, index) => {
+                const marketId = parseBytes32String(position.market);
+                const isSelected = position.positionId === searchParams.get('tradeId');
+                return (
+                  <ClosedPositionItem
+                    key={position.walletAddress?.concat(index.toString())}
+                    position={position}
+                    isSelected={isSelected}
+                    onSelect={() => {
+                      updateTradeId(position.positionId, position.openTimestamp, marketId);
+                      onSelectPosition(position);
+                    }}
+                  />
+                );
+              })}
             </Tbody>
           </Table>
+          <PaginationWithLimit
+            currentPage={currentPage}
+            currentLimit={currentLimit}
+            onPageChange={changeCurrentPage}
+            onLimitChange={changeCurrentLimit}
+            config={paginationConfig}
+            py={3}
+            px={6}
+            width="100%"
+            justifyContent="center"
+            bg="navy.700"
+            borderTopWidth="1px"
+          />
 
           {!loading && !error && noProcessedData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
@@ -160,9 +155,6 @@ export const ClosedPositionsTable = ({
           )}
         </>
       </TableContainer>
-      <Flex justifyContent="flex-end" width="100%" p="1">
-        <ClosedPositionsPagination pageParam="pg" hasNextPage={hasNextPage} />
-      </Flex>
     </>
   );
 };

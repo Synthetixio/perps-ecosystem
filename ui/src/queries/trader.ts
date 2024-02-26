@@ -1,4 +1,21 @@
-import { gql } from '../__generated__';
+import { gql } from '@apollo/client';
+
+export const TRADER_STATS = gql(`
+query TraderStats($ids: [ID!]) {
+  traders(where: {
+    id_in: $ids
+  }) {
+    id
+    lastTradeTimestamp
+    feesPaidToSynthetix
+    margin
+    realizedPnl
+    totalLiquidations
+    totalMarginLiquidated
+    totalVolume
+  }
+}
+ `);
 
 export const TRADERS_TOTAL_PNL = gql(`
 query TradersData($id: ID!) {
@@ -84,6 +101,7 @@ export const TRADER_POSITIONS_QUERY = gql(`
       }
       trader {
         id
+        totalLiquidations
       }
       isOpen
       entryPrice

@@ -7,6 +7,12 @@ export const KWENTA_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/kwen
 export const POLYNOMIAL_SUBGRAPH_URL =
   'https://api.thegraph.com/subgraphs/name/synthetix-perps/polynomial';
 
+export const TRADE_ON_KWENTA_URL = 'https://kwenta.eth.limo';
+export const TRADE_ON_POLYNOMIAL_URL = 'https://trade.polynomial.fi';
+export const TRADE_ON_INFINEX_URL = 'https://infinex.io';
+
+export const ethercanLink = (address: string) => `https://etherscan.io/address/${address}`;
+
 export const optimisticEthercanLink = (address: string) =>
   `https://optimistic.etherscan.io/address/${address}`;
 

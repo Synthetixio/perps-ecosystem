@@ -1,7 +1,8 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Divider, Flex, Text } from '@chakra-ui/react';
 import { KeyColour } from '../../Dashboard';
 import { ChartPnlData, ProcessedPnlData } from '../../../hooks';
 import { useMemo } from 'react';
+import { CurrencyIcon } from '../../CurrencyIcon';
 interface PnlTooltipProps {
   active?: boolean;
   payload?: any[];
@@ -32,13 +33,31 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
       borderRadius="md"
       borderWidth="1px"
       borderColor="gray.900"
+      gap="10px"
+      color="gray.500"
     >
-      <Text mb={2} fontFamily="heading" color="gray.500" fontSize="12px" lineHeight="16px">
+      <Text fontFamily="heading" fontSize="12px" fontWeight={700} lineHeight="16px">
         {pnlInfo.day}
       </Text>
+      <Flex justifyContent="space-between" w="100%">
+        <KeyColour label="Total PNL" fontWeight={700} lineHeight="16px" />
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="right">
+          ${pnlInfo.totalPnl.toLocaleString('en-US', formatNumberOptions)}
+        </Text>
+      </Flex>
+      <Flex justifyContent="space-between" w="100%">
+        <KeyColour label="Daily PNL" fontWeight={700} lineHeight="16px" />
+        <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="right">
+          ${pnlInfo.dailyTotalPnl.toLocaleString('en-US', formatNumberOptions)}
+        </Text>
+      </Flex>
+      <Divider />
       {positions?.map((position: any) => (
-        <Flex key={position.positionId} mt={2} justifyContent="space-between" w="100%">
-          <KeyColour label={position.marketName ?? ''} colour={position.color ?? ''} />
+        <Flex key={position.positionId} justifyContent="space-between" w="100%">
+          <Flex alignItems="center" gap={1}>
+            <CurrencyIcon currencyKey={position.marketName} width={12} height={12} />
+            <KeyColour label={position.marketName ?? ''} />
+          </Flex>
           <Text ml={3} fontFamily="heading" fontSize="12px" lineHeight="16px" textAlign="center">
             ${position.pnl.toLocaleString('en-US', formatNumberOptions)} |{' '}
             {position.leverage.toLocaleString('en-US', formatNumberOptions)}x |{' '}
@@ -47,36 +66,6 @@ export const AccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
           </Text>
         </Flex>
       ))}
-      <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour
-          label="Daily PNL"
-          colour={pnlInfo.dailyTotalPnl > 0 ? '#4FD1C5' : '#F471FF'}
-          fontWeight={700}
-        />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-          fontWeight={700}
-        >
-          ${pnlInfo.dailyTotalPnl.toLocaleString('en-US', formatNumberOptions)}
-        </Text>
-      </Flex>
-      <Flex mt={2} justifyContent="space-between" w="100%">
-        <KeyColour label="Total PNL" colour="whiteAlpha.400" fontWeight={700} />
-        <Text
-          ml={3}
-          fontFamily="heading"
-          fontSize="12px"
-          lineHeight="16px"
-          textAlign="center"
-          fontWeight={700}
-        >
-          ${pnlInfo.totalPnl.toLocaleString('en-US', formatNumberOptions)}
-        </Text>
-      </Flex>
     </Flex>
   );
 };
