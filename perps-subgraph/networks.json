@@ -26,5 +26,19 @@
       "address": "0xDD55BE4f3a8885E92d2Acd16869Fab857206B517",
       "startBlock": 6797500
     }
+  },
+  "optimism-sepolia": {
+    "ExchangeRates": {
+      "address": "0xd538CF9649fd65aAaaB92829e0Fc13f371A1d3fe",
+      "startBlock": 5104145
+    },
+    "FuturesMarketManagerOld": {
+      "address": "0x00D79DBB8e9fC344C015ADD2D4135E5181b61e66",
+      "startBlock": 5104360
+    },
+    "FuturesMarketManagerNew": {
+      "address": "0x00D79DBB8e9fC344C015ADD2D4135E5181b61e66",
+      "startBlock": 5104360
+    }
   }
 }

@@ -11,6 +11,8 @@
     "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service synthetix-perps/perps",
     "build:optimism-goerli": "yarn codegen && graph build --output-dir ./build/optimism-goerli --network optimism-goerli",
     "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service synthetix-perps/perps-op-goerli",
+    "build:optimism-sepolia": "yarn codegen && graph build --output-dir ./build/optimism-sepolia --network optimism-sepolia",
+    "deploy:optimism-sepolia": "yarn prepare && graph deploy --output-dir ./build/optimism-sepolia --network optimism-sepolia --product hosted-service synthetix-perps/perps-op-sepolia",
     "test": "yarn prepare && graph test"
   },
   "devDependencies": {
