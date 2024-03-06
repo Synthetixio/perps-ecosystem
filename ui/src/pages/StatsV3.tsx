@@ -1,8 +1,8 @@
 import { Flex, Heading } from '@chakra-ui/react';
-import { TvlProtocols } from '../components/V3/TvlProtocols';
-import { TvlLayer } from '../components/V3/TvlLayer';
-import { MintBurn } from '../components/V3/MintBurn';
-import { Delegation } from '../components/V3/Delegation';
+// import { TvlProtocols } from '../components/V3/TvlProtocols';
+// import { TvlLayer } from '../components/V3/TvlLayer';
+// import { MintBurn } from '../components/V3/MintBurn';
+// import { Delegation } from '../components/V3/Delegation';
 
 export function StatsV3() {
   return (
@@ -14,12 +14,15 @@ export function StatsV3() {
         pb={{ base: '32px', md: '64px' }}
       >
         <Heading fontSize="24px" my={2} mt={12}>
-          Dashboard
+          Coming Soon
         </Heading>
-        <TvlProtocols />
-        <TvlLayer />
-        <Delegation />
-        <MintBurn />
+        {/* <Heading fontSize="24px" my={2} mt={12}> */}
+        {/*  Dashboard */}
+        {/* </Heading> */}
+        {/* <TvlProtocols /> */}
+        {/* <TvlLayer /> */}
+        {/* <Delegation /> */}
+        {/* <MintBurn /> */}
       </Flex>
     </>
   );
