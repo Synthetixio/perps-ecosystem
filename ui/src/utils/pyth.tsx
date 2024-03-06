@@ -4,7 +4,7 @@ import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { type MarketsByKey } from '../types';
 
-export const pyth = new EvmPriceServiceConnection('https://hermes.pyth.network');
+export const pyth = new EvmPriceServiceConnection('https://synthetixab.rpc.p2p.world');
 
 const OffchainFeedSchema = z.array(
   z.object({
