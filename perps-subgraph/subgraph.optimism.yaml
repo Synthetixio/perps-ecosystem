@@ -4,6 +4,7 @@ schema:
 
 templates:
   - name: PerpetualFuturesMarket
+    network: optimism
     kind: ethereum/contract
     source:
       abi: PerpsV2Proxy
@@ -51,6 +52,7 @@ templates:
 
 dataSources:
   - kind: ethereum
+    network: optimism
     name: FuturesMarketManagerOld
     source:
       abi: PerpsV2Proxy
@@ -70,6 +72,7 @@ dataSources:
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
   - kind: ethereum
+    network: optimism
     name: FuturesMarketManagerNew
     source:
       abi: PerpsV2Proxy
@@ -88,26 +91,3 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
-  # - kind: ethereum
-  #   name: ExchangeRates
-  #   source:
-  #     abi: ExchangeRates
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.7
-  #     language: 'wasm/assemblyscript'
-  #     entities:
-  #       - Candle
-  #       - LatestRate
-  #       - RateUpdate
-  #     abis:
-  #       - name: ExchangeRates
-  #         file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
-  #       - name: AggregatorProxy
-  #         file: ./abis/AggregatorProxy.json
-  #       - name: Aggregator
-  #         file: ./abis/Aggregator.json
-  #     eventHandlers:
-  #       - event: 'AggregatorAdded(bytes32,address)'
-  #         handler: 'handleAggregatorAdded'
-  #     file: './src/latest-rates.ts'

@@ -3,47 +3,8 @@ schema:
   file: ./schema.graphql
 
 templates:
-  - name: AggregatorProxy
-    kind: ethereum/contract
-    source:
-      abi: AggregatorProxy
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
-      eventHandlers:
-        - event: 'AggregatorConfirmed(indexed address,indexed address)'
-          handler: 'handleAggregatorProxyAddressUpdated'
-
-  - name: Aggregator
-    kind: ethereum/contract
-    source:
-      abi: Aggregator
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/latest-rates.ts
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: Aggregator
-          file: ./abis/Aggregator.json
-      eventHandlers:
-        - event: 'AnswerUpdated(indexed int256,indexed uint256,uint256)'
-          handler: 'handleAggregatorAnswerUpdated'
-
   - name: PerpetualFuturesMarket
+    network: optimism-sepolia
     kind: ethereum/contract
     source:
       abi: PerpsV2Proxy
@@ -76,8 +37,7 @@ templates:
         - event: DelayedOrderSubmitted(indexed
             address,bool,int256,uint256,uint256,uint256,uint256,uint256,bytes32)
           handler: handleDelayedOrderSubmitted
-        - event: DelayedOrderRemoved(indexed
-            address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
+        - event: DelayedOrderRemoved(indexed address,bool,uint256,int256,uint256,uint256,uint256,bytes32)
           handler: handleDelayedOrderRemoved
         - event: MarginTransferred(indexed address,int256)
           handler: handleMarginTransferred
@@ -85,9 +45,14 @@ templates:
           handler: 'handleFundingRecomputed'
         - event: PerpsTracking(indexed bytes32,bytes32,bytes32,int256,uint256)
           handler: handlePerpsTracking
+        - event: PositionFlagged(uint256,address,address,uint256)
+          handler: handlePositionFlaggedOld
+        - event: PositionFlagged(uint256,address,address,uint256,uint256)
+          handler: handlePositionFlagged
 
 dataSources:
   - kind: ethereum
+    network: optimism-sepolia
     name: FuturesMarketManagerOld
     source:
       abi: PerpsV2Proxy
@@ -107,6 +72,7 @@ dataSources:
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
   - kind: ethereum
+    network: optimism-sepolia
     name: FuturesMarketManagerNew
     source:
       abi: PerpsV2Proxy
@@ -125,26 +91,3 @@ dataSources:
         - event: MarketRemoved(address,indexed bytes32,indexed bytes32)
           handler: handleFuturesMarketRemoved
       file: ./src/futures.ts
-  - kind: ethereum
-    name: ExchangeRates
-    source:
-      abi: ExchangeRates
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: 'wasm/assemblyscript'
-      entities:
-        - Candle
-        - LatestRate
-        - RateUpdate
-      abis:
-        - name: ExchangeRates
-          file: ../../contracts/src/mainnet-ovm/deployment/json/ExchangeRates.json
-        - name: AggregatorProxy
-          file: ./abis/AggregatorProxy.json
-        - name: Aggregator
-          file: ./abis/Aggregator.json
-      eventHandlers:
-        - event: 'AggregatorAdded(bytes32,address)'
-          handler: 'handleAggregatorAdded'
-      file: './src/latest-rates.ts'
