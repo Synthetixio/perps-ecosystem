@@ -1,7 +1,7 @@
 export const PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL =
-  'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps-op-goerli';
+  'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix-perps-v2-optimism-sepolia/api';
 export const PERPS_V2_DASHBOARD_GRAPH_URL =
-  'https://api.thegraph.com/subgraphs/name/synthetix-perps/perps';
+  'https://subgraph.satsuma-prod.com/ce5e03f52f3b/synthetix/synthetix-perps-v2-optimism/api';
 
 export const KWENTA_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-perps';
 export const POLYNOMIAL_SUBGRAPH_URL =

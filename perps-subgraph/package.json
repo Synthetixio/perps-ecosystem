@@ -5,15 +5,14 @@
   "scripts": {
     "build": "yarn build:optimism && yarn build:optimism-goerli",
     "auth": "graph auth --product hosted-service $PERPS_GRAPH_KEY",
-    "prepare": "node prepare-codegen.js && cp ./subgraph.base.yaml ./subgraph.yaml",
-    "codegen": "yarn prepare && graph codegen && prettier --write .",
+    "codegen": "yarn prepare:optimism && yarn prepare:optimism-sepolia && graph codegen && prettier --write .",
+    "prepare:optimism": "node prepare-codegen.js && cp ./subgraph.optimism.yaml ./subgraph.yaml",
     "build:optimism": "yarn codegen  && graph build --output-dir ./build/optimism --network optimism",
-    "deploy:optimism": "yarn prepare && graph deploy --output-dir ./build/optimism --network optimism --product hosted-service synthetix-perps/perps",
-    "build:optimism-goerli": "yarn codegen && graph build --output-dir ./build/optimism-goerli --network optimism-goerli",
-    "deploy:optimism-goerli": "yarn prepare && graph deploy --output-dir ./build/optimism-goerli --network optimism-goerli --product hosted-service synthetix-perps/perps-op-goerli",
+    "deploy:optimism": "yarn prepare:optimism && graph deploy synthetix-perps-v2-optimism subgraph.optimism.yaml --output-dir ./build/optimism --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
+    "prepare:optimism-sepolia": "node prepare-codegen.js && cp ./subgraph.optimism-sepolia.yaml ./subgraph.yaml",
     "build:optimism-sepolia": "yarn codegen && graph build --output-dir ./build/optimism-sepolia --network optimism-sepolia",
-    "deploy:optimism-sepolia": "yarn prepare && graph deploy --output-dir ./build/optimism-sepolia --network optimism-sepolia --product hosted-service synthetix-perps/perps-op-sepolia",
-    "test": "yarn prepare && graph test"
+    "deploy:optimism-sepolia": "yarn prepare:optimism-sepolia && graph deploy synthetix-perps-v2-optimism-sepolia subgraph.optimism-sepolia.yaml --output-dir ./build/optimism-sepolia --version-label v1 --node https://subgraphs.alchemy.com/api/subgraphs/deploy --deploy-key $SATSUMA_KEY --ipfs https://ipfs.satsuma.xyz",
+    "test": "yarn prepare:optimism && graph test"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.60.0",
