@@ -9,7 +9,10 @@ export const POLYNOMIAL_SUBGRAPH_URL =
 
 export const TRADE_ON_KWENTA_URL = 'https://kwenta.eth.limo';
 export const TRADE_ON_POLYNOMIAL_URL = 'https://trade.polynomial.fi';
-export const TRADE_ON_INFINEX_URL = 'https://infinex.io';
+export const TRADE_ON_INFINEX_URL = 'https://infinex.xyz';
+export const TRADE_ON_TLX_URL = 'https://tlx.fi';
+export const TRADE_ON_CYBERDEX_URL = 'https://cyberdex.xyz';
+export const VIEW_ON_COPIN_URL = 'https://app.copin.io';
 
 export const ethercanLink = (address: string) => `https://etherscan.io/address/${address}`;
 

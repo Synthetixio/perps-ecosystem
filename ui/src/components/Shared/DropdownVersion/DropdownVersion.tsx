@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Menu, MenuButton, MenuList, Flex } from '@chakra-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DropdownCheckbox } from '../DropdownFilter/DropdownCheckbox';
 
 interface DropdownOption {
@@ -11,13 +11,14 @@ interface DropdownOption {
 
 const VERSION_OPTIONS: DropdownOption[] = [
   { value: '', display: 'Perps V2' },
-  { value: 'v3', display: 'Core V3' },
+  // { value: 'v3', display: 'Core V3' },
 ];
 
 export const DropdownVersion = () => {
-  const location = useLocation();
-  const initialOptionValue =
-    location.pathname === '/v3' ? VERSION_OPTIONS[1].value : VERSION_OPTIONS[0].value;
+  // const location = useLocation();
+  // const initialOptionValue =
+  //   location.pathname === '/v3' ? VERSION_OPTIONS[1].value : VERSION_OPTIONS[0].value;
+  const initialOptionValue = VERSION_OPTIONS[0].value;
 
   const [activeOptionValue, setActiveOptionValue] = useState<string>(initialOptionValue);
 
@@ -50,7 +51,7 @@ export const DropdownVersion = () => {
       >
         {VERSION_OPTIONS.find((option) => option.value === activeOptionValue)?.display}
       </MenuButton>
-      <MenuList boxShadow="none">
+      <MenuList boxShadow="none" backgroundColor="transparent">
         <Flex
           bg="navy.900"
           p={1}
