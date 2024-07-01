@@ -66,29 +66,40 @@ export const Header: FC = () => {
             </Flex>
           </RouterLink>
           <DropdownVersion />
-          {['/', '/trades', '/actions', '/markets', '/positions', '/liquidations'].includes(
-            location.pathname
-          ) && (
-            <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
-              <Flex as="nav" sx={{ gap: '24px' }}>
-                <Box style={isActive('/') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/">Dashboard</RouterLink>
+          {
+            location.pathname.startsWith('/v3') ?
+              (
+                <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
+                  <Flex as="nav" sx={{ gap: '24px' }}>
+                    <Box style={isActive('/v3/markets') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/v3/markets">Markets</RouterLink>
+                    </Box>
+                  </Flex>
                 </Box>
-                <Box style={isActive('/actions') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/actions">Actions</RouterLink>
+              ) :
+              (
+                <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
+                  <Flex as="nav" sx={{ gap: '24px' }}>
+                    <Box style={isActive('/') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/">Dashboard</RouterLink>
+                    </Box>
+                    <Box style={isActive('/actions') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/actions">Actions</RouterLink>
+                    </Box>
+                    <Box style={isActive('/markets') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/markets">Markets</RouterLink>
+                    </Box>
+                    <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/positions">Positions</RouterLink>
+                    </Box>
+                    <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
+                      <RouterLink to="/liquidations">Liquidations</RouterLink>
+                    </Box>
+                  </Flex>
                 </Box>
-                <Box style={isActive('/markets') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/markets">Markets</RouterLink>
-                </Box>
-                <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/positions">Positions</RouterLink>
-                </Box>
-                <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/liquidations">Liquidations</RouterLink>
-                </Box>
-              </Flex>
-            </Box>
-          )}
+              )
+          }
+
           {!isActive('/v3') && (
             <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
               <Menu>
