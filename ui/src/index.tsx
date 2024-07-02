@@ -17,6 +17,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
 import { PythRealtimePrices } from './utils/pyth';
 import { V3MarketsPage } from './v3pages/v3MarketsPage';
+import { V3OrdersPage } from './v3pages/v3OrdersPage';
+import { V3LiquidationsPage } from './v3pages/v3LiquidationsPage';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -105,6 +107,24 @@ const router = createBrowserRouter([
       <>
         <Header />
         <V3MarketsPage />
+      </>
+    )
+  },
+  {
+    path: '/v3/orders',
+    element: (
+      <>
+        <Header />
+        <V3OrdersPage />
+      </>
+    )
+  },
+  {
+    path: '/v3/liquidations',
+    element: (
+      <>
+        <Header />
+        <V3LiquidationsPage />
       </>
     )
   },

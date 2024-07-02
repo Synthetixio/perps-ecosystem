@@ -24,6 +24,7 @@ export function useMarketV3() {
       return {
         id: item.id,
         perpsMarketId: item.perpsMarketId,
+        currentMarketPrice: item.price,
         marketName: item.marketName,
         marketSymbol: item.marketSymbol,
         price: wei(item.price, 18, true).toNumber(),

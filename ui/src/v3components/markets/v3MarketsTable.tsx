@@ -5,8 +5,6 @@ import {
   Skew,
   TableHeaderCell,
 } from '../../components/Shared';
-import { ApolloProvider as V3Provider } from '@apollo/client';
-import { V3Client } from '../../apollo/v3client';
 import { V3Market } from './v3Market';
 import { V3Funding } from './v3Funding';
 import { V3OpenInterest } from './v3OpenInterest';
@@ -16,7 +14,6 @@ export const V3MarketsTable = () => {
 
   return (
 
-    <V3Provider client={V3Client}>
       <Box px={{ base: '16px', md: '40px' }}>
         <TableContainer
           maxW="100%"
@@ -95,7 +92,6 @@ export const V3MarketsTable = () => {
           </Table>
         </TableContainer>
       </Box>
-    </V3Provider>
 
   );
 };
