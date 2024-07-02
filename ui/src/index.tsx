@@ -11,11 +11,13 @@ import {
   DEFAULT_REQUEST_REFRESH_INTERVAL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets, Positions, Liquidations, StatsV3 } from './pages';
+import { Actions, Markets, Positions, Liquidations, StatsV3 } from './pages';
 import { isStaging } from './utils/isStaging';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
 import { PythRealtimePrices } from './utils/pyth';
+import Maintenance from './pages/Maintenance';
+import { HeaderMaintenance } from './components/HeaderMaintenance';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -39,8 +41,8 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <>
-        <Header />
-        <Dashboard />
+        <HeaderMaintenance />
+        <Maintenance />
       </>
     ),
   },
