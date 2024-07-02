@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", ".eslintrc.js", "codegen.ts"]
+  "include": ["src", ".eslintrc.js", "codegen.ts", "v3codegen.ts"]
 }
