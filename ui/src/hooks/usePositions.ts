@@ -77,7 +77,7 @@ export const usePositions = (
       first: 50,
       skip: (page - 1) * 50,
     },
-    pollInterval: 10000,
+    pollInterval: 300000,
     skip: !arePricesReady,
   });
 
@@ -106,7 +106,7 @@ export const usePositions = (
       provider,
     },
     skip: !marketData?.futuresPositions,
-    pollInterval: 1000,
+    pollInterval: 300000,
   });
 
   const positionsData = data?.positionsFromContract

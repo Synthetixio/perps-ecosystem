@@ -37,7 +37,7 @@ export const useTraderLiquidatedPositions = () => {
       orderDirection: 'desc' as OrderDirection,
       skip: (page - 1) * 6,
     },
-    pollInterval: 100000,
+    pollInterval: 300000,
   });
 
   const processedLiquidatedPositionData: LiquidatedPositionsWithPageInfo = useMemo(() => {
