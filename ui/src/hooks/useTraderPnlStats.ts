@@ -62,7 +62,7 @@ export const useTraderPnlStats = (tradeNum: TradeNum) => {
     error: traderPnlQueryError,
   } = useQuery(POSITIONS_QUERY_MARKET, {
     variables: queryVariables,
-    pollInterval: 10000,
+    pollInterval: 300000,
   });
 
   const processedData = useMemo(() => {

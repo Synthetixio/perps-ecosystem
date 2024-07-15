@@ -168,7 +168,7 @@ export const useActions = (account?: string, limit?: number) => {
     data: marginData,
     error: marginError,
   } = useQuery(MARGIN_TRANSFERRED_QUERY, {
-    pollInterval: 10000,
+    pollInterval: 300000,
     skip: marketConfigsLoading,
     variables: {
       first: limit ?? 50,
@@ -188,7 +188,7 @@ export const useActions = (account?: string, limit?: number) => {
     data: futuresTradesData,
     error: futuresError,
   } = useQuery(FUTURES_TRADE_QUERY, {
-    pollInterval: 10000,
+    pollInterval: 300000,
     skip: marketConfigsLoading,
     variables: {
       first: limit ?? 50,
