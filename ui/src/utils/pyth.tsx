@@ -76,7 +76,13 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       const pythConfigByMarketKey = await getMarketsPythConfig();
-      const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
+
+      // RNDR is deprecated
+      const pythIds = Object.values(pythConfigByMarketKey)
+        .map((x) => x.pythId)
+        .filter(
+          (id) => id !== '0xab7347771135fc733f8f38db462ba085ed3309955f42554a14fa13e855ac0e2f'
+        );
 
       // Initial cache hit
       const initialCache = await pyth.getLatestPriceFeeds(pythIds);
