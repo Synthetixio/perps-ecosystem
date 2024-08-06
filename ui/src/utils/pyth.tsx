@@ -4,9 +4,7 @@ import { isStaging } from './isStaging';
 import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { type MarketsByKey } from '../types';
 
-export const pyth = new EvmPriceServiceConnection(
-  'https://hermes-mainnet.rpc.extrnode.com/abe13407-e0dc-45fc-8ee7-f26833246ab2'
-);
+export const pyth = new EvmPriceServiceConnection('https://hermes.pyth.network');
 
 const OffchainFeedSchema = z.array(
   z.object({
@@ -50,6 +48,7 @@ export const getMarketsPythConfig = async () => {
             asset,
           };
         })
+        .filter((x) => x.key !== 'sRNDRPERP')
         .reduce((acc: MarketsByKey, val) => {
           acc[val.key] = val;
           return acc;
@@ -78,11 +77,7 @@ export const PythRealtimePrices = ({ children }: { children: ReactNode }) => {
       const pythConfigByMarketKey = await getMarketsPythConfig();
 
       // RNDR is deprecated
-      const pythIds = Object.values(pythConfigByMarketKey)
-        .map((x) => x.pythId)
-        .filter(
-          (id) => id !== '0xab7347771135fc733f8f38db462ba085ed3309955f42554a14fa13e855ac0e2f'
-        );
+      const pythIds = Object.values(pythConfigByMarketKey).map((x) => x.pythId);
 
       // Initial cache hit
       const initialCache = await pyth.getLatestPriceFeeds(pythIds);
