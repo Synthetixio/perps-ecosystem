@@ -5,7 +5,7 @@ import { EvmPriceServiceConnection } from '@pythnetwork/pyth-evm-js';
 import { type MarketsByKey } from '../types';
 
 export const pyth = new EvmPriceServiceConnection(
-  'https://hermes-mainnet.rpc.extrnode.com/abe13407-e0dc-45fc-8ee7-f26833246ab2'
+  'https://hermes-mainnet.rpc.extrnode.com/abe13407-e0dc-45fc-8ee7-f26833246ab2/api'
 );
 
 const OffchainFeedSchema = z.array(
