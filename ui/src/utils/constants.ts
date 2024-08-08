@@ -3,9 +3,13 @@ export const PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL =
 export const PERPS_V2_DASHBOARD_GRAPH_URL =
 'https://subgraph.satsuma-prod.com/721d8975677c/tradess-team--772825/synthetix-perps-v2-optimism/api';
 
-export const KWENTA_SUBGRAPH_URL = 'https://gateway-arbitrum.network.thegraph.com/api/592b3ff36de6c725554b9c252c275192/subgraphs/id/7RJxwa4R6btrkWDDSV7FL42GKeGSEtXi4CWSaXYwcn7c';
+export const KWENTA_SUBGRAPH_URL =
+  'https://gateway-arbitrum.network.thegraph.com/api/592b3ff36de6c725554b9c252c275192/subgraphs/id/7RJxwa4R6btrkWDDSV7FL42GKeGSEtXi4CWSaXYwcn7c';
 export const POLYNOMIAL_SUBGRAPH_URL =
   'https://gateway-arbitrum.network.thegraph.com/api/592b3ff36de6c725554b9c252c275192/subgraphs/id/HNGcT3yUnJKQEoCGirzTECMwrRZeVyPLN75zusTCSziS';
+
+export const PERPS_V3_DASHBOARD_GRAPH_URL =
+  'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-watcher-sg-base/api';
 
 export const TRADE_ON_KWENTA_URL = 'https://kwenta.eth.limo';
 export const TRADE_ON_POLYNOMIAL_URL = 'https://trade.polynomial.fi';
