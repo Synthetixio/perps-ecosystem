@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import { KwentaIcon, PolynomialIcon } from '../Icons';
 import { InfinexIcon } from '../Icons/InfinexIcon';
 import {
-  VIEW_ON_COPIN_URL,
   TRADE_ON_CYBERDEX_URL,
   TRADE_ON_INFINEX_URL,
   TRADE_ON_KWENTA_URL,
@@ -12,7 +11,6 @@ import {
 } from '../../utils';
 import { TlxIcon } from '../Icons/TlxIcon';
 import { CyberdexIcon } from '../Icons/CyberdexIcon';
-import { CopinIcon } from '../Icons/CopinIcon';
 
 export const DashboardBanner = () => {
   return (
@@ -27,7 +25,7 @@ export const DashboardBanner = () => {
       gap={3}
     >
       <Text fontSize="14px" lineHeight="20px" color="gray.50" fontWeight={700}>
-        Gain exposure to a variety of assets with up to 50x leverage and deep liquidity
+        Start Trading Perpetual Futures Now
       </Text>
       <Flex alignItems="center" gap={2} flexWrap="wrap">
         <TradeOnItem
@@ -55,11 +53,6 @@ export const DashboardBanner = () => {
           title={'Trade on Cyberdex'}
           icon={<CyberdexIcon width="18px" height="18px" />}
         />
-        <TradeOnItem
-          url={VIEW_ON_COPIN_URL}
-          title={'View on Copin'}
-          icon={<CopinIcon width="18px" height="18px" />}
-        />
       </Flex>
     </Flex>
   );
@@ -78,7 +71,7 @@ const TradeOnItem = ({ url, title, icon }: TradeOnItemProps) => {
       display="flex"
       alignItems="center"
       gap={2}
-      width={['49%', '180px']}
+      width={['100%', 'auto']}
       as={'a'}
       href={url}
       target="_blank"

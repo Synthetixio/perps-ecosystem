@@ -36,7 +36,7 @@ export const useTraderStats = () => {
     variables: {
       ids: allAddresses,
     },
-    pollInterval: 100000,
+    pollInterval: 300000,
     skip: !allAddresses || allAddresses.length === 0,
   });
 

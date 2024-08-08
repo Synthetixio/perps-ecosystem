@@ -103,7 +103,7 @@ export function useLiquidations() {
       orderDirection: OrderDirection.Desc,
     },
     skip: marketConfigsLoading,
-    pollInterval: 10000,
+    pollInterval: 300000,
   });
 
   const isLoading = loading || marketConfigsLoading;
