@@ -1,35 +1,36 @@
-import { TableContainer, Table, Thead, Tr, Td, Tbody, Flex, Text } from '@chakra-ui/react';
-import { useSearchParams } from 'react-router-dom';
+import { TableContainer, Table, Thead, Tr, Td, Tbody, Text, Box } from '@chakra-ui/react';
 import { TableHeaderCell, PnL, Size, WalletTooltip } from '../../components/Shared';
 import { V3Market } from '../markets/v3Market';
 import { useV3OrdersSettled } from '../../v3hooks/useV3OrdersSettled';
-import { useState, useEffect, useMemo } from 'react';
 import { V3Price } from './v3OrderPrice';
 import { V3OrderType } from './v3OrderType';
 
 export const V3OrdersTable = () => {
-  const [storedParams, setStoredParams] = useState<string>('');
-  const [showLoading, setShowLoading] = useState<boolean>(true);
+  const { error, loading, orderData } = useV3OrdersSettled();
 
-  const [searchParams] = useSearchParams();
-  const currentParams = useMemo(() => searchParams.toString(), [searchParams]);
+  if (loading) {
+    return (
+      <Box px={{ base: '16px', md: '40px' }}>
+        <Text>Loading data...</Text>
+      </Box>
+    );
+  }
 
-  const { data, error, loading, orderData } = useV3OrdersSettled();
-  const noData = !data?.orderSettleds.length
+  if (error) {
+    return (
+      <Box px={{ base: '16px', md: '40px' }}>
+        <Text>Error loading data: {error.message}</Text>
+      </Box>
+    );
+  }
 
-  // we are loading lots of data, only show loading component on inital render or when params have changed
-  useEffect(() => {
-    if (storedParams !== currentParams) {
-      setShowLoading(true);
-      setStoredParams(currentParams);
-    }
-  }, [currentParams, storedParams]);
-
-  useEffect(() => {
-    if (data) {
-      setShowLoading(false);
-    }
-  }, [data]);
+  if (!orderData?.length) {
+    return (
+      <Box px={{ base: '16px', md: '40px' }}>
+        <Text>No Active Order Data Available</Text>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -59,11 +60,6 @@ export const V3OrdersTable = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {showLoading && (
-                <>
-                  <Text>Data Loading</Text>
-                </>
-              )}
               {orderData?.map(
                 (
                   {
@@ -93,24 +89,20 @@ export const V3OrdersTable = () => {
                     <Tr key={accountId?.concat(index.toString())} borderTopWidth="1px">
                       {/* Market and Direction */}
                       <V3Market
-                        asset={marketName ?? ""}
-                        assetKey={marketSymbol ?? ""}
+                        asset={marketName ?? ''}
+                        assetKey={marketSymbol ?? ''}
                         direction={newSize.toNumber() > 0 ? 'LONG' : 'SHORT'}
                       />
                       <V3OrderType size={newSize.toNumber()} />
                       {/* Market Price */}
-                      <V3Price
-                        price={marketPrice}
-                      />
-                       {/* Fill Price */}
-                       <V3Price
-                        price={fillPrice.toNumber()}
-                      />
+                      <V3Price price={marketPrice} />
+                      {/* Fill Price */}
+                      <V3Price price={fillPrice.toNumber()} />
                       <Size size={newSize.toNumber()} marketPrice={fillPrice.toNumber()} />
-                 
-                       {/* Accrued Funding */}
-                       <PnL pnl={accruedFunding.toNumber()} />
-                       {/* PNL */}
+
+                      {/* Accrued Funding */}
+                      <PnL pnl={accruedFunding.toNumber()} />
+                      {/* PNL */}
                       <PnL
                         pnl={orderPnl.orderSettledPnl.toNumber()}
                         pnlPercentage={orderPnl.orderSettledPercentage.toNumber()} //
@@ -126,22 +118,6 @@ export const V3OrdersTable = () => {
               )}
             </Tbody>
           </Table>
-
-          {!loading && !error && noData && (
-            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                No open positions
-              </Text>
-            </Flex>
-          )}
-
-          {error && noData && !loading && (
-            <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
-              <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
-                We&apos;re having problem loading the position data
-              </Text>
-            </Flex>
-          )}
         </>
       </TableContainer>
     </>

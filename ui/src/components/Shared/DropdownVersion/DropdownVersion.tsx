@@ -17,8 +17,9 @@ const VERSION_OPTIONS: DropdownOption[] = [
 export const DropdownVersion = () => {
   const location = useLocation();
 
-  const initialOptionValue =
-    location.pathname.startsWith('/v3') ? VERSION_OPTIONS[1].value : VERSION_OPTIONS[0].value;
+  const initialOptionValue = location.pathname.startsWith('/v3')
+    ? VERSION_OPTIONS[1].value
+    : VERSION_OPTIONS[0].value;
 
   const [activeOptionValue, setActiveOptionValue] = useState<string>(initialOptionValue);
 

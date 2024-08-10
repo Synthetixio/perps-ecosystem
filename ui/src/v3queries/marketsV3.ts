@@ -1,8 +1,8 @@
 import { gql } from '../v3/__generated__';
 
 export const MARKETS_QUERY_V3 = gql(`
-  query MarketsQueryV3($first: Int!) {
-    markets(first: $first) {
+  query MarketsQueryV3($first: Int! $where: Market_filter) {
+    markets(first: $first where: $where) {
       id
       perpsMarketId
       marketName

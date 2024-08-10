@@ -66,54 +66,44 @@ export const Header: FC = () => {
             </Flex>
           </RouterLink>
           <DropdownVersion />
-          {
-            location.pathname.startsWith('/v3') ?
-              (
-                <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
-                  <Flex as="nav" sx={{ gap: '24px' }}>
-                    <Box style={isActive('/v3/markets') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/v3/markets">Markets</RouterLink>
-                    </Box>
-                    <Box style={isActive('/v3/orders') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/v3/orders">Orders</RouterLink>
-                    </Box>
-                    <Box style={isActive('/v3/orders') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/v3/liquidations">Liquidations</RouterLink>
-                    </Box>
-                  </Flex>
+          {location.pathname.startsWith('/v3') ? (
+            <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
+              <Flex as="nav" sx={{ gap: '24px' }}>
+                <Box style={isActive('/v3/markets') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/markets">Markets</RouterLink>
                 </Box>
-              ) :
-              (
-                <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
-                  <Flex as="nav" sx={{ gap: '24px' }}>
-                    <Box style={isActive('/') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/">Dashboard</RouterLink>
-                    </Box>
-                    <Box style={isActive('/actions') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/actions">Actions</RouterLink>
-                    </Box>
-                    <Box style={isActive('/markets') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/markets">Markets</RouterLink>
-                    </Box>
-                    <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/positions">Positions</RouterLink>
-                    </Box>
-                    <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
-                      <RouterLink to="/liquidations">Liquidations</RouterLink>
-                    </Box>
-                  </Flex>
+                <Box style={isActive('/v3/orders') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/orders">Orders</RouterLink>
                 </Box>
-              )
-          }
+                <Box style={isActive('/v3/liquidations') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/liquidations">Liquidations</RouterLink>
+                </Box>
+              </Flex>
+            </Box>
+          ) : (
+            <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
+              <Flex as="nav" sx={{ gap: '24px' }}>
+                <Box style={isActive('/') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/">Dashboard</RouterLink>
+                </Box>
+                <Box style={isActive('/actions') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/actions">Actions</RouterLink>
+                </Box>
+                <Box style={isActive('/markets') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/markets">Markets</RouterLink>
+                </Box>
+                <Box style={isActive('/positions') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/positions">Positions</RouterLink>
+                </Box>
+                <Box style={isActive('/liquidations') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/liquidations">Liquidations</RouterLink>
+                </Box>
+              </Flex>
+            </Box>
+          )}
 
-
-
-
-
-
-          {
-            location.pathname.startsWith('/v3') ? (
-              <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
+          {location.pathname.startsWith('/v3') ? (
+            <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
               <Menu>
                 <MenuButton
                   as={Button}
@@ -151,10 +141,8 @@ export const Header: FC = () => {
                 </MenuList>
               </Menu>
             </Flex>
-
-            ) :
-            (
-              <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
+          ) : (
+            <Flex alignItems="center" display={{ base: 'flex', md: 'none' }}>
               <Menu>
                 <MenuButton
                   as={Button}
@@ -206,10 +194,7 @@ export const Header: FC = () => {
                 </MenuList>
               </Menu>
             </Flex>
-            )
-          }
-
-         
+          )}
         </Flex>
         <Flex justifyContent="flex-end">
           <AddressInput />

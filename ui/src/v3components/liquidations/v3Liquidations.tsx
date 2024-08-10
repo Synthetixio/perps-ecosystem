@@ -1,12 +1,5 @@
 import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/react';
-import {
-  Currency,
-  TableHeaderCell,
-
-  Size,
-
-  Age,
-} from '../../components/Shared';
+import { Currency, TableHeaderCell, Size, Age } from '../../components/Shared';
 import { useLiquidationsV3 } from '../../v3hooks/useV3Liquidations';
 import { V3Market } from '../markets/v3Market';
 import { wei } from '@synthetixio/wei';
@@ -39,7 +32,7 @@ export const V3LiquidationsTable = () => {
           <Tbody>
             {loading && (
               <>
-                 <Text>Data Loading</Text>
+                <Text>Data Loading</Text>
               </>
             )}
 
@@ -53,14 +46,17 @@ export const V3LiquidationsTable = () => {
                 currentPositionSize,
                 marketName,
                 marketSymbol,
-                marketPrice
+                marketPrice,
               }) => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
-                     <V3Market asset={marketName ?? ''} assetKey={marketSymbol ?? ''} />
+                    <V3Market asset={marketName ?? ''} assetKey={marketSymbol ?? ''} />
                     <Age timestamp={timestamp} />
-                    <Currency amount={wei(marketPrice,18,true).toNumber() || null} />
-                    <Size size={amountLiquidated.toNumber()} marketPrice={marketPrice ? wei(marketPrice,18,true).toNumber() : null} />
+                    <Currency amount={wei(marketPrice, 18, true).toNumber() || null} />
+                    <Size
+                      size={amountLiquidated.toNumber()}
+                      marketPrice={marketPrice ? wei(marketPrice, 18, true).toNumber() : null}
+                    />
                   </Tr>
                 );
               }

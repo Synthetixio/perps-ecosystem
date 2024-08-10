@@ -5,7 +5,6 @@ interface OrderTypeProps {
 }
 
 export const V3OrderType = ({ size }: OrderTypeProps) => {
-
   const orderType = size > 0 ? 'LONG' : 'SHORT';
 
   return (
@@ -14,7 +13,6 @@ export const V3OrderType = ({ size }: OrderTypeProps) => {
         <Text fontSize="14px" lineHeight="20px" fontFamily="heading" fontWeight={500}>
           {orderType}
         </Text>
-       
       </Fade>
     </Td>
   );

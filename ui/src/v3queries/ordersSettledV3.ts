@@ -25,4 +25,4 @@ export const ORDERS_SETTLED_QUERY_V3 = gql(`
 
       }
   }
-  `)
+  `);

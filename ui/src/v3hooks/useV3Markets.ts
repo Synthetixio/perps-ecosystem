@@ -1,25 +1,29 @@
 import { useQuery } from '@apollo/client';
 import { MARKETS_QUERY_V3 } from '../v3queries/marketsV3';
-import Wei, { wei } from '@synthetixio/wei';
+import { wei } from '@synthetixio/wei';
 import { calculateSkew } from '../utils';
 
 export function useMarketV3() {
   const { loading, data, error } = useQuery(MARKETS_QUERY_V3, {
-    variables: { first: 250 },
+    variables: {
+      first: 250,
+      where: {
+        price_not: null,
+        size_not: null,
+        currentFundingRate_not: null,
+      },
+    },
   });
 
   const v3MarketData = data?.markets
     .map((item) => {
-      const hourlyFundingRate = wei(item.currentFundingRate, 18, true).div(24);
-      const hourlyFundingVelocity = wei(item.currentFundingVelocity, 18, true).div(24);
-      const fundingRateApr = wei(item.currentFundingRate, 18, true).mul(365);
-      const size = wei(item.size, 18, true);
-      const skew = wei(item.skew, 18, true);
-      const marketSize = wei(item.size, 18, true)
-        .mul(wei(item.price, 18, true))
-        .toNumber();
-      const openInterest = calculateLongsAndShorts(size, skew);
-      const skewVal = calculateSkew(openInterest.long, openInterest.short);
+      const longOI = wei(item.size, 18, true)
+        .add(wei(item.skew, 18, true))
+        .div(2);
+      const shortOI = wei(item.size, 18, true)
+        .sub(wei(item.skew, 18, true))
+        .div(2);
+      const skewVal = calculateSkew(longOI, shortOI);
 
       return {
         id: item.id,
@@ -34,12 +38,21 @@ export function useMarketV3() {
         sizeDelta: wei(item.sizeDelta, 18, true).toNumber(),
         currentFundingRate: wei(item.currentFundingRate, 18, true).toNumber(),
         currentFundingVelocity: wei(item.currentFundingVelocity, 18, true).toNumber(),
-        hourlyFundingRate: hourlyFundingRate.toNumber(),
-        hourlyFundingVelocity: hourlyFundingVelocity.toNumber(),
-        fundingRateApr: fundingRateApr.toNumber(),
-        openInterest,
+        hourlyFundingRate: wei(item.currentFundingRate, 18, true).div(24).toNumber(), // hourlyFundingRate.toNumber(),
+        hourlyFundingVelocity: wei(item.currentFundingVelocity, 18, true).div(24).toNumber(), // hourlyFundingVelocity.toNumber(),
+        fundingRateApr: wei(item.currentFundingRate, 18, true).mul(365).toNumber(), // fundingRateApr.toNumber(),
         skewVal,
-        marketSize,
+        marketSize: wei(item.size, 18, true)
+          .mul(wei(item.price, 18, true))
+          .toNumber(),
+        longOI: wei(item.size, 18, true)
+          .add(wei(item.skew, 18, true))
+          .div(2)
+          .toNumber(),
+        shortOI: wei(item.size, 18, true)
+          .sub(wei(item.skew, 18, true))
+          .div(2)
+          .toNumber(),
       };
     })
     .sort((a, b) => b.marketSize - a.marketSize);
@@ -50,10 +63,4 @@ export function useMarketV3() {
     error,
     v3MarketData,
   };
-}
-
-function calculateLongsAndShorts(openInterest: Wei, skew: Wei) {
-  const long = openInterest.add(skew).div(2);
-  const short = openInterest.sub(skew).div(2);
-  return { long, short };
 }

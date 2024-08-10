@@ -19,12 +19,9 @@ export const V3Funding = ({ amount, time }: FundingProps) => {
       color={isPositive ? 'green.500' : 'red.500'}
     >
       <Fade in>
-        {
-          time === 1 ?
-            formatPercent(amount, { maximumFractionDigits: 6 }) :
-            formatPercent(amount, { maximumFractionDigits: 4 })
-        }
-
+        {time === 1
+          ? formatPercent(amount, { maximumFractionDigits: 6 })
+          : formatPercent(amount, { maximumFractionDigits: 4 })}
       </Fade>
     </Td>
   );

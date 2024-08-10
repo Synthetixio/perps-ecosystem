@@ -9,7 +9,13 @@ interface OpenInterestProps {
   decimals?: number;
 }
 
-export const V3OpenInterest = ({ totalOI, longOI, shortOI, price, decimals }: OpenInterestProps) => {
+export const V3OpenInterest = ({
+  totalOI,
+  longOI,
+  shortOI,
+  price,
+  decimals,
+}: OpenInterestProps) => {
   return (
     <Td border="none">
       <Fade in>

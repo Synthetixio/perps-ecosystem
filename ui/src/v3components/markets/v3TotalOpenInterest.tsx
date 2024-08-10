@@ -16,7 +16,7 @@ export const V3TotalOpenInterest = ({ oi, skew, decimals }: TotalOpenInterestPro
           fontWeight={500}
           fontSize="14px"
           lineHeight="20px"
-          color={skew > 0 ? "green.500" : "red.500"}
+          color={skew > 0 ? 'green.500' : 'red.500'}
         >
           {formatNumberToUsd(oi, {
             minimumFractionDigits: decimals,

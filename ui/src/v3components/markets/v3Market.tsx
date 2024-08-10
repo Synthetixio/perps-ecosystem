@@ -1,7 +1,6 @@
 import { Box, Fade, Flex, Td, Text } from '@chakra-ui/react';
 import { CurrencyIcon } from '../../components/CurrencyIcon';
 
-
 interface V3MarketProps {
   asset: string;
   assetKey: string;
@@ -10,13 +9,7 @@ interface V3MarketProps {
   isPosition?: boolean;
 }
 
-export const V3Market = ({
-  asset,
-  assetKey,
-  protocol,
-  direction,
-  isPosition
-}: V3MarketProps) => {
+export const V3Market = ({ asset, assetKey, protocol, direction, isPosition }: V3MarketProps) => {
   const isLong = direction === 'LONG';
 
   return (
@@ -32,8 +25,7 @@ export const V3Market = ({
                   bottom: '-15px',
                   right: '-15px',
                 }}
-              >
-              </Box>
+              ></Box>
             </Box>
 
             <Box ml={3}>
@@ -55,7 +47,6 @@ export const V3Market = ({
                   >
                     {direction}
                   </Text>
-
                 </Flex>
               )}
             </Box>

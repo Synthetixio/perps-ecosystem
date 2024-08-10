@@ -6,7 +6,11 @@ import { OrderDirection, PositionLiquidatedOrderBy } from '../v3/__generated__/g
 
 export function useLiquidationsV3() {
   const { loading, data, error } = useQuery(LIQUIDATIONS_QUERY_V3, {
-    variables: { first: 250, orderBy: 'timestamp' as PositionLiquidatedOrderBy, orderDirection: 'desc' as OrderDirection },
+    variables: {
+      first: 100,
+      orderBy: 'timestamp' as PositionLiquidatedOrderBy,
+      orderDirection: 'desc' as OrderDirection,
+    },
   });
 
   const { v3MarketData } = useMarketV3();
@@ -22,7 +26,7 @@ export function useLiquidationsV3() {
       marketSymbol: market?.marketSymbol,
       marketPrice: market?.currentMarketPrice,
       amountLiquidated: wei(item.amountLiquidated, 18, true),
-      currentPositionSize: wei(item.currentPositionSize,18,true)
+      currentPositionSize: wei(item.currentPositionSize, 18, true),
     };
   });
 
