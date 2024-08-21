@@ -53,7 +53,7 @@ export const usePositions = (
 
   const direction = searchParams.get('direction') ?? 'desc';
   const orderBy =
-    searchParams.get('orderby') === 'size' ? 'margin' : searchParams.get('orderby') ?? 'margin';
+    searchParams.get('orderby') === 'size' ? 'margin' : (searchParams.get('orderby') ?? 'margin');
   const page = Number(searchParams.get('page')) || 1;
 
   // get market ids from asset name

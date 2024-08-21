@@ -69,11 +69,17 @@ export const Header: FC = () => {
           {location.pathname.startsWith('/v3') ? (
             <Box px={{ base: '8px' }} display={{ base: 'none', md: 'flex', lg: 'flex' }}>
               <Flex as="nav" sx={{ gap: '24px' }}>
+                <Box style={isActive('/v3/dashboard') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/dashboard">Dashboard</RouterLink>
+                </Box>
                 <Box style={isActive('/v3/markets') ? activeStyle : inactiveStyle}>
                   <RouterLink to="/v3/markets">Markets</RouterLink>
                 </Box>
-                <Box style={isActive('/v3/orders') ? activeStyle : inactiveStyle}>
-                  <RouterLink to="/v3/orders">Orders</RouterLink>
+                <Box style={isActive('/v3/trades') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/trades">Trades</RouterLink>
+                </Box>
+                <Box style={isActive('/v3/positions') ? activeStyle : inactiveStyle}>
+                  <RouterLink to="/v3/positions">Positions</RouterLink>
                 </Box>
                 <Box style={isActive('/v3/liquidations') ? activeStyle : inactiveStyle}>
                   <RouterLink to="/v3/liquidations">Liquidations</RouterLink>

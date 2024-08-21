@@ -8,7 +8,7 @@ export const AccountName = ({ address, ...props }: { address: string } & TextPro
   const { names } = useAccountFavorites();
   const { addressEnsName } = useEnsName(address);
   const accountName = useMemo(
-    () => (names[address] ? names[address] : addressEnsName ?? truncateAddress(address)),
+    () => (names[address] ? names[address] : (addressEnsName ?? truncateAddress(address))),
     [address, names, addressEnsName]
   );
 

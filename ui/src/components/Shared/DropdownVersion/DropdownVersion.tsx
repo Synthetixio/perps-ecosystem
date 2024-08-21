@@ -27,7 +27,7 @@ export const DropdownVersion = () => {
 
   const onClick = (optionValue: string) => {
     navigate({
-      pathname: optionValue === 'v3' ? `/${optionValue}/markets` : `/${optionValue}`,
+      pathname: optionValue === 'v3' ? `/${optionValue}/dashboard` : `/${optionValue}`,
     });
     setActiveOptionValue(optionValue);
   };

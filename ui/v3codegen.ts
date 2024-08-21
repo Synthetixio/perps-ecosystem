@@ -1,13 +1,13 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
 import {
-  PERPS_V3_DASHBOARD_GRAPH_URL
+  PERPS_V3_BASE
 } from './src/utils/constants';
 
 const config: CodegenConfig = {
-  schema:   PERPS_V3_DASHBOARD_GRAPH_URL,
-  documents: ['src/v3queries/**/*.ts'],
+  schema:   PERPS_V3_BASE,
+  documents: ['src/v3_baseQueries/**/*.ts'],
   generates: {
-    './src/v3/__generated__/': {
+    './src/v3_perp/__generated__/': {
       preset: 'client',
       plugins: [],
       config: {
