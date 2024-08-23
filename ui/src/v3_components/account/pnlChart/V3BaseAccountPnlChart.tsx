@@ -39,7 +39,7 @@ export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlCha
     loading: pnlLoading,
     error: pnlError,
   } = useV3BaseAccountAggregateStat({
-    first: tradeNum,
+    first: 500,
     orderBy: 'timestamp' as AccountAggregateStatOrderBy,
     orderDirection: 'desc' as OrderDirection,
     accountAggregateStatFilter,
@@ -60,6 +60,8 @@ export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlCha
       </Flex>
     );
   }
+
+  const chartData = pnlData.slice(0, tradeNum).sort((a, b) => a.timestamp - b.timestamp);
 
   return (
     <Flex
@@ -114,23 +116,25 @@ export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlCha
           })}
         </Text>
 
-        {pnlData && (
+        {chartData && (
           <ResponsiveContainer minWidth="100%" minHeight={200}>
             <ComposedChart
               width={500}
               height={400}
-              data={pnlData}
+              data={chartData}
               margin={{
                 top: 20,
-                right: 20,
-                bottom: 20,
-                left: 20,
+                right: 5,
+                bottom: 5,
+                left: 5,
               }}
               stackOffset="sign"
             >
               <CartesianGrid stroke="0" />
               <XAxis
                 dataKey="date"
+                domain={['dataMin', 'dataMax']}
+                scale={'auto'}
                 tickLine={{ display: 'none' }}
                 tick={{ fontSize: '12px', fontFamily: 'Inter', fill: '#9999AC' }}
               />

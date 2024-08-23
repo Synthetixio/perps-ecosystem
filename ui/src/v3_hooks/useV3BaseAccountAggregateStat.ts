@@ -42,7 +42,10 @@ export function useV3BaseAccountAggregateStat({
           positionPnl: wei(stat.positionPnl, 18, true).toNumber(),
           timestamp: stat.timestamp,
           block: stat.block,
-          date: new Date(stat.timestamp * 1000).toLocaleDateString(),
+          date: new Date(stat.timestamp * 1000).toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+          }),
         };
       })
     : [];
