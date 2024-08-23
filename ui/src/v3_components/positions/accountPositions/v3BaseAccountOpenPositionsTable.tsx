@@ -1,4 +1,4 @@
-import { TableContainer, Table, Thead, Tr, Td, Tbody, Text, Box } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Td, Tbody, Text } from '@chakra-ui/react';
 import { TableHeaderCell, PnL } from '../../../components';
 import { V3BasePositionPrice } from '../v3BasePositionPrice';
 import { useV3BasePosition } from '../../../v3_hooks/useV3BasePosition';
@@ -11,6 +11,8 @@ import {
 import { V3BasePositionPnl } from '../v3BasePositionPnl';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
+import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
+import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 
 export const V3BaseAccountOpenPositionTable = () => {
   const navigate = useNavigate();
@@ -45,30 +47,6 @@ export const V3BaseAccountOpenPositionTable = () => {
     });
   };
 
-  if (loading) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Loading data...</Text>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Error loading data: {error.message}</Text>
-      </Box>
-    );
-  }
-
-  if (!data?.length) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>No Active Order Data Available</Text>
-      </Box>
-    );
-  }
-
   return (
     <>
       <TableContainer
@@ -98,6 +76,39 @@ export const V3BaseAccountOpenPositionTable = () => {
               </Tr>
             </Thead>
             <Tbody>
+              {loading && <V3BaseTableLoading rows={5} columns={9} />}
+
+              {!loading && error && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center" borderColor="gray.900">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      Error loading position data. Check back later
+                    </Text>
+                  </Td>
+                </Tr>
+              )}
+
+              {!loading && !error && data?.length === 0 && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      No Position Data Available. Check Back Later
+                    </Text>
+                  </Td>
+                </Tr>
+              )}
               {data?.map(
                 (
                   {
@@ -153,7 +164,7 @@ export const V3BaseAccountOpenPositionTable = () => {
                       {/* Accrued Funding */}
                       <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
                       {/* Source */}
-                      <Td>{trackingCode}</Td>
+                      <TrackingCodeIcon trackingCode={trackingCode} />
                     </Tr>
                   );
                 }

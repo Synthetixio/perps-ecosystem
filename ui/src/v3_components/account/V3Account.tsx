@@ -20,7 +20,6 @@ export const V3Account = ({ accountId }: V3AccountProps) => {
   // Even if accountId is undefined, call the hook with a default value
   const { data: account, loading, error } = useV3BaseAccountOne({ id: accountId });
 
-  // Hooks need to be called regardless of the state, so use a fallback
   const { isFavorite, saveAccountFavorite, removeAccountFavorite } = useAccountFavorites(
     account?.owner
   );
@@ -83,7 +82,7 @@ export const V3Account = ({ accountId }: V3AccountProps) => {
               size="sm"
               color="white"
               iconSize="16px"
-              value={account ? account.id : ''}
+              value={account ? account.owner : ''}
             />
             <Link
               alignItems="center"

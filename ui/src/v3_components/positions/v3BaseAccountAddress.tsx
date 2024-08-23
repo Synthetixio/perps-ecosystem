@@ -19,6 +19,7 @@ export const V3BaseAccountAddress = ({ address }: V3BaseAccountAddressProps) => 
           position="absolute"
           left={-375}
           top={-5}
+          zIndex={10}
           bg="none"
           _focus={{ outline: 'none', boxShadow: 'none' }}
         >

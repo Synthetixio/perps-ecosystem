@@ -1,4 +1,4 @@
-import { TableContainer, Table, Thead, Tr, Td, Tbody, Text, Box } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Td, Tbody, Text } from '@chakra-ui/react';
 import { TableHeaderCell, PnL } from '../../components/Shared';
 import { V3BasePositionPrice } from './v3BasePositionPrice';
 import { useV3BasePosition } from '../../v3_hooks/useV3BasePosition';
@@ -13,6 +13,8 @@ import { V3BasePositionPnl } from './v3BasePositionPnl';
 import { useSearchParams } from 'react-router-dom';
 import { V3BaseMarket } from '../markets/v3BaseMarket';
 import { wei } from '@synthetixio/wei';
+import { V3BaseTableLoading } from '../shared/loading/v3BaseTableLoading';
+import { TrackingCodeIcon } from '../shared/trackingCode/v3BaseTrackingCode';
 
 export const V3BasePositionTable = () => {
   const [searchParams] = useSearchParams();
@@ -38,30 +40,6 @@ export const V3BasePositionTable = () => {
     orderDirection,
     positionFilters,
   });
-
-  if (loading) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Loading data...</Text>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Error loading data: {error.message}</Text>
-      </Box>
-    );
-  }
-
-  if (!data?.length) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>No Active Order Data Available</Text>
-      </Box>
-    );
-  }
 
   return (
     <>
@@ -91,60 +69,96 @@ export const V3BasePositionTable = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {data?.map(
-                (
-                  {
-                    id,
-                    marketName,
-                    marketSymbol,
-                    marketPrice,
-                    averageEntryPrice,
-                    lastFillPrice,
-                    size,
-                    notionalAmount,
-                    accruedFunding,
-                    realizedPnl,
-                    unrealizedPnl,
-                    unrealizedPnlFE,
-                    trackingCode,
-                    accountId,
-                    marketId,
-                    direction,
-                  },
-                  index: number
-                ) => {
-                  return (
-                    <Tr key={accountId?.concat(index.toString())} borderTopWidth="1px">
-                      {/* Market and Direction */}
-                      <V3BaseMarket
-                        asset={marketName}
-                        assetKey={marketSymbol}
-                        isPosition={true}
-                        direction={direction}
-                      />
-                      {/* Market Price */}
-                      <V3BasePositionPrice price={marketPrice.toNumber()} />
-                      {/* Size Val */}
-                      <V3BasePositionSize
-                        size={size.toNumber()}
-                        marketPrice={marketPrice.toNumber()}
-                      />
-                      {/* Accrued Funding */}
-                      <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
-                      {/* Average Entry Price */}
-                      <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
-                      {/* Realized PNL */}
-                      <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
-                      {/* Unrealized PNL */}
-                      <PnL pnl={unrealizedPnlFE.toNumber()} />
-                      {/* Source */}
-                      <Td>{trackingCode}</Td>
-                      {/* Address */}
-                      <V3BaseAccountAddress address={accountId} />
-                    </Tr>
-                  );
-                }
+              {loading && <V3BaseTableLoading rows={5} columns={8} />}
+
+              {!loading && error && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center" borderColor="gray.900">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      Error loading position data. Check back later
+                    </Text>
+                  </Td>
+                </Tr>
               )}
+
+              {!loading && !error && data?.length === 0 && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      No Position Data Available. Check Back Later
+                    </Text>
+                  </Td>
+                </Tr>
+              )}
+
+              {!loading &&
+                !error &&
+                data?.map(
+                  (
+                    {
+                      id,
+                      marketName,
+                      marketSymbol,
+                      marketPrice,
+                      averageEntryPrice,
+                      lastFillPrice,
+                      size,
+                      notionalAmount,
+                      accruedFunding,
+                      realizedPnl,
+                      unrealizedPnl,
+                      unrealizedPnlFE,
+                      trackingCode,
+                      accountId,
+                      marketId,
+                      direction,
+                    },
+                    index: number
+                  ) => {
+                    return (
+                      <Tr key={accountId?.concat(index.toString())} borderTopWidth="1px">
+                        {/* Market and Direction */}
+                        <V3BaseMarket
+                          asset={marketName}
+                          assetKey={marketSymbol}
+                          isPosition={true}
+                          direction={direction}
+                        />
+                        {/* Market Price */}
+                        <V3BasePositionPrice price={marketPrice.toNumber()} />
+                        {/* Size Val */}
+                        <V3BasePositionSize
+                          size={size.toNumber()}
+                          marketPrice={marketPrice.toNumber()}
+                        />
+                        {/* Accrued Funding */}
+                        <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
+                        {/* Average Entry Price */}
+                        <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
+                        {/* Realized PNL */}
+                        <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
+                        {/* Unrealized PNL */}
+                        <PnL pnl={unrealizedPnlFE.toNumber()} />
+                        {/* Source */}
+                        <TrackingCodeIcon trackingCode={trackingCode} />
+                        {/* Address */}
+                        <V3BaseAccountAddress address={accountId} />
+                      </Tr>
+                    );
+                  }
+                )}
             </Tbody>
           </Table>
         </>

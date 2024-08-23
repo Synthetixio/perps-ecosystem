@@ -13,7 +13,7 @@ export const V3BaseAccountName = ({ address, accountId, ...props }: V3BaseAccoun
   const { names } = useAccountFavorites();
   const { addressEnsName } = useEnsName(address);
   const accountName = useMemo(
-    () => (names[accountId] ? names[accountId] : (addressEnsName ?? truncateAddress(address))),
+    () => (names[address] ? names[address] : (addressEnsName ?? truncateAddress(address))),
     [address, names, addressEnsName]
   );
 

@@ -1,4 +1,4 @@
-import { TableContainer, Table, Thead, Tr, Td, Tbody, Text, Box } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Td, Tbody, Text } from '@chakra-ui/react';
 import { TableHeaderCell } from '../../../components';
 import { V3BasePositionPrice } from '../v3BasePositionPrice';
 import { V3BasePositionSize } from '../v3BasePositionSize';
@@ -7,6 +7,8 @@ import { V3BasePositionPnl } from '../v3BasePositionPnl';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useV3Baseliquidation } from '../../../v3_hooks/useV3BaseLiquidation';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
+import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
+import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 
 export const V3BaseAccountLiquidatedPositionTable = () => {
   const navigate = useNavigate();
@@ -40,30 +42,6 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
     });
   };
 
-  if (loading) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Loading data...</Text>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Error loading data: {error.message}</Text>
-      </Box>
-    );
-  }
-
-  if (!data?.length) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>No Active Order Data Available</Text>
-      </Box>
-    );
-  }
-
   return (
     <>
       <TableContainer
@@ -92,6 +70,39 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
               </Tr>
             </Thead>
             <Tbody>
+              {loading && <V3BaseTableLoading rows={5} columns={8} />}
+
+              {!loading && error && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center" borderColor="gray.900">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      Error loading position data. Check back later
+                    </Text>
+                  </Td>
+                </Tr>
+              )}
+
+              {!loading && !error && data?.length === 0 && (
+                <Tr borderTopWidth="1px">
+                  <Td border={'none'} colSpan={8} textAlign="center">
+                    <Text
+                      fontFamily="inter"
+                      fontWeight="500"
+                      fontSize="14px"
+                      color="gray.500"
+                      m={6}
+                    >
+                      No Position Data Available. Check Back Later
+                    </Text>
+                  </Td>
+                </Tr>
+              )}
               {data?.map(
                 (
                   {
@@ -141,7 +152,7 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
                       <V3BasePositionPrice price={positionAverageEntryPrice?.toNumber() ?? 0} />
 
                       {/* Liquidation Type */}
-                      <Td>{liquidationType}</Td>
+                      <Td border={'none'}>{liquidationType}</Td>
 
                       {/* Amount Liquidated */}
                       <V3BasePositionPrice price={amountLiquidated.toNumber()} />
@@ -150,7 +161,7 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
                       <V3BasePositionPrice price={marketPrice.toNumber()} />
 
                       {/* Source */}
-                      <Td>{positionTrackingCode}</Td>
+                      <TrackingCodeIcon trackingCode={positionTrackingCode ?? ''} />
                     </Tr>
                   );
                 }

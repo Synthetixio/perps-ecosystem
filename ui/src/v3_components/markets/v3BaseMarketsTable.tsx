@@ -1,10 +1,11 @@
-import { TableContainer, Table, Thead, Tr, Tbody, Text, Box } from '@chakra-ui/react';
+import { TableContainer, Table, Thead, Tr, Tbody, Text, Td } from '@chakra-ui/react';
 import { MarkPrice, Skew, TableHeaderCell } from '../../components/Shared';
 import { V3Market } from './v3Market';
 import { V3Funding } from './v3Funding';
 import { V3OpenInterest } from './v3OpenInterest';
 import { useV3BaseMarket } from '../../v3_hooks/useV3BaseMarket';
 import { MarketOrderBy, OrderDirection } from '../../v3_perp/__generated__/graphql';
+import { V3BaseTableLoading } from '../shared/loading/v3BaseTableLoading';
 
 export const V3BaseMarketsTable = () => {
   const marketFilters = {
@@ -19,30 +20,6 @@ export const V3BaseMarketsTable = () => {
     orderDirection: 'desc' as OrderDirection,
     marketFilters,
   });
-
-  if (loading) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Loading data...</Text>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>Error loading data: {error.message}</Text>
-      </Box>
-    );
-  }
-
-  if (!data?.length) {
-    return (
-      <Box px={{ base: '16px', md: '40px' }}>
-        <Text>No Active Market Data Available</Text>
-      </Box>
-    );
-  }
 
   return (
     <TableContainer
@@ -70,6 +47,27 @@ export const V3BaseMarketsTable = () => {
           </Tr>
         </Thead>
         <Tbody>
+          {loading && <V3BaseTableLoading rows={5} columns={8} />}
+
+          {!loading && error && (
+            <Tr borderTopWidth="1px">
+              <Td border={'none'} colSpan={8} textAlign="center" borderColor="gray.900">
+                <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+                  Error Loading Market Data. Check Back Later
+                </Text>
+              </Td>
+            </Tr>
+          )}
+
+          {!loading && !error && data?.length === 0 && (
+            <Tr borderTopWidth="1px">
+              <Td border={'none'} colSpan={8} textAlign="center">
+                <Text fontFamily="inter" fontWeight="500" fontSize="14px" color="gray.500" m={6}>
+                  No Market Data Available. Check Back Later
+                </Text>
+              </Td>
+            </Tr>
+          )}
           {data?.map((item) => {
             const {
               perpsMarketId,
