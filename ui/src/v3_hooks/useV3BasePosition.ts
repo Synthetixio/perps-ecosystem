@@ -28,9 +28,6 @@ export function useV3BasePosition({
     where: positionFilters,
   };
 
-  console.log('variables');
-  console.log(variables);
-
   const { loading, data, error } = useQuery(v3_POSITION, {
     variables,
   });

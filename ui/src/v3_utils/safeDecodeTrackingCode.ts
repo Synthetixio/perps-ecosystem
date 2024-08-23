@@ -3,7 +3,6 @@
 import { utils } from 'ethers';
 
 export function safeDecodeTrackingCode(value: string): string {
-  console.log(`logging value: ${value}`);
   if (value)
     try {
       if (utils.isHexString(value) && value.length === 66) {

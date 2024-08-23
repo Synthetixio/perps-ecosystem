@@ -15,24 +15,13 @@ export const V3BaseAccountPnlTooltip = ({ payload }: PnlTooltipProps) => {
   }
 
   const pnlInfo = payload?.[0]?.payload satisfies AccountAggregateStat;
-  console.log(pnlInfo);
+
   const formatNumberOptions = { maximumFractionDigits: 2, minimumFractionDigits: 2 };
   if (!pnlInfo) {
     return null;
   }
-  console.log('payloadyo');
-  console.log(payload);
 
   const date = new Date(pnlInfo.timestamp * 1000).toLocaleDateString();
-  console.log(date);
-
-  // const positions: AccountAggregateStat[] = useMemo(
-  //   () =>
-  //     Object.values(pnlInfo.positions as Record<string, Position>)?.sort((x, y) =>
-  //       x.marketName < y.marketName ? -1 : x.marketName > y.marketName ? 1 : 0
-  //     ),
-  //   [pnlInfo]
-  // );
 
   return (
     <Flex

@@ -32,7 +32,6 @@ export function useV3BaseAccountAggregateStat({
 
   const processedData: AccountStat[] = data
     ? data.accountAggregateStats.map((stat: any) => {
-        console.log(stat);
         return {
           id: stat.id,
           accountId: stat.account.id,

@@ -18,8 +18,6 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
   const orderDirection = (searchParams.get('direction') as OrderDirection) ?? 'desc';
   const { accountId } = useParams();
 
-  console.log(accountId);
-
   // need URL params to update the filter
   const liquidationFilters = {
     market_in: market,
@@ -65,8 +63,6 @@ export const V3BaseAccountLiquidatedPositionTable = () => {
       </Box>
     );
   }
-
-  console.log(data);
 
   return (
     <>

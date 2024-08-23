@@ -19,7 +19,6 @@ import {
   AccountAggregateStatOrderBy,
   OrderDirection,
 } from '../../../v3_perp/__generated__/graphql';
-import { useSearchParams } from 'react-router-dom';
 import { Account } from '../../../v3_types';
 import { useV3BaseAccountAggregateStat } from '../../../v3_hooks/useV3BaseAccountAggregateStat';
 
@@ -29,10 +28,6 @@ interface V3BaseAccountPnlChartProps extends FlexProps {
 
 export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlChartProps) => {
   const [tradeNum, setTradeNum] = useState<number>(10);
-
-  const [searchParams] = useSearchParams();
-  // Extract any other relevant search parameters, e.g., sorting
-  console.log(searchParams);
 
   // Construct the position filters
   const accountAggregateStatFilter = {
@@ -66,12 +61,6 @@ export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlCha
     );
   }
 
-  const chartData = pnlData.slice(0, tradeNum);
-  console.log('yo');
-  console.log(chartData);
-
-  const sortedData = pnlData.sort((a, b) => a.timestamp - b.timestamp);
-  console.log(sortedData);
   return (
     <Flex
       flex="auto"

@@ -15,7 +15,6 @@ export const V3BaseAccountClosedPositionTable = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { accountId } = useParams();
-  console.log(accountId);
 
   // Extracting filters and sorting options from the URL
   const market = searchParams.get('markets')?.split(',') ?? undefined;
