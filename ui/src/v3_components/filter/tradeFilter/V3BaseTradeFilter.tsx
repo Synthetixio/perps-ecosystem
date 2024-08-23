@@ -1,4 +1,4 @@
-import { Box, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import { useV3BaseMarket } from '../../../v3_hooks/useV3BaseMarket';
 import { V3BaseMarketSelect } from '../MarketSelect';
 import { V3BaseDropdownFilter } from '../DropdownFilter';
@@ -32,43 +32,12 @@ export const V3BaseTradeFilter = ({ route }: V3BaseTradeFilterProps) => {
     currentFundingRate_not: null,
   };
 
-  const {
-    data: markets,
-    loading,
-    error,
-  } = useV3BaseMarket({
+  const { data: markets } = useV3BaseMarket({
     first: 200,
     orderBy: 'size' as MarketOrderBy,
     orderDirection: 'desc' as OrderDirection,
     marketFilters,
   });
-
-  if (loading) {
-    return (
-      <Box>
-        <Spinner size="lg" />
-        <Text>Loading markets...</Text>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box>
-        <Text color="red.500">Error loading markets: {error.message}</Text>
-      </Box>
-    );
-  }
-
-  if (!markets || markets.length === 0) {
-    return (
-      <Box>
-        <Text>No markets available</Text>
-      </Box>
-    );
-  }
-
-  // const markets = data ? data.map((item) => item.marketSymbol ) : []
 
   return (
     <Stack direction={{ base: 'column', md: 'row' }} spacing={{ base: 5, md: 10 }} width="100%">
