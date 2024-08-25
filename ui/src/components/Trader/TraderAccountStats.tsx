@@ -12,16 +12,18 @@ import {
 } from '@chakra-ui/react';
 import React, { useMemo, useRef, useState } from 'react';
 import { PositionsTable } from '../Positions';
-import { ClosedPositionsTable } from './ClosedPositions';
+// import { ClosedPositionsTable } from './ClosedPositions';
 import { AccountActionsTable } from '../Actions';
 import { useSearchParams } from 'react-router-dom';
 import TabHeader, { TabHeaderItemProps } from '../Tab';
 import useTabHandler from '../../hooks/helpers/useTabHandler';
-import { LiquidatedPositionsTable } from './LiquidatedPositions';
+// import { LiquidatedPositionsTable } from './LiquidatedPositions';
 import OpenPositionItem from './OpenPositionItem';
 import ClosedPositionItem from './ClosedPositionItem';
 import { useTraderStats } from '../../hooks/useTraderStats';
 import { useTraderClosedPositions } from '../../hooks';
+import { ClosedPositionsTableNoPag } from './ClosedPositions/ClosedPositionsTableNoPag';
+import { LiquidatedPositionsTableNoPag } from './LiquidatedPositions/LiquidatedPositionsTableNoPag';
 
 interface TraderAccountStatsProps {
   kwentaAccount?: string;
@@ -145,7 +147,7 @@ export const TraderAccountStats = ({
           <TabPanel p={0}>
             {tab === TabKeyEnum.CLOSED && (
               <Box>
-                <ClosedPositionsTable
+                <ClosedPositionsTableNoPag
                   actionsRef={actionsRef}
                   actionFilter={actionFilter}
                   resetActionFilters={resetActionFilters}
@@ -159,7 +161,7 @@ export const TraderAccountStats = ({
           <TabPanel p={0}>
             {tab === TabKeyEnum.LIQUIDATED && (
               <Box>
-                <LiquidatedPositionsTable
+                <LiquidatedPositionsTableNoPag
                   actionsRef={actionsRef}
                   actionFilter={actionFilter}
                   resetActionFilters={resetActionFilters}
