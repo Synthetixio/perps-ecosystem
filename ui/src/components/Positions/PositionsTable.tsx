@@ -2,18 +2,12 @@ import { TableContainer, Table, Thead, Tr, Tbody, Flex, Text } from '@chakra-ui/
 import { useParams, useSearchParams } from 'react-router-dom';
 import { TableHeaderCell } from '../Shared';
 import { PositionsLoading } from './PositionsLoading';
-import { PositionType, usePositions } from '../../hooks';
+import { PositionType } from '../../hooks';
 import { parseBytes32String } from 'ethers/lib/utils';
 import OpenPositionItem from '../Trader/OpenPositionItem';
-import { useEffect, useMemo } from 'react';
-import {
-  pageToOffset,
-  PaginationConfigProps,
-  PaginationWithLimit,
-  totalToPages,
-} from '../Pagination';
-import { usePageChangeWithLimit } from '../../hooks/helpers/usePageChange';
+import { useEffect } from 'react';
 import { PositionStatsTable } from './PositionStatsTable';
+import { useTraderOpenPositions } from '../../hooks/useTraderOpenPositions';
 
 interface PositionsProps {
   kwentaAccount?: string;
@@ -45,73 +39,28 @@ export const PositionsTable = ({
   const [searchParams] = useSearchParams();
   const { walletAddress } = useParams();
 
-  const {
-    data: walletData,
-    error: walletError,
-    loading: walletLoading,
-  } = usePositions(walletAddress, 'wallet', false);
+  const { data: allData, error, loading } = useTraderOpenPositions(walletAddress, 'wallet', false);
 
-  const {
-    data: kwentaData,
-    error: kwentaError,
-    loading: kwentaLoading,
-  } = usePositions(kwentaAccount, 'kwenta', false);
-
-  const {
-    data: polyData,
-    error: polyError,
-    loading: polyLoading,
-  } = usePositions(polynomialAccount, 'poly', false);
-
-  const loading = walletLoading || kwentaLoading || polyLoading;
-  const error = walletError ?? kwentaError ?? polyError;
-  const allData = [...(walletData || []), ...(kwentaData || []), ...(polyData || [])];
-
-  const noData = !allData.length;
+  const noData = !allData;
 
   const tradeIdParam = searchParams.get('tradeId');
 
   useEffect(() => {
-    if (!tradeIdParam || !allData?.length || currentPosition?.id === tradeIdParam) return;
-    const position = allData.find((e) => e.id === tradeIdParam);
+    if (!tradeIdParam || !allData || currentPosition?.id === tradeIdParam) return;
+    const position = allData.find((e: { id: string }) => e.id === tradeIdParam);
     if (position) {
       onSelectPosition(position);
     }
   }, [tradeIdParam, currentPosition, allData]);
 
-  const totalRecords = allData?.length ?? 0;
   useEffect(() => {
     if (totalOpenPositions) return;
-    setTotalOpenPositions && setTotalOpenPositions(totalRecords);
+    setTotalOpenPositions && setTotalOpenPositions(allData?.length ?? 0);
   }, [totalOpenPositions, allData]);
-
-  const ITEMS_PER_PAGE = 5;
-
-  const { currentPage, changeCurrentPage, currentLimit, changeCurrentLimit } =
-    usePageChangeWithLimit({ pageName: 'pg', limitName: 'limit', defaultLimit: ITEMS_PER_PAGE });
-  const paginationConfig = useMemo(() => {
-    return {
-      limit: currentLimit,
-      offset: pageToOffset(currentPage, currentLimit),
-      total: totalRecords,
-      totalPages: totalToPages(totalRecords, currentLimit),
-    } satisfies PaginationConfigProps;
-  }, [currentLimit, currentPage, totalRecords]);
-
-  const data = useMemo(
-    () =>
-      allData?.slice(
-        paginationConfig.offset,
-        paginationConfig.offset + currentLimit > totalRecords
-          ? undefined
-          : paginationConfig.offset + currentLimit
-      ),
-    [allData, paginationConfig.offset, currentLimit]
-  );
 
   return (
     <>
-      <PositionStatsTable data={data} loading={loading} />
+      <PositionStatsTable data={allData} loading={loading} />
       <TableContainer
         maxW="100%"
         my={5}
@@ -147,7 +96,7 @@ export const PositionsTable = ({
                   <PositionsLoading />
                 </>
               )}
-              {data?.map((position, index) => {
+              {allData?.map((position, index) => {
                 const marketId = parseBytes32String(position.asset);
                 const isSelected = position.id === searchParams.get('tradeId');
                 return (
@@ -164,19 +113,6 @@ export const PositionsTable = ({
               })}
             </Tbody>
           </Table>
-          <PaginationWithLimit
-            currentPage={currentPage}
-            currentLimit={currentLimit}
-            onPageChange={changeCurrentPage}
-            onLimitChange={changeCurrentLimit}
-            config={paginationConfig}
-            py={3}
-            px={6}
-            width="100%"
-            justifyContent="center"
-            bg="navy.700"
-            borderTopWidth="1px"
-          />
 
           {!loading && !error && noData && (
             <Flex width="100%" justifyContent="center" bg="navy.700" borderTopWidth="1px">
