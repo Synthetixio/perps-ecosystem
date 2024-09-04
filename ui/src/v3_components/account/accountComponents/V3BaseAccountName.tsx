@@ -1,20 +1,20 @@
 import { Text, Tooltip, type TextProps } from '@chakra-ui/react';
-import { useEnsName } from '../../../hooks/useEnsName';
-import useAccountFavorites from '../../../hooks/store/useAccountFavorites';
+// import { useEnsName } from '../../../hooks/useEnsName';
+// import useAccountFavorites from '../../../hooks/store/useAccountFavorites';
 import { truncateAddress } from '../../../utils';
 import { useMemo } from 'react';
 
 interface V3BaseAccountNameProps extends TextProps {
   address: string;
+  ensName?: string | null;
   accountId: string;
 }
 
-export const V3BaseAccountName = ({ address, accountId, ...props }: V3BaseAccountNameProps) => {
-  const { names } = useAccountFavorites();
-  const { addressEnsName } = useEnsName(address);
+export const V3BaseAccountName = ({ address, accountId, ensName, ...props }: V3BaseAccountNameProps) => {
+
   const accountName = useMemo(
-    () => (names[address] ? names[address] : (addressEnsName ?? truncateAddress(address))),
-    [address, names, addressEnsName]
+    () => ensName ?? truncateAddress(address), // Use ENS name if available, otherwise truncate
+    [address]
   );
 
   return (

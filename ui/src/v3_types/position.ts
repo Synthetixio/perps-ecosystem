@@ -16,6 +16,8 @@ export interface Position {
   size: Wei;
   notionalAmount: Wei;
   realizedPnl: Wei;
+  realizedPnlWithFees: Wei;
+  positionPnl: Wei;
   unrealizedPnl: Wei;
   unrealizedPnlFE: Wei;
   totalFees: Wei;

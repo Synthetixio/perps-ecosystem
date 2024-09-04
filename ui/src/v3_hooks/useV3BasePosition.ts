@@ -62,6 +62,8 @@ export function useV3BasePosition({
           size: wei(position.size, 18, true),
           notionalAmount: wei(position.notionalAmount, 18, true),
           realizedPnl: wei(position.realizedPnl, 18, true),
+          realizedPnlWithFees: wei(position.realizedPnlWithFees, 18, true),
+          positionPnl: wei(position.positionPnl, 18, true),
           unrealizedPnl: wei(position.unrealizedPnl, 18, true),
           unrealizedPnlFE: wei(unrealizedPnlFE, 18, true),
           totalFees: wei(position.totalFees, 18, true),

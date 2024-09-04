@@ -2,7 +2,7 @@ import { TableContainer, Table, Thead, Tr, Td, Tbody, Text } from '@chakra-ui/re
 import { TableHeaderCell } from '../../../components/Shared';
 import { useV3BaseTrade } from '../../../v3_hooks/useV3BaseTrade';
 import { OrderDirection, TradeOrderBy } from '../../../v3_perp/__generated__/graphql';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
 import { V3BasePositionPrice } from '../../positions/v3BasePositionPrice';
 import { V3BasePositionSize } from '../../positions/v3BasePositionSize';
@@ -11,9 +11,12 @@ import { wei } from '@synthetixio/wei';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 
-export const V3BaseAccountTradeTable = () => {
+interface V3BaseOwnerTradeTableProps {
+    accountId: string;
+  }
+
+export const V3BaseOwnerTradeTable = ({ accountId }: V3BaseOwnerTradeTableProps) => {
   const [searchParams] = useSearchParams();
-  const { accountId } = useParams();
 
   // Extracting filters and sorting options from the URL
   const market = searchParams.get('markets')?.split(',') ?? undefined;

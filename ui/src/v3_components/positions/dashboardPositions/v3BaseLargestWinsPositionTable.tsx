@@ -101,6 +101,7 @@ export const V3BaseLargestWinsPositionTable = () => {
                     unrealizedPnlFE,
                     trackingCode,
                     accountId,
+                    accountOwner,
                     marketId,
                     direction,
                   },
@@ -122,7 +123,7 @@ export const V3BaseLargestWinsPositionTable = () => {
                       <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
 
                       {/* Address */}
-                      <V3BaseAccountAddress address={accountId} />
+                      <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                     </Tr>
                   );
                 }

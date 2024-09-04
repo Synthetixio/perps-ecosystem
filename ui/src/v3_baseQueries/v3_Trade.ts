@@ -9,6 +9,7 @@ export const v3_TRADE = gql(`
         }
     	account {
             id
+            owner
         }
     	market {
             id
@@ -18,6 +19,7 @@ export const v3_TRADE = gql(`
         }
         fillPrice
         pnl
+        realizedPnl
         accruedFunding
         sizeDelta
         newSize

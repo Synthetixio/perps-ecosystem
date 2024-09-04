@@ -61,9 +61,10 @@ export const V3BasePositionTable = () => {
                 <TableHeaderCell>Market</TableHeaderCell>
                 <TableHeaderCell>Market Price</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
-                <TableHeaderCell>Accrued Funding</TableHeaderCell>
                 <TableHeaderCell>Average Entry Price</TableHeaderCell>
                 <TableHeaderCell>Realized PNL</TableHeaderCell>
+                <TableHeaderCell>Accrued Funding</TableHeaderCell>
+                <TableHeaderCell>Total Fees</TableHeaderCell>
                 <TableHeaderCell>Unrealized PNL</TableHeaderCell>
                 <TableHeaderCell>Source</TableHeaderCell>
               </Tr>
@@ -115,13 +116,17 @@ export const V3BasePositionTable = () => {
                       averageEntryPrice,
                       lastFillPrice,
                       size,
+                      totalFees,
                       notionalAmount,
                       accruedFunding,
                       realizedPnl,
+                      realizedPnlWithFees,
+                      positionPnl,
                       unrealizedPnl,
                       unrealizedPnlFE,
                       trackingCode,
                       accountId,
+                      accountOwner,
                       marketId,
                       direction,
                     },
@@ -143,18 +148,20 @@ export const V3BasePositionTable = () => {
                           size={size.toNumber()}
                           marketPrice={marketPrice.toNumber()}
                         />
-                        {/* Accrued Funding */}
-                        <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
                         {/* Average Entry Price */}
                         <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
-                        {/* Realized PNL */}
-                        <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
+                         {/* Realized PNL */}
+                         <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
+                        {/* Accrued Funding */}
+                        <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
+                        {/* Total Fees */}
+                        <V3BasePositionPnl pnl={totalFees.toNumber()} />
                         {/* Unrealized PNL */}
                         <PnL pnl={unrealizedPnlFE.toNumber()} />
                         {/* Source */}
                         <TrackingCodeIcon trackingCode={trackingCode} />
                         {/* Address */}
-                        <V3BaseAccountAddress address={accountId} />
+                        <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                       </Tr>
                     );
                   }

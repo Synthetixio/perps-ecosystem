@@ -8,6 +8,7 @@ import { V3BasePositionSize } from '../../positions/v3BasePositionSize';
 import { V3BaseTradeDetails } from '../tradeDetails/v3BaseTradeDetails';
 import { V3BaseAccountAddress } from '../../positions/v3BaseAccountAddress';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
+import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 
 export const V3DashboardTradeTable = () => {
   const orderBy = 'timestamp' as TradeOrderBy;
@@ -45,7 +46,6 @@ export const V3DashboardTradeTable = () => {
                 <TableHeaderCell>Market</TableHeaderCell>
                 <TableHeaderCell>Fill Price</TableHeaderCell>
                 <TableHeaderCell>Size</TableHeaderCell>
-                <TableHeaderCell>Fees</TableHeaderCell>
                 <TableHeaderCell>Source</TableHeaderCell>
               </Tr>
             </Thead>
@@ -93,6 +93,7 @@ export const V3DashboardTradeTable = () => {
                     marketPrice,
                     marketSymbol,
                     accountId,
+                    accountOwner,
                     fillPrice,
                     accruedFunding,
                     sizeDelta,
@@ -129,14 +130,12 @@ export const V3DashboardTradeTable = () => {
                         marketPrice={fillPrice.toNumber()}
                       />
 
-                      {/* Fees */}
-                      <V3BasePositionPrice price={totalFees.toNumber()} />
-
                       {/* Source */}
-                      <Td>{trackingCode}</Td>
+                      <TrackingCodeIcon trackingCode={trackingCode} />
+                
 
                       {/* Address */}
-                      <V3BaseAccountAddress address={accountId} />
+                      <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                     </Tr>
                   );
                 }

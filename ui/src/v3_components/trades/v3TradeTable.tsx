@@ -104,6 +104,7 @@ export const V3BaseTradeTable = () => {
                     marketPrice,
                     marketSymbol,
                     accountId,
+                    accountOwner,
                     fillPrice,
                     accruedFunding,
                     sizeDelta,
@@ -148,7 +149,7 @@ export const V3BaseTradeTable = () => {
                       <TrackingCodeIcon trackingCode={trackingCode} />
 
                       {/* Address */}
-                      <V3BaseAccountAddress address={accountId} />
+                      <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                     </Tr>
                   );
                 }

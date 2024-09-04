@@ -170,7 +170,7 @@ export const V3BaseAccountPnlChart = ({ account, ...props }: V3BaseAccountPnlCha
               />
 
               <Bar type="monotone" dataKey="positionPnl" yAxisId={'left'}>
-                {pnlData.map((item, i) => {
+                {chartData.map((item, i) => {
                   return (
                     <Cell key={`cell-${i}`} fill={item.positionPnl > 0 ? '#319795' : '#EE2EFF'} />
                   );

@@ -4,12 +4,14 @@ export interface Trade {
   id: string;
   positionId: string;
   accountId: string;
+  accountOwner: string;
   marketId: string;
   marketName: string;
   marketSymbol: string;
   marketPrice: Wei;
   fillPrice: Wei;
   pnl: Wei;
+  realizedPnl: Wei;
   accruedFunding: Wei;
   sizeDelta: Wei;
   newSize: Wei;

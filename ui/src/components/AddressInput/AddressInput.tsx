@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { SearchIcon } from '@chakra-ui/icons';
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGlobalProvidersWithFallback } from '@synthetixio/use-global-providers';
 import { KeyboardEvent, useState } from 'react';
 
@@ -15,6 +15,8 @@ export const AddressInput = (): JSX.Element => {
 
   const L1DefaultProvider = globalProviders.mainnet;
 
+  const location = useLocation();
+  
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -26,7 +28,6 @@ export const AddressInput = (): JSX.Element => {
     setInputError(null);
     console.log('data', data);
     const address = data.address.trim();
-
     if (address.length > 0) {
       if (address.endsWith('.eth')) {
         try {
@@ -34,7 +35,7 @@ export const AddressInput = (): JSX.Element => {
 
           if (ens != null) {
             resetField('address');
-            navigate(`/${ens}`);
+            navigateToVersionPath(`${ens}`);
           } else {
             setInputError(`Failed to resolve ENS name: ${address}`);
           }
@@ -43,12 +44,20 @@ export const AddressInput = (): JSX.Element => {
         }
       } else if (ethers.utils.isAddress(address)) {
         resetField('address');
-        navigate(`/${address}`);
+        navigateToVersionPath(`${address}`);
       } else {
         setInputError('Invalid address or ENS name');
       }
     } else {
       setInputError('Please enter an address or ENS name');
+    }
+  };
+
+  const navigateToVersionPath = (resolvedAddress: string) => {
+    if (location.pathname.startsWith('/v3')) {
+      navigate(`/v3/owner/${resolvedAddress}`);
+    } else {
+      navigate(`/${resolvedAddress}`);
     }
   };
 

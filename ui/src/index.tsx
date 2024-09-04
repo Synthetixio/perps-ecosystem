@@ -22,6 +22,7 @@ import { V3BaseTradesPage } from './v3_pages/V3BaseTradesPage';
 import { V3BaseLiquidationsPage } from './v3_pages/V3BaseLiquidationsPage';
 import { V3AccountPage } from './v3_pages/V3AccountPage';
 import V3BaseDashboard from './v3_pages/V3BaseDashboard';
+import { V3OwnerPage } from './v3_pages/V3OwnerPage';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -137,6 +138,15 @@ const router = createBrowserRouter([
       <>
         <Header />
         <V3AccountPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/owner/:owner/',
+    element: (
+      <>
+        <Header />
+        <V3OwnerPage />
       </>
     ),
   },

@@ -1,5 +1,5 @@
 import { Td, Fade, Text } from '@chakra-ui/react';
-import { KwentaIcon, PolynomialIcon, InfinexIcon, CyberdexIcon } from '../icons';
+import { KwentaIcon, PolynomialIcon, InfinexIcon, CyberdexIcon, DhedgeIcon } from '../icons';
 
 // Extend this map as needed
 const iconMap: Record<string, (props: any) => JSX.Element> = {
@@ -7,6 +7,7 @@ const iconMap: Record<string, (props: any) => JSX.Element> = {
   INFINEX: InfinexIcon,
   CYBERDEX: CyberdexIcon,
   POLYNOMIAL: PolynomialIcon,
+  DHEDGE: DhedgeIcon,
 };
 
 interface TrackingCodeIconProps {
@@ -15,14 +16,14 @@ interface TrackingCodeIconProps {
 
 export const TrackingCodeIcon = ({ trackingCode }: TrackingCodeIconProps) => {
   const IconComponent = iconMap[trackingCode.toUpperCase()] || null;
-
+  console.log(trackingCode)
   return (
-    <Td border="none">
+    <Td border="none" maxWidth="80px" whiteSpace="normal" overflow="hidden" textOverflow="ellipsis">
       <Fade in>
         {IconComponent ? (
           <IconComponent width="25px" height="25px" />
         ) : (
-          <Text fontFamily="heading" fontSize="14px" lineHeight="20px" color="gray.500">
+          <Text fontFamily="heading" fontSize="11px" lineHeight="14px" color="gray.500">
             {trackingCode}
           </Text>
         )}

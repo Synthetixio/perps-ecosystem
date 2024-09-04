@@ -3,12 +3,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import { WalletIcon } from '../../components';
 
 interface V3BaseAccountAddressProps {
-  address: string;
+  accountId: string;
+  owner: string;
 }
 
-export const V3BaseAccountAddress = ({ address }: V3BaseAccountAddressProps) => {
+export const V3BaseAccountAddress = ({ accountId, owner }: V3BaseAccountAddressProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <Td border="none" onMouseEnter={onOpen} onMouseLeave={onClose} position="relative">
       <Flex height="100%">
@@ -17,17 +17,21 @@ export const V3BaseAccountAddress = ({ address }: V3BaseAccountAddressProps) => 
       <Popover isOpen={isOpen}>
         <PopoverContent
           position="absolute"
-          left={-375}
-          top={-5}
+          right={0}
+          top={2}
+          
           zIndex={10}
+          width={"max-content"}
           bg="none"
+          border={2}
           _focus={{ outline: 'none', boxShadow: 'none' }}
         >
-          <RouterLink to={`/v3/account/${address}`}>
+          <RouterLink to={`/v3/owner/${owner}?accountId=${accountId}`}>
             <Box
               borderRadius="4px"
               bg="gray.900"
-              width="fit-content"
+             
+              
               _focus={{ outline: 'none', boxShadow: 'none' }}
               px={4}
               py={3}
@@ -35,8 +39,8 @@ export const V3BaseAccountAddress = ({ address }: V3BaseAccountAddressProps) => 
                 textDecoration: 'underline',
               }}
             >
-              <Text color="gray.50" fontSize="14px" fontWeight={400}>
-                {address}
+              <Text color="gray.50" fontSize="14px" fontWeight={400} textAlign={"center"}>
+                {accountId}
               </Text>
             </Box>
           </RouterLink>

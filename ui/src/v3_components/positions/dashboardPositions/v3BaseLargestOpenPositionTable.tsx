@@ -101,6 +101,7 @@ export const V3BaseLargetOpenPositionTable = () => {
                     unrealizedPnlFE,
                     trackingCode,
                     accountId,
+                    accountOwner,
                     marketId,
                     direction,
                   },
@@ -126,7 +127,7 @@ export const V3BaseLargetOpenPositionTable = () => {
                       <V3BasePositionPnl pnl={unrealizedPnlFE.toNumber()} />
 
                       {/* Address */}
-                      <V3BaseAccountAddress address={accountId} />
+                      <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                     </Tr>
                   );
                 }
