@@ -151,7 +151,7 @@ export const V3BasePositionTable = () => {
                         {/* Average Entry Price */}
                         <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
                          {/* Realized PNL */}
-                         <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
+                         <V3BasePositionPnl pnl={realizedPnlWithFees.toNumber()} />
                         {/* Accrued Funding */}
                         <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
                         {/* Total Fees */}

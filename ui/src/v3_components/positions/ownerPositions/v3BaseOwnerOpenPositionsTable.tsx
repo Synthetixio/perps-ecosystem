@@ -136,6 +136,7 @@ export const V3BaseOwnerOpenPositionTable = ({ accountId }: V3BaseOwnerOpenPosit
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
+                    realizedPnlWithFees,
                     unrealizedPnl,
                     unrealizedPnlFE,
                     totalFees,
@@ -172,7 +173,7 @@ export const V3BaseOwnerOpenPositionTable = ({ accountId }: V3BaseOwnerOpenPosit
                       {/* Unrealized PNL */}
                       <PnL pnl={unrealizedPnlFE.toNumber()} />
                       {/* Realized PNL */}
-                      <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
+                      <V3BasePositionPnl pnl={realizedPnlWithFees.toNumber()} />
                       {/* Average Entry Price */}
                       <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
                       {/* Total Fees */}
