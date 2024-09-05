@@ -15,6 +15,7 @@ import { V3BaseMarket } from '../markets/v3BaseMarket';
 import { wei } from '@synthetixio/wei';
 import { V3BaseTableLoading } from '../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../shared/trackingCode/v3BaseTrackingCode';
+import { V3BasePositionFees } from './v3BasePositionFees';
 
 export const V3BasePositionTable = () => {
   const [searchParams] = useSearchParams();
@@ -155,7 +156,7 @@ export const V3BasePositionTable = () => {
                         {/* Accrued Funding */}
                         <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
                         {/* Total Fees */}
-                        <V3BasePositionPnl pnl={totalFees.toNumber()} />
+                        <V3BasePositionFees fees={totalFees.toNumber()} />
                         {/* Unrealized PNL */}
                         <PnL pnl={unrealizedPnlFE.toNumber()} />
                         {/* Source */}
