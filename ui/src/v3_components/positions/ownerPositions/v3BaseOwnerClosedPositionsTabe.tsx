@@ -12,6 +12,7 @@ import { useSearchParams, /* useNavigate */ } from 'react-router-dom';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
+import { V3BasePositionFees } from '../v3BasePositionFees';
 
 interface V3BaseOwnerClosedPositionTableProps {
   accountId: string;
@@ -186,7 +187,7 @@ export const V3BaseOwnerClosedPositionTable = ({ accountId }: V3BaseOwnerClosedP
                       <V3BasePositionPnl pnl={realizedPnl.toNumber()} />
 
                       {/* Total Fees */}
-                      <V3BasePositionPnl pnl={totalFees.toNumber()} />
+                      <V3BasePositionFees fees={totalFees.toNumber()} />
 
                       {/* Accrued Funding */}
                       <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
