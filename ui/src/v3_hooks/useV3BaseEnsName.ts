@@ -9,7 +9,7 @@ console.log(ensCache);
 export const useV3BaseEnsName = (address?: string | null) => {
   const { globalProviders } = useGlobalProvidersWithFallback();
   const [addressEnsName, setAddressEnsName] = useState<string | null>(null);
-  
+
   useEffect(() => {
     async function resolve() {
       if (!address || !globalProviders.mainnet) {

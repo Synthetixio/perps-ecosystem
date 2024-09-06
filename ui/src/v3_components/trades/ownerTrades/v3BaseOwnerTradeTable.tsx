@@ -12,8 +12,8 @@ import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 
 interface V3BaseOwnerTradeTableProps {
-    accountId: string;
-  }
+  accountId: string;
+}
 
 export const V3BaseOwnerTradeTable = ({ accountId }: V3BaseOwnerTradeTableProps) => {
   const [searchParams] = useSearchParams();
@@ -152,8 +152,6 @@ export const V3BaseOwnerTradeTable = ({ accountId }: V3BaseOwnerTradeTableProps)
                       {/* Source */}
 
                       <TrackingCodeIcon trackingCode={trackingCode} />
-
-                    
                     </Tr>
                   );
                 }

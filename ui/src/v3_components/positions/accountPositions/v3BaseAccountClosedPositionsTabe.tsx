@@ -129,7 +129,6 @@ export const V3BaseAccountClosedPositionTable = () => {
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     status,
                     direction,

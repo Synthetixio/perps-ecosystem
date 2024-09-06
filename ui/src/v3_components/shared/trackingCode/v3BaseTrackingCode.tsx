@@ -16,7 +16,7 @@ interface TrackingCodeIconProps {
 
 export const TrackingCodeIcon = ({ trackingCode }: TrackingCodeIconProps) => {
   const IconComponent = iconMap[trackingCode.toUpperCase()] || null;
-  console.log(trackingCode)
+
   return (
     <Td border="none" maxWidth="80px" whiteSpace="normal" overflow="hidden" textOverflow="ellipsis">
       <Fade in>

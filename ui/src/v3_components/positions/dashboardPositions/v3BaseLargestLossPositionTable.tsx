@@ -97,7 +97,6 @@ export const V3BaseLargestLossPositionTable = () => {
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     trackingCode,
                     accountId,

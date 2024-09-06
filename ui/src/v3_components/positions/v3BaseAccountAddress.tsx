@@ -19,9 +19,8 @@ export const V3BaseAccountAddress = ({ accountId, owner }: V3BaseAccountAddressP
           position="absolute"
           right={0}
           top={2}
-          
           zIndex={10}
-          width={"max-content"}
+          width={'max-content'}
           bg="none"
           border={2}
           _focus={{ outline: 'none', boxShadow: 'none' }}
@@ -30,8 +29,6 @@ export const V3BaseAccountAddress = ({ accountId, owner }: V3BaseAccountAddressP
             <Box
               borderRadius="4px"
               bg="gray.900"
-             
-              
               _focus={{ outline: 'none', boxShadow: 'none' }}
               px={4}
               py={3}
@@ -39,8 +36,8 @@ export const V3BaseAccountAddress = ({ accountId, owner }: V3BaseAccountAddressP
                 textDecoration: 'underline',
               }}
             >
-              <Text color="gray.50" fontSize="14px" fontWeight={400} textAlign={"center"}>
-                {accountId}
+              <Text color="gray.50" fontSize="14px" fontWeight={400} textAlign={'center'}>
+                {owner}
               </Text>
             </Box>
           </RouterLink>

@@ -5,28 +5,32 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  BigDecimal: { input: string; output: string; }
-  BigInt: { input: string; output: string; }
-  Bytes: { input: string; output: string; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  BigDecimal: { input: string; output: string };
+  BigInt: { input: string; output: string };
+  Bytes: { input: string; output: string };
   /**
    * 8 bytes signed integer
    *
    */
-  Int8: { input: any; output: any; }
+  Int8: { input: any; output: any };
   /**
    * A string representation of microseconds UNIX timestamp (16 digits)
    *
    */
-  Timestamp: { input: any; output: any; }
+  Timestamp: { input: any; output: any };
 };
 
 export type Account = {
@@ -46,7 +50,6 @@ export type Account = {
   totalVolume: Scalars['BigInt']['output'];
 };
 
-
 export type AccountLiquidationsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<LiquidationOrderBy>;
@@ -54,7 +57,6 @@ export type AccountLiquidationsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<LiquidationFilter>;
 };
-
 
 export type AccountPositionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -207,7 +209,7 @@ export enum AccountAggregateStatOrderBy {
   market__skewScale = 'market__skewScale',
   market__takerFee = 'market__takerFee',
   positionPnl = 'positionPnl',
-  timestamp = 'timestamp'
+  timestamp = 'timestamp',
 }
 
 export type AccountFlaggedForLiquidation = {
@@ -337,7 +339,7 @@ export enum AccountFlaggedForLiquidationOrderBy {
   liquidationReward = 'liquidationReward',
   requiredMaintenanceMargin = 'requiredMaintenanceMargin',
   timestamp = 'timestamp',
-  transactionHash = 'transactionHash'
+  transactionHash = 'transactionHash',
 }
 
 export type AccountLiquidated = {
@@ -397,7 +399,7 @@ export enum AccountLiquidatedOrderBy {
   fullyLiquidated = 'fullyLiquidated',
   id = 'id',
   liquidationReward = 'liquidationReward',
-  timestamp = 'timestamp'
+  timestamp = 'timestamp',
 }
 
 export type AccountFilter = {
@@ -512,7 +514,7 @@ export enum AccountOrderBy {
   totalMargin = 'totalMargin',
   totalOpenPositions = 'totalOpenPositions',
   totalTrades = 'totalTrades',
-  totalVolume = 'totalVolume'
+  totalVolume = 'totalVolume',
 }
 
 export type Action = {
@@ -542,7 +544,7 @@ export type Action = {
 
 export enum ActionCategory {
   COLLATERAL = 'COLLATERAL',
-  TRADE = 'TRADE'
+  TRADE = 'TRADE',
 }
 
 export enum ActionType {
@@ -555,7 +557,7 @@ export enum ActionType {
   SHORT_DECREASED = 'SHORT_DECREASED',
   SHORT_INCREASED = 'SHORT_INCREASED',
   SHORT_OPENED = 'SHORT_OPENED',
-  WITHDRAW_MARGIN = 'WITHDRAW_MARGIN'
+  WITHDRAW_MARGIN = 'WITHDRAW_MARGIN',
 }
 
 export type ActionFilter = {
@@ -830,12 +832,12 @@ export enum ActionOrderBy {
   totalFees = 'totalFees',
   trackingCode = 'trackingCode',
   transactionHash = 'transactionHash',
-  volume = 'volume'
+  volume = 'volume',
 }
 
 export enum AggregationInterval {
   day = 'day',
-  hour = 'hour'
+  hour = 'hour',
 }
 
 export type BlockChangedFilter = {
@@ -850,7 +852,7 @@ export type BlockHeight = {
 
 export enum CollateralActionType {
   DEPOSIT = 'DEPOSIT',
-  WITHDRAWAL = 'WITHDRAWAL'
+  WITHDRAWAL = 'WITHDRAWAL',
 }
 
 export type CollateralModified = {
@@ -944,12 +946,12 @@ export enum CollateralModifiedOrderBy {
   sender = 'sender',
   synthMarketId = 'synthMarketId',
   timestamp = 'timestamp',
-  transactionHash = 'transactionHash'
+  transactionHash = 'transactionHash',
 }
 
 export enum Direction {
   LONG = 'LONG',
-  SHORT = 'SHORT'
+  SHORT = 'SHORT',
 }
 
 export type GlobalConfiguration = {
@@ -995,7 +997,7 @@ export type GlobalConfigurationFilter = {
 
 export enum GlobalConfigurationOrderBy {
   feeCollector = 'feeCollector',
-  id = 'id'
+  id = 'id',
 }
 
 export type InterestCharged = {
@@ -1071,7 +1073,7 @@ export enum InterestChargedOrderBy {
   id = 'id',
   interest = 'interest',
   timestamp = 'timestamp',
-  txHash = 'txHash'
+  txHash = 'txHash',
 }
 
 export type Liquidation = {
@@ -1093,7 +1095,7 @@ export type Liquidation = {
 
 export enum LiquidationType {
   FULL = 'FULL',
-  PARTIAL = 'PARTIAL'
+  PARTIAL = 'PARTIAL',
 }
 
 export type LiquidationFilter = {
@@ -1297,7 +1299,7 @@ export enum LiquidationOrderBy {
   position__trackingCode = 'position__trackingCode',
   position__unrealizedPnl = 'position__unrealizedPnl',
   timestamp = 'timestamp',
-  transactionHash = 'transactionHash'
+  transactionHash = 'transactionHash',
 }
 
 export type Market = {
@@ -1331,7 +1333,6 @@ export type Market = {
   takerFee: Maybe<Scalars['BigInt']['output']>;
 };
 
-
 export type MarketLiquidationsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<LiquidationOrderBy>;
@@ -1339,7 +1340,6 @@ export type MarketLiquidationsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<LiquidationFilter>;
 };
-
 
 export type MarketPositionsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -1450,7 +1450,7 @@ export enum MarketUpdatedOrderBy {
   size = 'size',
   sizeDelta = 'sizeDelta',
   skew = 'skew',
-  timestamp = 'timestamp'
+  timestamp = 'timestamp',
 }
 
 export type MarketFilter = {
@@ -1715,7 +1715,7 @@ export enum MarketOrderBy {
   sizeDelta = 'sizeDelta',
   skew = 'skew',
   skewScale = 'skewScale',
-  takerFee = 'takerFee'
+  takerFee = 'takerFee',
 }
 
 export type OpenPosition = {
@@ -1786,13 +1786,13 @@ export enum OpenPositionOrderBy {
   position__totalTrades = 'position__totalTrades',
   position__totalVolume = 'position__totalVolume',
   position__trackingCode = 'position__trackingCode',
-  position__unrealizedPnl = 'position__unrealizedPnl'
+  position__unrealizedPnl = 'position__unrealizedPnl',
 }
 
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   asc = 'asc',
-  desc = 'desc'
+  desc = 'desc',
 }
 
 export type Position = {
@@ -1826,7 +1826,6 @@ export type Position = {
   trades: Maybe<Array<Trade>>;
   unrealizedPnl: Scalars['BigInt']['output'];
 };
-
 
 export type PositionTradesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -1919,7 +1918,7 @@ export enum PositionLiquidatedOrderBy {
   id = 'id',
   marketId = 'marketId',
   timestamp = 'timestamp',
-  transactionHash = 'transactionHash'
+  transactionHash = 'transactionHash',
 }
 
 export type PositionReference = {
@@ -2029,13 +2028,13 @@ export enum PositionReferenceOrderBy {
   marketId = 'marketId',
   positionId = 'positionId',
   tradeId = 'tradeId',
-  transactionHash = 'transactionHash'
+  transactionHash = 'transactionHash',
 }
 
 export enum PositionStatus {
   CLOSED = 'CLOSED',
   LIQUIDATED = 'LIQUIDATED',
-  OPEN = 'OPEN'
+  OPEN = 'OPEN',
 }
 
 export type PositionFilter = {
@@ -2361,7 +2360,7 @@ export enum PositionOrderBy {
   totalVolume = 'totalVolume',
   trackingCode = 'trackingCode',
   trades = 'trades',
-  unrealizedPnl = 'unrealizedPnl'
+  unrealizedPnl = 'unrealizedPnl',
 }
 
 export type Query = {
@@ -2406,11 +2405,9 @@ export type Query = {
   trades: Array<Trade>;
 };
 
-
 export type QueryMetaArgs = {
   block?: InputMaybe<BlockHeight>;
 };
-
 
 export type QueryAccountArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2418,13 +2415,11 @@ export type QueryAccountArgs = {
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type QueryAccountAggregateStatArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryAccountAggregateStatsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2436,13 +2431,11 @@ export type QueryAccountAggregateStatsArgs = {
   where?: InputMaybe<AccountAggregateStatFilter>;
 };
 
-
 export type QueryAccountFlaggedForLiquidationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryAccountFlaggedForLiquidationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2454,13 +2447,11 @@ export type QueryAccountFlaggedForLiquidationsArgs = {
   where?: InputMaybe<AccountFlaggedForLiquidationFilter>;
 };
 
-
 export type QueryAccountLiquidatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryAccountLiquidatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2472,7 +2463,6 @@ export type QueryAccountLiquidatedsArgs = {
   where?: InputMaybe<AccountLiquidatedFilter>;
 };
 
-
 export type QueryAccountsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2483,13 +2473,11 @@ export type QueryAccountsArgs = {
   where?: InputMaybe<AccountFilter>;
 };
 
-
 export type QueryActionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryActionsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2501,13 +2489,11 @@ export type QueryActionsArgs = {
   where?: InputMaybe<ActionFilter>;
 };
 
-
 export type QueryCollateralModifiedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryCollateralModifiedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2519,13 +2505,11 @@ export type QueryCollateralModifiedsArgs = {
   where?: InputMaybe<CollateralModifiedFilter>;
 };
 
-
 export type QueryGlobalConfigurationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryGlobalConfigurationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2537,13 +2521,11 @@ export type QueryGlobalConfigurationsArgs = {
   where?: InputMaybe<GlobalConfigurationFilter>;
 };
 
-
 export type QueryInterestChargedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryInterestChargedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2555,13 +2537,11 @@ export type QueryInterestChargedsArgs = {
   where?: InputMaybe<InterestChargedFilter>;
 };
 
-
 export type QueryLiquidationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryLiquidationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2573,20 +2553,17 @@ export type QueryLiquidationsArgs = {
   where?: InputMaybe<LiquidationFilter>;
 };
 
-
 export type QueryMarketArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type QueryMarketUpdatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryMarketUpdatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2598,7 +2575,6 @@ export type QueryMarketUpdatedsArgs = {
   where?: InputMaybe<MarketUpdatedFilter>;
 };
 
-
 export type QueryMarketsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2609,13 +2585,11 @@ export type QueryMarketsArgs = {
   where?: InputMaybe<MarketFilter>;
 };
 
-
 export type QueryOpenPositionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryOpenPositionsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2627,20 +2601,17 @@ export type QueryOpenPositionsArgs = {
   where?: InputMaybe<OpenPositionFilter>;
 };
 
-
 export type QueryPositionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type QueryPositionLiquidatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryPositionLiquidatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2652,13 +2623,11 @@ export type QueryPositionLiquidatedsArgs = {
   where?: InputMaybe<PositionLiquidatedFilter>;
 };
 
-
 export type QueryPositionReferenceArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryPositionReferencesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2670,7 +2639,6 @@ export type QueryPositionReferencesArgs = {
   where?: InputMaybe<PositionReferenceFilter>;
 };
 
-
 export type QueryPositionsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2681,13 +2649,11 @@ export type QueryPositionsArgs = {
   where?: InputMaybe<PositionFilter>;
 };
 
-
 export type QueryReferrerShareArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryReferrerSharesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2699,7 +2665,6 @@ export type QueryReferrerSharesArgs = {
   where?: InputMaybe<ReferrerShareFilter>;
 };
 
-
 export type QuerySettlementStrategiesArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2710,20 +2675,17 @@ export type QuerySettlementStrategiesArgs = {
   where?: InputMaybe<SettlementStrategyFilter>;
 };
 
-
 export type QuerySettlementStrategyArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type QueryTradeArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type QueryTradesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2788,7 +2750,7 @@ export type ReferrerShareFilter = {
 export enum ReferrerShareOrderBy {
   id = 'id',
   referrer = 'referrer',
-  shareRatioD18 = 'shareRatioD18'
+  shareRatioD18 = 'shareRatioD18',
 }
 
 export type SettlementStrategy = {
@@ -2942,7 +2904,7 @@ export enum SettlementStrategyOrderBy {
   settlementReward = 'settlementReward',
   settlementWindowDuration = 'settlementWindowDuration',
   strategyId = 'strategyId',
-  strategyType = 'strategyType'
+  strategyType = 'strategyType',
 }
 
 export type Subscription = {
@@ -2987,11 +2949,9 @@ export type Subscription = {
   trades: Array<Trade>;
 };
 
-
 export type SubscriptionMetaArgs = {
   block?: InputMaybe<BlockHeight>;
 };
-
 
 export type SubscriptionAccountArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -2999,13 +2959,11 @@ export type SubscriptionAccountArgs = {
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type SubscriptionAccountAggregateStatArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionAccountAggregateStatsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3017,13 +2975,11 @@ export type SubscriptionAccountAggregateStatsArgs = {
   where?: InputMaybe<AccountAggregateStatFilter>;
 };
 
-
 export type SubscriptionAccountFlaggedForLiquidationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionAccountFlaggedForLiquidationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3035,13 +2991,11 @@ export type SubscriptionAccountFlaggedForLiquidationsArgs = {
   where?: InputMaybe<AccountFlaggedForLiquidationFilter>;
 };
 
-
 export type SubscriptionAccountLiquidatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionAccountLiquidatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3053,7 +3007,6 @@ export type SubscriptionAccountLiquidatedsArgs = {
   where?: InputMaybe<AccountLiquidatedFilter>;
 };
 
-
 export type SubscriptionAccountsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -3064,13 +3017,11 @@ export type SubscriptionAccountsArgs = {
   where?: InputMaybe<AccountFilter>;
 };
 
-
 export type SubscriptionActionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionActionsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3082,13 +3033,11 @@ export type SubscriptionActionsArgs = {
   where?: InputMaybe<ActionFilter>;
 };
 
-
 export type SubscriptionCollateralModifiedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionCollateralModifiedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3100,13 +3049,11 @@ export type SubscriptionCollateralModifiedsArgs = {
   where?: InputMaybe<CollateralModifiedFilter>;
 };
 
-
 export type SubscriptionGlobalConfigurationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionGlobalConfigurationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3118,13 +3065,11 @@ export type SubscriptionGlobalConfigurationsArgs = {
   where?: InputMaybe<GlobalConfigurationFilter>;
 };
 
-
 export type SubscriptionInterestChargedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionInterestChargedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3136,13 +3081,11 @@ export type SubscriptionInterestChargedsArgs = {
   where?: InputMaybe<InterestChargedFilter>;
 };
 
-
 export type SubscriptionLiquidationArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionLiquidationsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3154,20 +3097,17 @@ export type SubscriptionLiquidationsArgs = {
   where?: InputMaybe<LiquidationFilter>;
 };
 
-
 export type SubscriptionMarketArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type SubscriptionMarketUpdatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionMarketUpdatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3179,7 +3119,6 @@ export type SubscriptionMarketUpdatedsArgs = {
   where?: InputMaybe<MarketUpdatedFilter>;
 };
 
-
 export type SubscriptionMarketsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -3190,13 +3129,11 @@ export type SubscriptionMarketsArgs = {
   where?: InputMaybe<MarketFilter>;
 };
 
-
 export type SubscriptionOpenPositionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionOpenPositionsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3208,20 +3145,17 @@ export type SubscriptionOpenPositionsArgs = {
   where?: InputMaybe<OpenPositionFilter>;
 };
 
-
 export type SubscriptionPositionArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type SubscriptionPositionLiquidatedArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionPositionLiquidatedsArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3233,13 +3167,11 @@ export type SubscriptionPositionLiquidatedsArgs = {
   where?: InputMaybe<PositionLiquidatedFilter>;
 };
 
-
 export type SubscriptionPositionReferenceArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionPositionReferencesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3251,7 +3183,6 @@ export type SubscriptionPositionReferencesArgs = {
   where?: InputMaybe<PositionReferenceFilter>;
 };
 
-
 export type SubscriptionPositionsArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -3262,13 +3193,11 @@ export type SubscriptionPositionsArgs = {
   where?: InputMaybe<PositionFilter>;
 };
 
-
 export type SubscriptionReferrerShareArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionReferrerSharesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3280,7 +3209,6 @@ export type SubscriptionReferrerSharesArgs = {
   where?: InputMaybe<ReferrerShareFilter>;
 };
 
-
 export type SubscriptionSettlementStrategiesArgs = {
   block?: InputMaybe<BlockHeight>;
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -3291,20 +3219,17 @@ export type SubscriptionSettlementStrategiesArgs = {
   where?: InputMaybe<SettlementStrategyFilter>;
 };
 
-
 export type SubscriptionSettlementStrategyArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
 
-
 export type SubscriptionTradeArgs = {
   block?: InputMaybe<BlockHeight>;
   id: Scalars['ID']['input'];
   subgraphError?: SubgraphErrorPolicy;
 };
-
 
 export type SubscriptionTradesArgs = {
   block?: InputMaybe<BlockHeight>;
@@ -3668,7 +3593,7 @@ export enum TradeOrderBy {
   trackingCode = 'trackingCode',
   tradeType = 'tradeType',
   transactionHash = 'transactionHash',
-  volume = 'volume'
+  volume = 'volume',
 }
 
 export type Block = {
@@ -3704,7 +3629,7 @@ export enum SubgraphErrorPolicy {
   /** Data will be returned even if the subgraph has indexing errors */
   allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  deny = 'deny'
+  deny = 'deny',
 }
 
 export type V3AccountQueryVariables = Exact<{
@@ -3714,8 +3639,21 @@ export type V3AccountQueryVariables = Exact<{
   where?: InputMaybe<AccountFilter>;
 }>;
 
-
-export type V3AccountQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, owner: string, feesPaid: string, pnl: string, totalLiquidations: string, totalTrades: string, totalVolume: string, totalOpenPositions: string, totalClosedPositions: string }> };
+export type V3AccountQuery = {
+  __typename?: 'Query';
+  accounts: Array<{
+    __typename?: 'Account';
+    id: string;
+    owner: string;
+    feesPaid: string;
+    pnl: string;
+    totalLiquidations: string;
+    totalTrades: string;
+    totalVolume: string;
+    totalOpenPositions: string;
+    totalClosedPositions: string;
+  }>;
+};
 
 export type V3AccountAggregateStatQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3724,8 +3662,25 @@ export type V3AccountAggregateStatQueryVariables = Exact<{
   where?: InputMaybe<AccountAggregateStatFilter>;
 }>;
 
-
-export type V3AccountAggregateStatQuery = { __typename?: 'Query', accountAggregateStats: Array<{ __typename?: 'AccountAggregateStat', id: string, positionPnl: string, accountPnl: string, timestamp: string, block: string, account: { __typename?: 'Account', id: string }, market: { __typename?: 'Market', id: string, marketName: string, perpsMarketId: string, marketSymbol: string } }> };
+export type V3AccountAggregateStatQuery = {
+  __typename?: 'Query';
+  accountAggregateStats: Array<{
+    __typename?: 'AccountAggregateStat';
+    id: string;
+    positionPnl: string;
+    accountPnl: string;
+    timestamp: string;
+    block: string;
+    account: { __typename?: 'Account'; id: string };
+    market: {
+      __typename?: 'Market';
+      id: string;
+      marketName: string;
+      perpsMarketId: string;
+      marketSymbol: string;
+    };
+  }>;
+};
 
 export type V3AccountFullQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3742,15 +3697,93 @@ export type V3AccountFullQueryVariables = Exact<{
   liquidationWhere?: InputMaybe<LiquidationFilter>;
 }>;
 
-
-export type V3AccountFullQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: string, owner: string, feesPaid: string, pnl: string, totalLiquidations: string, totalTrades: string, totalVolume: string, totalOpenPositions: string, totalClosedPositions: string, positions: Array<{ __typename?: 'Position', id: string, trackingCode: string | null, isOpen: boolean, isLiquidated: boolean, status: PositionStatus, direction: Direction, openTimestamp: string, closeTimestamp: string | null, entryPrice: string, exitPrice: string | null, lastFillPrice: string, size: string, notionalAmount: string, realizedPnl: string, totalFees: string, totalVolume: string, totalTrades: string, accruedFunding: string, interestCharged: string, averageEntryPrice: string, unrealizedPnl: string, market: { __typename?: 'Market', id: string, marketName: string, marketSymbol: string, price: string }, trades: Array<{ __typename?: 'Trade', id: string, sizeDelta: string, pnl: string }> | null }> | null, liquidations: Array<{ __typename?: 'Liquidation', id: string, timestamp: string, transactionHash: string, amountLiquidated: string, liquidationType: LiquidationType, currentPositionSize: string, notionalAmount: string, marketPrice: string, account: { __typename?: 'Account', id: string }, market: { __typename?: 'Market', id: string, marketName: string, marketSymbol: string, price: string } }> | null }> };
+export type V3AccountFullQuery = {
+  __typename?: 'Query';
+  accounts: Array<{
+    __typename?: 'Account';
+    id: string;
+    owner: string;
+    feesPaid: string;
+    pnl: string;
+    totalLiquidations: string;
+    totalTrades: string;
+    totalVolume: string;
+    totalOpenPositions: string;
+    totalClosedPositions: string;
+    positions: Array<{
+      __typename?: 'Position';
+      id: string;
+      trackingCode: string | null;
+      isOpen: boolean;
+      isLiquidated: boolean;
+      status: PositionStatus;
+      direction: Direction;
+      openTimestamp: string;
+      closeTimestamp: string | null;
+      entryPrice: string;
+      exitPrice: string | null;
+      lastFillPrice: string;
+      size: string;
+      notionalAmount: string;
+      realizedPnl: string;
+      totalFees: string;
+      totalVolume: string;
+      totalTrades: string;
+      accruedFunding: string;
+      interestCharged: string;
+      averageEntryPrice: string;
+      unrealizedPnl: string;
+      market: {
+        __typename?: 'Market';
+        id: string;
+        marketName: string;
+        marketSymbol: string;
+        price: string;
+      };
+      trades: Array<{ __typename?: 'Trade'; id: string; sizeDelta: string; pnl: string }> | null;
+    }> | null;
+    liquidations: Array<{
+      __typename?: 'Liquidation';
+      id: string;
+      timestamp: string;
+      transactionHash: string;
+      amountLiquidated: string;
+      liquidationType: LiquidationType;
+      currentPositionSize: string;
+      notionalAmount: string;
+      marketPrice: string;
+      account: { __typename?: 'Account'; id: string };
+      market: {
+        __typename?: 'Market';
+        id: string;
+        marketName: string;
+        marketSymbol: string;
+        price: string;
+      };
+    }> | null;
+  }>;
+};
 
 export type V3AccountOneQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
-
-export type V3AccountOneQuery = { __typename?: 'Query', account: { __typename?: 'Account', id: string, owner: string, feesPaid: string, pnl: string, totalLiquidations: string, totalMargin: string, totalTrades: string, totalVolume: string, totalOpenPositions: string, totalClosedPositions: string } | null };
+export type V3AccountOneQuery = {
+  __typename?: 'Query';
+  account: {
+    __typename?: 'Account';
+    id: string;
+    owner: string;
+    feesPaid: string;
+    pnl: string;
+    totalLiquidations: string;
+    totalMargin: string;
+    totalTrades: string;
+    totalVolume: string;
+    totalOpenPositions: string;
+    totalClosedPositions: string;
+  } | null;
+};
 
 export type V3LiquidationQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3759,8 +3792,42 @@ export type V3LiquidationQueryVariables = Exact<{
   where?: InputMaybe<LiquidationFilter>;
 }>;
 
-
-export type V3LiquidationQuery = { __typename?: 'Query', liquidations: Array<{ __typename?: 'Liquidation', id: string, timestamp: string, transactionHash: string, amountLiquidated: string, liquidationType: LiquidationType, currentPositionSize: string, notionalAmount: string, marketPrice: string, account: { __typename?: 'Account', id: string }, market: { __typename?: 'Market', id: string, marketName: string, marketSymbol: string, price: string }, position: { __typename?: 'Position', id: string, isLiquidated: boolean, direction: Direction, status: PositionStatus, realizedPnl: string, totalFees: string, accruedFunding: string, totalTrades: string, totalVolume: string, averageEntryPrice: string, trackingCode: string | null } | null }> };
+export type V3LiquidationQuery = {
+  __typename?: 'Query';
+  liquidations: Array<{
+    __typename?: 'Liquidation';
+    id: string;
+    timestamp: string;
+    transactionHash: string;
+    amountLiquidated: string;
+    liquidationType: LiquidationType;
+    currentPositionSize: string;
+    notionalAmount: string;
+    marketPrice: string;
+    account: { __typename?: 'Account'; id: string };
+    market: {
+      __typename?: 'Market';
+      id: string;
+      marketName: string;
+      marketSymbol: string;
+      price: string;
+    };
+    position: {
+      __typename?: 'Position';
+      id: string;
+      isLiquidated: boolean;
+      direction: Direction;
+      status: PositionStatus;
+      realizedPnl: string;
+      totalFees: string;
+      accruedFunding: string;
+      totalTrades: string;
+      totalVolume: string;
+      averageEntryPrice: string;
+      trackingCode: string | null;
+    } | null;
+  }>;
+};
 
 export type V3MarketQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3769,8 +3836,34 @@ export type V3MarketQueryVariables = Exact<{
   where?: InputMaybe<MarketFilter>;
 }>;
 
-
-export type V3MarketQuery = { __typename?: 'Query', markets: Array<{ __typename?: 'Market', id: string, perpsMarketId: string, marketName: string, marketSymbol: string, price: string, skew: string | null, size: string | null, sizeDelta: string | null, currentFundingRate: string | null, currentFundingVelocity: string | null, interestRate: string | null, feedId: string | null, maxFundingVelocity: string | null, skewScale: string | null, lockedOiPercent: string | null, initialMarginRatioD18: string | null, minimumInitialMarginRatioD18: string | null, flagRewardRatioD18: string | null, minimumPositionMargin: string | null, maxSecondsInLiquidationWindow: string | null, makerFee: string | null, takerFee: string | null }> };
+export type V3MarketQuery = {
+  __typename?: 'Query';
+  markets: Array<{
+    __typename?: 'Market';
+    id: string;
+    perpsMarketId: string;
+    marketName: string;
+    marketSymbol: string;
+    price: string;
+    skew: string | null;
+    size: string | null;
+    sizeDelta: string | null;
+    currentFundingRate: string | null;
+    currentFundingVelocity: string | null;
+    interestRate: string | null;
+    feedId: string | null;
+    maxFundingVelocity: string | null;
+    skewScale: string | null;
+    lockedOiPercent: string | null;
+    initialMarginRatioD18: string | null;
+    minimumInitialMarginRatioD18: string | null;
+    flagRewardRatioD18: string | null;
+    minimumPositionMargin: string | null;
+    maxSecondsInLiquidationWindow: string | null;
+    makerFee: string | null;
+    takerFee: string | null;
+  }>;
+};
 
 export type V3PositionQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3779,8 +3872,49 @@ export type V3PositionQueryVariables = Exact<{
   where?: InputMaybe<PositionFilter>;
 }>;
 
-
-export type V3PositionQuery = { __typename?: 'Query', positions: Array<{ __typename?: 'Position', id: string, trackingCode: string | null, isOpen: boolean, isLiquidated: boolean, status: PositionStatus, direction: Direction, openTimestamp: string, closeTimestamp: string | null, entryPrice: string, exitPrice: string | null, lastFillPrice: string, size: string, notionalAmount: string, realizedPnl: string, realizedPnlWithFees: string, positionPnl: string, totalFees: string, totalVolume: string, totalTrades: string, accruedFunding: string, interestCharged: string, averageEntryPrice: string, unrealizedPnl: string, market: { __typename?: 'Market', id: string, marketName: string, marketSymbol: string, price: string }, account: { __typename?: 'Account', id: string, accountId: string, owner: string }, trades: Array<{ __typename?: 'Trade', id: string, sizeDelta: string, pnl: string }> | null, liquidation: { __typename?: 'Liquidation', id: string, timestamp: string, amountLiquidated: string } | null }> };
+export type V3PositionQuery = {
+  __typename?: 'Query';
+  positions: Array<{
+    __typename?: 'Position';
+    id: string;
+    trackingCode: string | null;
+    isOpen: boolean;
+    isLiquidated: boolean;
+    status: PositionStatus;
+    direction: Direction;
+    openTimestamp: string;
+    closeTimestamp: string | null;
+    entryPrice: string;
+    exitPrice: string | null;
+    lastFillPrice: string;
+    size: string;
+    notionalAmount: string;
+    realizedPnl: string;
+    realizedPnlWithFees: string;
+    positionPnl: string;
+    totalFees: string;
+    totalVolume: string;
+    totalTrades: string;
+    accruedFunding: string;
+    interestCharged: string;
+    averageEntryPrice: string;
+    market: {
+      __typename?: 'Market';
+      id: string;
+      marketName: string;
+      marketSymbol: string;
+      price: string;
+    };
+    account: { __typename?: 'Account'; id: string; accountId: string; owner: string };
+    trades: Array<{ __typename?: 'Trade'; id: string; sizeDelta: string; pnl: string }> | null;
+    liquidation: {
+      __typename?: 'Liquidation';
+      id: string;
+      timestamp: string;
+      amountLiquidated: string;
+    } | null;
+  }>;
+};
 
 export type V3TradeQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -3789,15 +3923,1029 @@ export type V3TradeQueryVariables = Exact<{
   where?: InputMaybe<TradeFilter>;
 }>;
 
+export type V3TradeQuery = {
+  __typename?: 'Query';
+  trades: Array<{
+    __typename?: 'Trade';
+    id: string;
+    fillPrice: string;
+    pnl: string;
+    realizedPnl: string;
+    accruedFunding: string;
+    sizeDelta: string;
+    newSize: string;
+    volume: string;
+    notionalAmount: string;
+    totalFees: string;
+    referralFees: string;
+    collectedFees: string;
+    settlementReward: string | null;
+    trackingCode: string | null;
+    settler: string;
+    block: string;
+    timestamp: string;
+    transactionHash: string;
+    interestCharged: string;
+    tradeType: ActionType;
+    position: { __typename?: 'Position'; id: string };
+    account: { __typename?: 'Account'; id: string; owner: string };
+    market: {
+      __typename?: 'Market';
+      id: string;
+      marketName: string;
+      marketSymbol: string;
+      price: string;
+    };
+  }>;
+};
 
-export type V3TradeQuery = { __typename?: 'Query', trades: Array<{ __typename?: 'Trade', id: string, fillPrice: string, pnl: string, realizedPnl: string, accruedFunding: string, sizeDelta: string, newSize: string, volume: string, notionalAmount: string, totalFees: string, referralFees: string, collectedFees: string, settlementReward: string | null, trackingCode: string | null, settler: string, block: string, timestamp: string, transactionHash: string, interestCharged: string, tradeType: ActionType, position: { __typename?: 'Position', id: string }, account: { __typename?: 'Account', id: string, owner: string }, market: { __typename?: 'Market', id: string, marketName: string, marketSymbol: string, price: string } }> };
-
-
-export const V3AccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3Account"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Account_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Account_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaid"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalOpenPositions"}},{"kind":"Field","name":{"kind":"Name","value":"totalClosedPositions"}}]}}]}}]} as unknown as DocumentNode<V3AccountQuery, V3AccountQueryVariables>;
-export const V3AccountAggregateStatDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3AccountAggregateStat"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AccountAggregateStat_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"AccountAggregateStat_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accountAggregateStats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"perpsMarketId"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}}]}},{"kind":"Field","name":{"kind":"Name","value":"positionPnl"}},{"kind":"Field","name":{"kind":"Name","value":"accountPnl"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"block"}}]}}]}}]} as unknown as DocumentNode<V3AccountAggregateStatQuery, V3AccountAggregateStatQueryVariables>;
-export const V3AccountFullDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3AccountFull"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Account_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Account_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"positionFirst"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"positionOrderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Position_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"positionOrderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"positionWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Position_filter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"liquidationFirst"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"liquidationOrderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Liquidation_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"liquidationOrderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"liquidationWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Liquidation_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaid"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalOpenPositions"}},{"kind":"Field","name":{"kind":"Name","value":"totalClosedPositions"}},{"kind":"Field","name":{"kind":"Name","value":"positions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"positionFirst"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"positionOrderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"positionOrderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"positionWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"trackingCode"}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"direction"}},{"kind":"Field","name":{"kind":"Name","value":"openTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"closeTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastFillPrice"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"notionalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalFees"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"accruedFunding"}},{"kind":"Field","name":{"kind":"Name","value":"interestCharged"}},{"kind":"Field","name":{"kind":"Name","value":"averageEntryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"unrealizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trades"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sizeDelta"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"liquidations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"liquidationFirst"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"liquidationWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"liquidationOrderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"liquidationOrderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"transactionHash"}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amountLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"liquidationType"}},{"kind":"Field","name":{"kind":"Name","value":"currentPositionSize"}},{"kind":"Field","name":{"kind":"Name","value":"notionalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"marketPrice"}}]}}]}}]}}]} as unknown as DocumentNode<V3AccountFullQuery, V3AccountFullQueryVariables>;
-export const V3AccountOneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3AccountOne"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}},{"kind":"Field","name":{"kind":"Name","value":"feesPaid"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalLiquidations"}},{"kind":"Field","name":{"kind":"Name","value":"totalMargin"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalOpenPositions"}},{"kind":"Field","name":{"kind":"Name","value":"totalClosedPositions"}}]}}]}}]} as unknown as DocumentNode<V3AccountOneQuery, V3AccountOneQueryVariables>;
-export const V3LiquidationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3Liquidation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Liquidation_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Liquidation_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"liquidations"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"transactionHash"}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amountLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"liquidationType"}},{"kind":"Field","name":{"kind":"Name","value":"currentPositionSize"}},{"kind":"Field","name":{"kind":"Name","value":"notionalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"marketPrice"}},{"kind":"Field","name":{"kind":"Name","value":"position"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"direction"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalFees"}},{"kind":"Field","name":{"kind":"Name","value":"accruedFunding"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"averageEntryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"trackingCode"}}]}}]}}]}}]} as unknown as DocumentNode<V3LiquidationQuery, V3LiquidationQueryVariables>;
-export const V3MarketDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3Market"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Market_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Market_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markets"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"perpsMarketId"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"skew"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"sizeDelta"}},{"kind":"Field","name":{"kind":"Name","value":"currentFundingRate"}},{"kind":"Field","name":{"kind":"Name","value":"currentFundingVelocity"}},{"kind":"Field","name":{"kind":"Name","value":"interestRate"}},{"kind":"Field","name":{"kind":"Name","value":"feedId"}},{"kind":"Field","name":{"kind":"Name","value":"maxFundingVelocity"}},{"kind":"Field","name":{"kind":"Name","value":"skewScale"}},{"kind":"Field","name":{"kind":"Name","value":"lockedOiPercent"}},{"kind":"Field","name":{"kind":"Name","value":"initialMarginRatioD18"}},{"kind":"Field","name":{"kind":"Name","value":"minimumInitialMarginRatioD18"}},{"kind":"Field","name":{"kind":"Name","value":"flagRewardRatioD18"}},{"kind":"Field","name":{"kind":"Name","value":"minimumPositionMargin"}},{"kind":"Field","name":{"kind":"Name","value":"maxSecondsInLiquidationWindow"}},{"kind":"Field","name":{"kind":"Name","value":"makerFee"}},{"kind":"Field","name":{"kind":"Name","value":"takerFee"}}]}}]}}]} as unknown as DocumentNode<V3MarketQuery, V3MarketQueryVariables>;
-export const V3PositionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3Position"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Position_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Position_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"positions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"trackingCode"}},{"kind":"Field","name":{"kind":"Name","value":"isOpen"}},{"kind":"Field","name":{"kind":"Name","value":"isLiquidated"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"direction"}},{"kind":"Field","name":{"kind":"Name","value":"openTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"closeTimestamp"}},{"kind":"Field","name":{"kind":"Name","value":"entryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"exitPrice"}},{"kind":"Field","name":{"kind":"Name","value":"lastFillPrice"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"notionalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnlWithFees"}},{"kind":"Field","name":{"kind":"Name","value":"positionPnl"}},{"kind":"Field","name":{"kind":"Name","value":"totalFees"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"totalTrades"}},{"kind":"Field","name":{"kind":"Name","value":"accruedFunding"}},{"kind":"Field","name":{"kind":"Name","value":"interestCharged"}},{"kind":"Field","name":{"kind":"Name","value":"averageEntryPrice"}},{"kind":"Field","name":{"kind":"Name","value":"unrealizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"accountId"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}},{"kind":"Field","name":{"kind":"Name","value":"trades"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sizeDelta"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"liquidation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"amountLiquidated"}}]}}]}}]}}]} as unknown as DocumentNode<V3PositionQuery, V3PositionQueryVariables>;
-export const V3TradeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"v3Trade"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Trade_orderBy"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OrderDirection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Trade_filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"trades"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderDirection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderDirection"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"position"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"account"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"owner"}}]}},{"kind":"Field","name":{"kind":"Name","value":"market"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"marketName"}},{"kind":"Field","name":{"kind":"Name","value":"marketSymbol"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fillPrice"}},{"kind":"Field","name":{"kind":"Name","value":"pnl"}},{"kind":"Field","name":{"kind":"Name","value":"realizedPnl"}},{"kind":"Field","name":{"kind":"Name","value":"accruedFunding"}},{"kind":"Field","name":{"kind":"Name","value":"sizeDelta"}},{"kind":"Field","name":{"kind":"Name","value":"newSize"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}},{"kind":"Field","name":{"kind":"Name","value":"notionalAmount"}},{"kind":"Field","name":{"kind":"Name","value":"totalFees"}},{"kind":"Field","name":{"kind":"Name","value":"referralFees"}},{"kind":"Field","name":{"kind":"Name","value":"collectedFees"}},{"kind":"Field","name":{"kind":"Name","value":"settlementReward"}},{"kind":"Field","name":{"kind":"Name","value":"trackingCode"}},{"kind":"Field","name":{"kind":"Name","value":"settler"}},{"kind":"Field","name":{"kind":"Name","value":"block"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"transactionHash"}},{"kind":"Field","name":{"kind":"Name","value":"interestCharged"}},{"kind":"Field","name":{"kind":"Name","value":"tradeType"}}]}}]}}]} as unknown as DocumentNode<V3TradeQuery, V3TradeQueryVariables>;
+export const V3AccountDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3Account' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Account_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Account_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'accounts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaid' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalOpenPositions' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalClosedPositions' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3AccountQuery, V3AccountQueryVariables>;
+export const V3AccountAggregateStatDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3AccountAggregateStat' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'AccountAggregateStat_orderBy' },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'AccountAggregateStat_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'accountAggregateStats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'account' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'perpsMarketId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'positionPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'accountPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'block' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3AccountAggregateStatQuery, V3AccountAggregateStatQueryVariables>;
+export const V3AccountFullDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3AccountFull' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Account_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Account_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'positionFirst' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'positionOrderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Position_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'positionOrderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'positionWhere' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Position_filter' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'liquidationFirst' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'liquidationOrderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Liquidation_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'liquidationOrderDirection' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'liquidationWhere' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Liquidation_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'accounts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaid' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalOpenPositions' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalClosedPositions' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'positions' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'first' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'positionFirst' } },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'positionOrderBy' } },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderDirection' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'positionOrderDirection' },
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: { kind: 'Variable', name: { kind: 'Name', value: 'positionWhere' } },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'trackingCode' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isOpen' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'direction' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'entryPrice' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'exitPrice' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'lastFillPrice' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'notionalAmount' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalFees' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'accruedFunding' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'interestCharged' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'averageEntryPrice' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'unrealizedPnl' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'market' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'trades' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'sizeDelta' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'liquidations' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'first' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'liquidationFirst' },
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'liquidationWhere' },
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'liquidationOrderBy' },
+                      },
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderDirection' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'liquidationOrderDirection' },
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'transactionHash' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'account' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'market' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                          ],
+                        },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'amountLiquidated' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'liquidationType' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'currentPositionSize' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'notionalAmount' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketPrice' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3AccountFullQuery, V3AccountFullQueryVariables>;
+export const V3AccountOneDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3AccountOne' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'account' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feesPaid' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalLiquidations' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalMargin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalOpenPositions' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalClosedPositions' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3AccountOneQuery, V3AccountOneQueryVariables>;
+export const V3LiquidationDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3Liquidation' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Liquidation_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Liquidation_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'liquidations' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'transactionHash' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'account' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amountLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'liquidationType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currentPositionSize' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notionalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'marketPrice' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'position' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'direction' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalFees' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'accruedFunding' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'averageEntryPrice' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'trackingCode' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3LiquidationQuery, V3LiquidationQueryVariables>;
+export const V3MarketDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3Market' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Market_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Market_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'markets' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'perpsMarketId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'skew' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'sizeDelta' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currentFundingRate' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'currentFundingVelocity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'interestRate' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'feedId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'maxFundingVelocity' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'skewScale' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lockedOiPercent' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'initialMarginRatioD18' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'minimumInitialMarginRatioD18' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'flagRewardRatioD18' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'minimumPositionMargin' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'maxSecondsInLiquidationWindow' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'makerFee' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'takerFee' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3MarketQuery, V3MarketQueryVariables>;
+export const V3PositionDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3Position' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Position_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Position_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'positions' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trackingCode' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isOpen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isLiquidated' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'direction' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'openTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'closeTimestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'entryPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'exitPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lastFillPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notionalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnlWithFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'positionPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalVolume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalTrades' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'accruedFunding' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'interestCharged' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'averageEntryPrice' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'account' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'accountId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'trades' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'sizeDelta' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'liquidation' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'amountLiquidated' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3PositionQuery, V3PositionQueryVariables>;
+export const V3TradeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'v3Trade' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Trade_orderBy' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'OrderDirection' } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Trade_filter' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'trades' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'first' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderBy' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderDirection' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'orderDirection' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'where' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'position' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'account' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'market' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketName' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'marketSymbol' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'price' } },
+                    ],
+                  },
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'fillPrice' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'realizedPnl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'accruedFunding' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'sizeDelta' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'newSize' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'volume' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'notionalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'referralFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'collectedFees' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'settlementReward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'trackingCode' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'settler' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'block' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'transactionHash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'interestCharged' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tradeType' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<V3TradeQuery, V3TradeQueryVariables>;

@@ -4,7 +4,7 @@ import { V3BasePositionPrice } from '../v3BasePositionPrice';
 import { V3BasePositionSize } from '../v3BasePositionSize';
 import { LiquidationOrderBy, OrderDirection } from '../../../v3_perp/__generated__/graphql';
 import { V3BasePositionPnl } from '../v3BasePositionPnl';
-import { useSearchParams, /* useNavigate */ } from 'react-router-dom';
+import { useSearchParams /* useNavigate */ } from 'react-router-dom';
 import { useV3Baseliquidation } from '../../../v3_hooks/useV3BaseLiquidation';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
@@ -13,7 +13,9 @@ import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
 interface V3BaseOwnerLiquidatedPositionTableProps {
   accountId: string;
 }
-export const V3BaseOwnerLiquidatedPositionTable = ({ accountId }: V3BaseOwnerLiquidatedPositionTableProps) => {
+export const V3BaseOwnerLiquidatedPositionTable = ({
+  accountId,
+}: V3BaseOwnerLiquidatedPositionTableProps) => {
   // const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -40,7 +42,7 @@ export const V3BaseOwnerLiquidatedPositionTable = ({ accountId }: V3BaseOwnerLiq
 
   const handleRowClick = (positionId: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
-    
+
     if (selectedPositionId === positionId) {
       // Clear the filter if the same position is clicked again
       newParams.delete('positionId');

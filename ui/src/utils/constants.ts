@@ -12,8 +12,8 @@ export const PERPS_V3_DASHBOARD_GRAPH_URL =
   'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-watcher-sg-base/api';
 
 export const PERPS_V3_BASE =
-'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/version/v33/api';
-  // 'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/api';
+  'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/version/v33/api';
+// 'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/api';
 
 export const TRADE_ON_KWENTA_URL = 'https://kwenta.eth.limo';
 export const TRADE_ON_POLYNOMIAL_URL = 'https://trade.polynomial.fi';

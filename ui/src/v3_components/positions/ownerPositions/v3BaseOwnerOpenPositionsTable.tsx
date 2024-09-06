@@ -9,7 +9,7 @@ import {
   PositionStatus,
 } from '../../../v3_perp/__generated__/graphql';
 import { V3BasePositionPnl } from '../v3BasePositionPnl';
-import { useSearchParams, /* useNavigate */ } from 'react-router-dom';
+import { useSearchParams /* useNavigate */ } from 'react-router-dom';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
@@ -42,12 +42,12 @@ export const V3BaseOwnerOpenPositionTable = ({ accountId }: V3BaseOwnerOpenPosit
     positionFilters,
   });
 
-   // Get the selected positionId from the searchParams
-   const selectedPositionId = searchParams.get('positionId');
+  // Get the selected positionId from the searchParams
+  const selectedPositionId = searchParams.get('positionId');
 
   const handleRowClick = (positionId: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
-    
+
     if (selectedPositionId === positionId) {
       // Clear the filter if the same position is clicked again
       newParams.delete('positionId');
@@ -138,7 +138,6 @@ export const V3BaseOwnerOpenPositionTable = ({ accountId }: V3BaseOwnerOpenPosit
                     accruedFunding,
                     realizedPnl,
                     realizedPnlWithFees,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     totalFees,
                     trackingCode,

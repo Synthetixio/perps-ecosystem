@@ -22,25 +22,61 @@ export const V3BasePositionTable = () => {
 
   // Extracting filters and sorting options from the URL
   const market = searchParams.get('markets')?.split(',') ?? undefined;
-  const orderBy = (searchParams.get('orderby') as PositionOrderBy) ?? 'lastTradeTimestamp';
+  const rawOrderBy = (searchParams.get('orderby') as PositionOrderBy) ?? 'notionalAmount';
+  const orderBy = rawOrderBy === 'unrealizedPnl' ? PositionOrderBy.notionalAmount : rawOrderBy;
   const orderDirection = (searchParams.get('direction') as OrderDirection) ?? 'desc';
-  const minNotionalAmount = searchParams.get('min') ?? undefined;
-  const maxNotionalAmount = searchParams.get('max') ?? undefined;
+  const min = searchParams.get('min') ?? undefined;
+  const max = searchParams.get('max') ?? undefined;
+
+  // Determine the correct filter keys based on the selected orderBy value
+  let minFilterKey: string;
+  let maxFilterKey: string;
+
+  switch (rawOrderBy) {
+    case 'realizedPnl':
+      minFilterKey = 'realizedPnl_gte';
+      maxFilterKey = 'realizedPnl_lte';
+      break;
+    case 'size':
+      minFilterKey = 'notionalAmount_gte';
+      maxFilterKey = 'notionalAmount_lte';
+      break;
+    case 'unrealizedPnl':
+      minFilterKey = 'notionalAmount_gte';
+      maxFilterKey = 'notionalAmount_lte';
+      break;
+    default:
+      minFilterKey = 'notionalAmount_gte';
+      maxFilterKey = 'notionalAmount_lte';
+  }
 
   // need URL params to update the filter
   const positionFilters = {
     status: PositionStatus.OPEN,
     market_in: market,
-    notionalAmount_gte: minNotionalAmount ? wei(minNotionalAmount).toBN().toString() : undefined,
-    notionalAmount_lte: maxNotionalAmount ? wei(maxNotionalAmount).toBN().toString() : undefined,
+    [minFilterKey]: min ? wei(min).toBN().toString() : undefined,
+    [maxFilterKey]: max ? wei(max).toBN().toString() : undefined,
   };
 
-  const { error, loading, data } = useV3BasePosition({
+  const {
+    error,
+    loading,
+    data: positionData,
+  } = useV3BasePosition({
     first: 100,
     orderBy,
     orderDirection,
     positionFilters,
   });
+
+  const data =
+    rawOrderBy === 'unrealizedPnl'
+      ? [...positionData].sort((a, b) => {
+          const pnlA = a.unrealizedPnlFE.toNumber();
+          const pnlB = b.unrealizedPnlFE.toNumber();
+          return orderDirection === 'asc' ? pnlA - pnlB : pnlB - pnlA;
+        })
+      : positionData;
 
   return (
     <>
@@ -123,7 +159,6 @@ export const V3BasePositionTable = () => {
                       realizedPnl,
                       realizedPnlWithFees,
                       positionPnl,
-                      unrealizedPnl,
                       unrealizedPnlFE,
                       trackingCode,
                       accountId,
@@ -151,8 +186,8 @@ export const V3BasePositionTable = () => {
                         />
                         {/* Average Entry Price */}
                         <V3BasePositionPrice price={averageEntryPrice.toNumber()} />
-                         {/* Realized PNL */}
-                         <V3BasePositionPnl pnl={realizedPnlWithFees.toNumber()} />
+                        {/* Realized PNL */}
+                        <V3BasePositionPnl pnl={realizedPnlWithFees.toNumber()} />
                         {/* Accrued Funding */}
                         <V3BasePositionPnl pnl={accruedFunding.toNumber()} />
                         {/* Total Fees */}

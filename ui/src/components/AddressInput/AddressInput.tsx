@@ -16,7 +16,7 @@ export const AddressInput = (): JSX.Element => {
   const L1DefaultProvider = globalProviders.mainnet;
 
   const location = useLocation();
-  
+
   const [inputError, setInputError] = useState<string | null>(null);
   const navigate = useNavigate();
 

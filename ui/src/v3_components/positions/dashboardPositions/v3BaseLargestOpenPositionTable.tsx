@@ -97,7 +97,6 @@ export const V3BaseLargetOpenPositionTable = () => {
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     trackingCode,
                     accountId,

@@ -132,7 +132,6 @@ export const V3DashboardTradeTable = () => {
 
                       {/* Source */}
                       <TrackingCodeIcon trackingCode={trackingCode} />
-                
 
                       {/* Address */}
                       <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />

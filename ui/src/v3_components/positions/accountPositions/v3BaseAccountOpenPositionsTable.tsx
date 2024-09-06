@@ -122,7 +122,6 @@ export const V3BaseAccountOpenPositionTable = () => {
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     totalFees,
                     trackingCode,

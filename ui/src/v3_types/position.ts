@@ -18,7 +18,6 @@ export interface Position {
   realizedPnl: Wei;
   realizedPnlWithFees: Wei;
   positionPnl: Wei;
-  unrealizedPnl: Wei;
   unrealizedPnlFE: Wei;
   totalFees: Wei;
   totalVolume: Wei;

@@ -10,8 +10,12 @@ interface V3BaseAccountNameProps extends TextProps {
   accountId: string;
 }
 
-export const V3BaseAccountName = ({ address, accountId, ensName, ...props }: V3BaseAccountNameProps) => {
-
+export const V3BaseAccountName = ({
+  address,
+  accountId,
+  ensName,
+  ...props
+}: V3BaseAccountNameProps) => {
   const accountName = useMemo(
     () => ensName ?? truncateAddress(address), // Use ENS name if available, otherwise truncate
     [address]

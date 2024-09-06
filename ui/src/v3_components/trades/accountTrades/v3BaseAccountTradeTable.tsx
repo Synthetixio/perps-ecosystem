@@ -149,8 +149,6 @@ export const V3BaseAccountTradeTable = () => {
                       {/* Source */}
 
                       <TrackingCodeIcon trackingCode={trackingCode} />
-
-                    
                     </Tr>
                   );
                 }

@@ -30,7 +30,6 @@ export const v3_POSITION = gql(`
           accruedFunding
           interestCharged
           averageEntryPrice
-          unrealizedPnl
           market {
             id
             marketName
@@ -56,17 +55,13 @@ export const v3_POSITION = gql(`
   }
   `);
 
-
-
-
-
 // import { gql } from '../v3_perp/__generated__';
 
 // export const v3_POSITION = gql(`
 //   query v3Position($first: Int!, $orderBy: Position_orderBy, $orderDirection: OrderDirection, $where: Position_filter) {
 //     positions(
-//         first:$first 
-//         orderBy:$orderBy 
+//         first:$first
+//         orderBy:$orderBy
 //         orderDirection:$orderDirection
 //         where: $where
 //         ){

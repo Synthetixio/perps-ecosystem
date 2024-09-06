@@ -88,7 +88,7 @@ export const V3BaseMarketSelect = ({ markets, route }: V3BaseMarketSelectProps) 
               icon={<CurrencyIcon width={20} height={20} currencyKey={market.marketSymbol} />}
               label={market.marketName}
               onChange={(e) => {
-                if (activeAssets.includes(market.id) && !e.target.checked) {
+                if (activeAssets.includes(market.marketSymbol) && !e.target.checked) {
                   const newState = activeAssets.filter((asset) => asset !== market.marketSymbol);
                   setActiveAssets(newState);
                   onClick(newState.join(','));

@@ -3,8 +3,8 @@ import { Stack } from '@chakra-ui/react';
 import { useV3BaseMarket } from '../../../v3_hooks/useV3BaseMarket';
 import { V3BaseMarketSelect } from '../MarketSelect';
 import { V3BaseDropdownFilter } from '../DropdownFilter';
-import { V3BaseSizeFilter } from '../sizeFilter';
 import { MarketOrderBy, OrderDirection } from '../../../v3_perp/__generated__/graphql';
+import { V3BaseSizeFilter } from '../sizeFilter';
 
 interface DropdownInterface {
   value: string;

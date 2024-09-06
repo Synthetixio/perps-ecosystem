@@ -8,7 +8,7 @@ import {
   PositionStatus,
 } from '../../../v3_perp/__generated__/graphql';
 import { V3BasePositionPnl } from '../v3BasePositionPnl';
-import { useSearchParams, /* useNavigate */ } from 'react-router-dom';
+import { useSearchParams /* useNavigate */ } from 'react-router-dom';
 import { V3BaseMarket } from '../../markets/v3BaseMarket';
 import { V3BaseTableLoading } from '../../shared/loading/v3BaseTableLoading';
 import { TrackingCodeIcon } from '../../shared/trackingCode/v3BaseTrackingCode';
@@ -17,11 +17,11 @@ import { V3BasePositionFees } from '../v3BasePositionFees';
 interface V3BaseOwnerClosedPositionTableProps {
   accountId: string;
 }
-export const V3BaseOwnerClosedPositionTable = ({ accountId }: V3BaseOwnerClosedPositionTableProps) => {
+export const V3BaseOwnerClosedPositionTable = ({
+  accountId,
+}: V3BaseOwnerClosedPositionTableProps) => {
   // const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-
-
 
   // Extracting filters and sorting options from the URL
   const market = searchParams.get('markets')?.split(',') ?? undefined;
@@ -49,9 +49,9 @@ export const V3BaseOwnerClosedPositionTable = ({ accountId }: V3BaseOwnerClosedP
     positionFilters,
   });
 
-    // Get the selected positionId from the searchParams
-    const selectedPositionId = searchParams.get('positionId');
-    
+  // Get the selected positionId from the searchParams
+  const selectedPositionId = searchParams.get('positionId');
+
   const handleRowClick = (positionId: string) => {
     const newParams = new URLSearchParams(searchParams.toString());
 
@@ -145,7 +145,6 @@ export const V3BaseOwnerClosedPositionTable = ({ accountId }: V3BaseOwnerClosedP
                     notionalAmount,
                     accruedFunding,
                     realizedPnl,
-                    unrealizedPnl,
                     unrealizedPnlFE,
                     status,
                     direction,

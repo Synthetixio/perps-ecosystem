@@ -11,9 +11,8 @@ interface DropdownInterface {
 }
 
 const ORDER_BY_CATEGORIES: DropdownInterface[] = [
-  { value: 'volume', display: 'Volume' },
-  { value: 'notionalAmount', display: 'Notional Amount' },
   { value: 'timestamp', display: 'Date' },
+  { value: 'volume', display: 'Volume' },
 ];
 
 const ORDER_DIRECTIONS: DropdownInterface[] = [
