@@ -3804,7 +3804,7 @@ export type V3LiquidationQuery = {
     currentPositionSize: string;
     notionalAmount: string;
     marketPrice: string;
-    account: { __typename?: 'Account'; id: string };
+    account: { __typename?: 'Account'; id: string; owner: string };
     market: {
       __typename?: 'Market';
       id: string;
@@ -4542,7 +4542,10 @@ export const V3LiquidationDocument = {
                   name: { kind: 'Name', value: 'account' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
+                    ],
                   },
                 },
                 {

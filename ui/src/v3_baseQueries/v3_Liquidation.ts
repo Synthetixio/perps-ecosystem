@@ -8,6 +8,7 @@ export const v3_LIQUIDATION = gql(`
     	transactionHash
     	account {
             id
+            owner
         }
     	market {
             id

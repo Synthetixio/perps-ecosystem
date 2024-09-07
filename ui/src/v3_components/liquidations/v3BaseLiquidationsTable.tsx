@@ -6,6 +6,8 @@ import { useV3Baseliquidation } from '../../v3_hooks/useV3BaseLiquidation';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { LiquidationOrderBy, OrderDirection } from '../../v3_perp/__generated__/graphql';
 import { V3BaseTableLoading } from '../shared/loading/v3BaseTableLoading';
+import { V3BaseLiquidationDetails } from './liquidationDetails/v3BaseLiquidationDetails';
+import { V3BaseAccountAddress } from '../positions/v3BaseAccountAddress';
 
 export const V3BaseLiquidationsTable = () => {
   const [searchParams] = useSearchParams();
@@ -45,10 +47,11 @@ export const V3BaseLiquidationsTable = () => {
         <Table bg="navy.700">
           <Thead>
             <Tr>
+              <TableHeaderCell>Details</TableHeaderCell>
               <TableHeaderCell>Market</TableHeaderCell>
               <TableHeaderCell>Age</TableHeaderCell>
               <TableHeaderCell>Price</TableHeaderCell>
-              <TableHeaderCell>Size</TableHeaderCell>
+              <TableHeaderCell>Amount Liquidated</TableHeaderCell>
             </Tr>
           </Thead>
           <Tbody>
@@ -79,15 +82,23 @@ export const V3BaseLiquidationsTable = () => {
                 id,
                 timestamp,
                 accountId,
+                accountOwner,
                 marketId,
                 amountLiquidated,
                 currentPositionSize,
                 marketName,
                 marketSymbol,
                 marketPrice,
+                transactionHash,
+                liquidationType,
               }) => {
                 return (
                   <Tr key={id} borderTopWidth="1px">
+                    <V3BaseLiquidationDetails
+                      timestamp={timestamp}
+                      label={'LIQUIDATION'}
+                      txHash={transactionHash}
+                    />
                     <V3Market asset={marketName} assetKey={marketSymbol} />
                     <Age timestamp={timestamp} />
                     <Currency amount={wei(marketPrice, 18, true).toNumber() || null} />
@@ -95,6 +106,7 @@ export const V3BaseLiquidationsTable = () => {
                       size={amountLiquidated.toNumber()}
                       marketPrice={marketPrice ? wei(marketPrice, 18, true).toNumber() : null}
                     />
+                    <V3BaseAccountAddress accountId={accountId} owner={accountOwner} />
                   </Tr>
                 );
               }

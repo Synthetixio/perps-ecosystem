@@ -2,6 +2,7 @@ import { Box, Heading } from '@chakra-ui/react';
 import { ApolloProvider as V3Provider } from '@apollo/client';
 import { V3BaseClient } from '../apollo/v3baseClient';
 import { V3BaseLiquidationsTable } from '../v3_components/liquidations/v3BaseLiquidationsTable';
+import { V3BaseLiquidationFilter } from '../v3_components/filter/liquidationFilter';
 
 export const V3BaseLiquidationsPage = () => {
   return (
@@ -11,6 +12,7 @@ export const V3BaseLiquidationsPage = () => {
           {' '}
           Liquidations{' '}
         </Heading>
+        <V3BaseLiquidationFilter route="v3/liquidations" />
         <V3BaseLiquidationsTable />
       </Box>
     </V3Provider>

@@ -39,6 +39,7 @@ export const useV3Baseliquidation = ({
         timestamp: liquidation.timestamp,
         transactionHash: liquidation.transactionHash,
         accountId: liquidation.account.id,
+        accountOwner: liquidation.account.owner,
         marketId: liquidation.market.id,
         marketName: liquidation.market.marketName,
         marketSymbol: liquidation.market.marketSymbol,

@@ -5,6 +5,7 @@ export interface Liquidation {
   timestamp: string;
   transactionHash: string;
   accountId: string;
+  accountOwner: string;
   marketId: string;
   marketName: string;
   marketSymbol: string;
