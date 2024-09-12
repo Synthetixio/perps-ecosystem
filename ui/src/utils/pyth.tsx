@@ -40,6 +40,7 @@ export const getMarketsPythConfig = async () => {
     .then((json) => {
       const parsedJson = OffchainFeedSchema.parse(json);
       return parsedJson
+        .filter(({ asset }) => asset !== 'MATIC')
         .map(({ feedId, asset }) => {
           const key = formatAssetToPerpName(asset);
           return {
