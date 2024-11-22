@@ -1,6 +1,7 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-import { KwentaIcon, PolynomialIcon } from '../Icons';
+import { /* KwentaIcon, */ PolynomialIcon } from '../Icons';
+import { KwentaIcon as V3KwentaIcon } from '../../v3_components/shared/icons';
 import { InfinexIcon } from '../Icons/InfinexIcon';
 import {
   TRADE_ON_CYBERDEX_URL,
@@ -31,7 +32,7 @@ export const DashboardBanner = () => {
         <TradeOnItem
           url={TRADE_ON_KWENTA_URL}
           title={'Trade on Kwenta'}
-          icon={<KwentaIcon width="14px" height="14px" border="none" borderRadius="unset" />}
+          icon={<V3KwentaIcon width="18px" height="18px" border="none" borderRadius="unset" />}
         />
         <TradeOnItem
           url={TRADE_ON_POLYNOMIAL_URL}

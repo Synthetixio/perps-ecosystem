@@ -8,6 +8,13 @@ export const KWENTA_SUBGRAPH_URL =
 export const POLYNOMIAL_SUBGRAPH_URL =
   'https://gateway-arbitrum.network.thegraph.com/api/592b3ff36de6c725554b9c252c275192/subgraphs/id/HNGcT3yUnJKQEoCGirzTECMwrRZeVyPLN75zusTCSziS';
 
+export const PERPS_V3_DASHBOARD_GRAPH_URL =
+  'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-watcher-sg-base/api';
+
+export const PERPS_V3_BASE =
+  'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/version/v33/api';
+// 'https://subgraph.satsuma-prod.com/d652a52b2fb4/tradess-team--772825/perps-base-3/api';
+
 export const TRADE_ON_KWENTA_URL = 'https://kwenta.eth.limo';
 export const TRADE_ON_POLYNOMIAL_URL = 'https://trade.polynomial.fi';
 export const TRADE_ON_INFINEX_URL = 'https://infinex.xyz';
@@ -22,6 +29,10 @@ export const optimisticEthercanLink = (address: string) =>
 
 export const optimisticEthercanTx = (txHash: string) =>
   `https://optimistic.etherscan.io/tx/${txHash}`;
+
+export const basescanLink = (address: string) => `https://basescan.org/address/${address}`;
+
+export const basescanTx = (txHash: string) => `https://basescan.org/tx/${txHash}`;
 
 export const infuraId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL;

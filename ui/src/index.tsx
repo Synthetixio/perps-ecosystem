@@ -11,11 +11,18 @@ import {
   DEFAULT_REQUEST_REFRESH_INTERVAL,
 } from './utils/constants';
 import { resolvers, typeDefs } from './queries/resolved';
-import { Dashboard, Actions, Markets, Positions, Liquidations, StatsV3 } from './pages';
+import { Dashboard, Actions, Markets, Positions, Liquidations } from './pages';
 import { isStaging } from './utils/isStaging';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { EthersProvider } from './utils/ProviderContext';
 import { PythRealtimePrices } from './utils/pyth';
+import { V3BaseMarketsPage } from './v3_pages/V3BaseMarketsPage';
+import { V3BasePositionsPage } from './v3_pages/V3BasePositionsPage';
+import { V3BaseTradesPage } from './v3_pages/V3BaseTradesPage';
+import { V3BaseLiquidationsPage } from './v3_pages/V3BaseLiquidationsPage';
+import { V3AccountPage } from './v3_pages/V3AccountPage';
+import V3BaseDashboard from './v3_pages/V3BaseDashboard';
+import { V3OwnerPage } from './v3_pages/V3OwnerPage';
 
 const client = new ApolloClient({
   uri: isStaging ? PERPS_V2_DASHBOARD_GRAPH_GOERLI_URL : PERPS_V2_DASHBOARD_GRAPH_URL,
@@ -90,11 +97,65 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/v3',
+    path: '/v3/markets',
     element: (
       <>
         <Header />
-        <StatsV3 />
+        <V3BaseMarketsPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/trades',
+    element: (
+      <>
+        <Header />
+        <V3BaseTradesPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/positions',
+    element: (
+      <>
+        <Header />
+        <V3BasePositionsPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/liquidations',
+    element: (
+      <>
+        <Header />
+        <V3BaseLiquidationsPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/account/:accountId',
+    element: (
+      <>
+        <Header />
+        <V3AccountPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/owner/:owner/',
+    element: (
+      <>
+        <Header />
+        <V3OwnerPage />
+      </>
+    ),
+  },
+  {
+    path: '/v3/dashboard',
+    element: (
+      <>
+        <Header />
+        <V3BaseDashboard />
       </>
     ),
   },

@@ -123,8 +123,8 @@ export const MintBurn = ({ ...props }: FlexProps) => {
                           item.totalMintBurn > 0
                             ? '#11946B'
                             : item.totalMintBurn < 0
-                            ? '#FF4A60'
-                            : '#00D1FF'
+                              ? '#FF4A60'
+                              : '#00D1FF'
                         }
                       />
                     );

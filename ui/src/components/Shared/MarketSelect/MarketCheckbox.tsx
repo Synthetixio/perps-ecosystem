@@ -13,8 +13,8 @@ export const MarketCheckbox = ({ label, icon, ...props }: MarketCheckboxProps) =
     label === 'ALL'
       ? 'All Markets'
       : label.includes('sBTC') || label.includes('sETH')
-      ? `${label.substring(1)}-PERP`
-      : `${label}-PERP`;
+        ? `${label.substring(1)}-PERP`
+        : `${label}-PERP`;
 
   return (
     <chakra.label

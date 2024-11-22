@@ -50,6 +50,7 @@
     "start": "craco start",
     "build": "craco build",
     "compile": "graphql-codegen",
+    "v3compile": "graphql-codegen --config v3codegen.ts",
     "test": "craco test",
     "eject": "craco eject",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\"",
@@ -74,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "@types/uuid": "9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "craco": "^0.0.3",
     "eslint": "^8.0.1",
@@ -84,7 +86,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.0.3",
-    "semver": "^7.5.4",
-    "@types/uuid": "9.0.7"
-  }
+    "semver": "^7.5.4"
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
